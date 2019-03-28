@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>用户管理</title>
+
+    <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
+    <link rel='stylesheet' href='../../../assets/module/admin.css'/>
+    <style type="text/css">
+        #search{display: inline-block;width: 200px;height: 34px;vertical-align:top}
+    </style>
+</head>
+<body>
+    <!-- 正文开始 -->
+    <div class='layui-fluid'>
+        <div class='layui-card'>
+            <div class='layui-card-body'>
+                <table id='table' lay-filter='table'></table>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载动画，移除位置在common.js中 -->
+    <div class='page-loading'>
+        <div class='rubik-loader'></div>
+    </div>
+
+    <!-- 关闭Tab时顶部标题 -->
+    <div class='layui-body-header'>
+        <span class='layui-body-header-title'>个人中心</span>
+        <span class='layui-breadcrumb pull-right'>
+            <a href='../console/console.html'>首页</a>
+            <a><cite>个人中心</cite></a>
+        </span>
+    </div>
+
+    <!-- 表格操作列 -->
+    <script type='text/html' id='tableBar'>
+        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>
+        <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
+    </script>
+    <!--操作-->
+    <script type='text/html' id='toolbar'>
+        <button class='layui-btn layui-btn-sm' lay-event='add'>添加</button>
+        <!--<input type="search" id="search" name="search" placeholder="搜索账号/手机号/邮箱" class="layui-input">-->
+
+    </script>
+
+    <!-- js部分 -->
+    <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
+    <script type='text/javascript' src='../../../assets/js/common.js'></script>
+    <script type='text/javascript'>
+        layui.use(['form','layer','jquery','table','admin'],function(){
+            var table = layui.table;
+            $ = layui.$;
+            createTable();
+            function createTable(){
+
+                //执行渲染
+                table.render({
+                    elem: '#table' //指定原始表格元素选择器（推荐id选择器）
+                    ,toolbar: '#toolbar'
+                    ,url:'/sysUser/list'
+                    ,page:true
+                    ,cellMinWidth:100
+                    ,height: 'full-70'
+                    ,cols: [ [
+                        {field:'id',title:'ID',hide:true},
+                        {field:'uname',title:'账号'},
+                        {field:'nickname',title:'昵称'},
+                        {field:'phone',title:'手机号'},
+                        {field:'email',title:'邮箱'},
+                        {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:120}
+                    ] ] //设置表头
+
+                });
+
+                //头工具栏事件
+                table.on('toolbar(table)', function(obj){
+                    switch(obj.event){
+                        case 'add':
+                            console.log(obj.data)
+                            showAddModel(obj.data)
+                            break;
+                    };
+                });
+                //监听行工具事件
+                table.on('tool(table)', function(obj){
+                    var data = obj.data;
+                    //console.log(obj)
+                    if(obj.event === 'delete'){
+                        layer.confirm('真的删除行么', function(index){
+                            obj.del();
+                            layer.close(index);
+                        });
+                    } else if(obj.event === 'edit'){
+                        showEditModel(data);
+                    }
+                });
+            }
+
+            // 显示表单弹窗
+            function showEditModel(data) {
+                var id = 0;
+                if(data){
+                    id = data.id;
+                }
+                top.layui.admin.open({
+                    type: 2,
+                    title:  '修改用户' ,
+                    area: ['500px', '400px'],
+                    content: 'user_add.html',
+                    end: function () {
+                        table.reload('table');  // 成功刷新表格
+                    }
+                });
+            }
+            // 显示表单弹窗
+            function showAddModel(data) {
+
+                top.layui.admin.open({
+                    type: 2,
+                    title: '添加用户',
+                    area: ['500px', '400px'],
+                    content: 'user_add.html',
+                    end: function () {
+                        table.reload('table');  // 成功刷新表格
+                    }
+                });
+            }
+
+        })
+    </script>
+</body>
+</html>
