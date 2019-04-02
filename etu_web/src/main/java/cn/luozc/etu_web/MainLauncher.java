@@ -33,8 +33,8 @@ public class MainLauncher {
 
     
     public void init() {
-        String path = this.getClass().getClassLoader().getResource("").getPath();
-        execSql(path);
+//        String path = this.getClass().getClassLoader().getResource("").getPath();
+//        execSql(path);
 
         List<SysUser> list = userDao.getList();
         System.err.println(list);
