@@ -23,9 +23,10 @@ public class UserModule {
     private UserService userService;
 
     @At("/list")
-    public LayuiTableResult list(int page,int limit){
-        return userService.getList(page,limit,"");
+    public LayuiTableResult list(int page,int limit,String value){
+        return userService.getList(page,limit,value);
     }
+
     @At("/add")
     public Object add(SysUser sysUser){
         if(StringUtils.isEmpty(sysUser.getId())){
@@ -33,6 +34,16 @@ public class UserModule {
         }else{
             return userService.edit(sysUser);
         }
+    }
+
+    @At
+    public JsonData del(String id){
+        return userService.del(id);
+    }
+
+    @At
+    public JsonData enable(String id,int enable){
+        return userService.enable(enable,id);
     }
 
 

@@ -26,8 +26,8 @@ public class BaseDao<T> {
      * @param value         模糊查询值
      * @return  返回实体对象列表
      */
-    public List<T> getList(int pageNumber,int pageSize,String value){
-        return dao.query(bean, getVagueCriteria(value),  getPager(pageNumber, pageSize));
+    public List<T> getList(int pageNumber,int pageSize,String value,List<String> feilds){
+        return dao.query(bean, getVagueCriteria(value,feilds),  getPager(pageNumber, pageSize));
     }
 
     /**
@@ -57,16 +57,24 @@ public class BaseDao<T> {
         return dao.update(t);
     }
 
+    /**
+     * 删除数据
+     * @param id    数据id
+     * @return  删除的条数
+     */
+    public int delete(String id){
+        return dao.delete(bean,id);
+    }
 
     /**
      * 获取总数据量
      * @return  int
      */
-    public int size(String value){
+    public int size(String value,List<String> feilds){
         if(StringUtils.isEmpty(value)){
             return dao.count(bean);
         }
-        return dao.count(bean,getVagueCriteria(value));
+        return dao.count(bean,getVagueCriteria(value,feilds));
     }
 
     /**
@@ -87,18 +95,13 @@ public class BaseDao<T> {
      * @param value
      * @return
      */
-    private  Criteria getVagueCriteria(String value) {
+    private  Criteria getVagueCriteria(String value,List<String> feilds) {
         Criteria cri = Cnd.cri();
         if(StringUtils.isNotEmpty(value)){
-            for (Field field : bean.getDeclaredFields()) {
-                if("String".equals(field.getType().getSimpleName())){
-                    // 获取数据库字段名称
-                    String columnName =  field.getName();
-
-                    // 封装条件并塞入条件集合
-                    SqlExpressionGroup expression = Cnd.exps(columnName, "like", "%"+value+"%");
-                    cri.where().or(expression);
-                }
+            for (String feild:feilds) {
+                // 封装条件并塞入条件集合
+                SqlExpressionGroup expression = Cnd.exps(feild, "like", "%"+value+"%");
+                cri.where().or(expression);
             }
         }
         return cri;

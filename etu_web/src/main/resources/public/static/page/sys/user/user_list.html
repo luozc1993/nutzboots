@@ -36,9 +36,12 @@
     <!--操作-->
     <script type='text/html' id='toolbar'>
         <button class='layui-btn layui-btn-sm' lay-event='add'>添加</button>
-        <!--<input type="search" id="search" name="search" placeholder="搜索账号/手机号/邮箱" class="layui-input">-->
-
+        <input type="search" id="search" name="search" placeholder="搜索账号/手机号/邮箱" class="layui-input">
     </script>
+
+    <script type="text/html" id="enable">
+        <input type="checkbox" name="sex" value="{{d.id}}" data-enable="{{d.enable}}" lay-skin="switch" lay-text="已启用|未启用" lay-filter="enable" {{ d.enable == 0 ? 'checked' : '' }}>
+      </script>
 
     <!-- js部分 -->
     <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
@@ -47,27 +50,34 @@
         layui.use(['form','layer','jquery','table','admin'],function(){
             var table = layui.table;
             var admin = layui.admin;
+            var form = layui.form;
             $ = layui.$;
-            createTable();
-            function createTable(){
+            createTable('');
+            function createTable(value){
                 //执行渲染
-                table.render({
+                var tableIns = table.render({
                     elem: '#table' //指定原始表格元素选择器（推荐id选择器）
                     ,toolbar: '#toolbar'
                     ,url:'/sys/user/list'
                     ,page:true
                     ,cellMinWidth:100
-                    ,height: 'full-65'
+                    ,where: { //设定异步数据接口的额外参数，任意设
+                        value: value
+                    }
+                    ,height: 'full-70'
                     ,cols: [ [
                         {field:'id',title:'ID',hide:true},
                         {field:'uname',title:'账号'},
                         {field:'nickname',title:'昵称'},
                         {field:'phone',title:'手机号'},
                         {field:'email',title:'邮箱'},
+                        {field:'enable',title:'是否启用',templet: '#enable', unresize: true,minWidth:110},
                         {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:120}
                     ] ] //设置表头
 
                 });
+                $("#search").val(value);
+                $("#search").focus()
 
                 //头工具栏事件
                 table.on('toolbar(table)', function(obj){
@@ -84,12 +94,38 @@
                     if(obj.event === 'delete'){
                         layer.confirm('真的删除行么', function(index){
                             obj.del();
+                            del(data.id);
                             layer.close(index);
                         });
                     } else if(obj.event === 'edit'){
                         showFormModel(data);
                     }
                 });
+
+                //监听锁定操作
+                form.on('switch(enable)', function(obj){
+                    var enable = obj.elem.dataset.enable;
+                    enable = enable==0?1:0
+                    var id = obj.value;
+                    $.ajax({
+                        url:"/sys/user/enable",
+                        data:{id:id,enable:enable},
+                        dataType:"json",
+                        type:"post",
+                        success:function(res){
+                            if (res.status) {
+                                top.layer.closeAll();
+                                top.layer.msg(res.msg, {icon: 1});
+                            } else {
+                                layer.closeAll('loading'); //关闭加载层
+                                top.layer.msg(res.msg, {icon: 2});
+                            }
+                        }
+                    });
+                });
+                $("#search").bind("input propertychange",function(){
+                    createTable($("#search").val());
+                })
             }
 
             // 显示表单弹窗
@@ -106,7 +142,44 @@
                 });
             }
 
+
+            function del(id){
+                $.ajax({
+                    url:"/sys/user/del",
+                    data:{id:id},
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        if (res.status) {
+                            top.layer.closeAll();
+                            top.layer.msg(res.msg, {icon: 1});
+                        } else {
+                            layer.closeAll('loading'); //关闭加载层
+                            top.layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            }
+
         })
+
+        function lockEnable(id){
+            $.ajax({
+                url:"/sys/user/enable",
+                data:{id:id},
+                dataType:"json",
+                type:"post",
+                success:function(res){
+                    if (res.status) {
+                        top.layer.closeAll();
+                        top.layer.msg(res.msg, {icon: 1});
+                    } else {
+                        layer.closeAll('loading'); //关闭加载层
+                        top.layer.msg(res.msg, {icon: 2});
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>

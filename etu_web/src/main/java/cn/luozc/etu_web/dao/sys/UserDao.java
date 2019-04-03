@@ -18,4 +18,8 @@ public class UserDao extends BaseDao<SysUser> {
     public SysUser getSysUserByPhone(String phone){
         return dao.fetch(SysUser.class, Cnd.where("phone","=",phone));
     }
+
+    public SysUser getSysUserByPhoneNotId(String phone,String id){
+        return dao.fetch(SysUser.class,Cnd.where("phone","=",phone).and("id","<>",id));
+    }
 }

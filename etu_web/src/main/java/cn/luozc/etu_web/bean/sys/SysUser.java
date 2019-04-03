@@ -2,6 +2,7 @@ package cn.luozc.etu_web.bean.sys;
 
 
 import org.nutz.dao.entity.annotation.Column;
+import org.nutz.dao.entity.annotation.Default;
 import org.nutz.dao.entity.annotation.Name;
 import org.nutz.dao.entity.annotation.Table;
 
@@ -31,6 +32,16 @@ public class SysUser {
     @Column("create_time")
     private Date createTime;
 
+    @Column
+    private int enable;
+
+    public int getEnable() {
+        return enable;
+    }
+
+    public void setEnable(int enable) {
+        this.enable = enable;
+    }
 
     public String getId() {
         return id;
