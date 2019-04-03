@@ -1,3 +1,134 @@
-/** EasyWeb iframe v3.1.0 data:2019-01-17 */
+﻿/** EasyWeb iframe v3.1.1 data:2019-03-24 License By http://easyweb.vip */
 
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('l.14(["z"],3(h){4 g=l.z,e={Z:3(c,b){g(c).Z("1c",3(a){e.L(b,a.1b,a.18);x!1})},E:3(c,b){D(4 a="",d=0;d<c.m;d++){4 f=c[d];f.t="2-"+b+d;f.k&&0<f.k.m?(a+=\'<6 7="2-u B" I-K="\'+f.t+\'">\',a+="<a>",f.5&&(a+=\'<i 7="\'+f.5+\' M-5"></i>\'),a+=f.N,a+=\'<i 7="l-5 l-5-17 5-16"></i>\',a+="</a>",a+=\'<6 7="2-w" P="C: W;">\',a+=e.E(f.k,b+d),a+="</6>"):(a+=\'<6 7="2-u" I-K="\'+f.t+\'">\',a+="<a>",f.5&&(a+=\'<i 7="\'+f.5+\' M-5"></i>\'),a+=f.N,a+="</a>");a+="</6>";1==f.X&&(a+="<X/>")}x a},F:3(c){D(4 b=0;b<c.m;b++){4 a=c[b];13(a.8)g(".2").o("8",\'[I-K="\'+a.t+\'"]\',a.8);a.k&&0<a.k.m&&e.F(a.k)}},9:3(){D(4 c=j.12.11,b=0;b<c.m;b++){4 a=c[b];R{a.l.z(".2").9()}S(d){}}R{j.l.z(".2").9()}S(d){}},G:3(){x n.U.V||n.v.V},J:3(){x n.U.Y||n.v.Y},L:3(c,b,a){4 d=\'<6 7="2" P="\'+("s: "+b+"Q; j: "+a+"Q;")+\'">\'+e.E(c,"");d+="</6>";e.9();g("v").19(d);d=g(".2");b+d.r()>e.J()&&(b-=d.r());a+d.p()>e.G()&&(a-=d.p(),0>a&&(a=0));d.A({j:a,s:b});e.F(c);g(".2-u.B").o("15",3(){4 a=g(q).y(">a"),c=g(q).y(">.2-w"),b=a.H().j,d=a.H().s+a.r();d+c.r()>e.J()&&(d=a.H().s-c.r());b+c.p()>e.G()&&(b=b-c.p()+a.p(),0>b&&(b=0));g(q).y(">.2-w").A({j:b,s:d,C:"10"})}).o("1a",3(){g(q).y(">.2-w").A("C","W")})}};g(n).O("8.2").o("8.2",3(){e.9()});g("v").O("8.T").o("8.T",".2-u",3(c){g(q).1d("B")?1e 0!==c&&(c.1f(),c.1g()):e.9()});h("1h",e)});',62,80,'||ctxMenu|function|var|icon|div|class|click|remove||||||||||top|subs|layui|length|document|on|outerHeight|this|outerWidth|left|itemId|item|body|sub|return|find|jquery|css|haveMore|display|for|getHtml|setEvents|getPageHeight|offset|lay|getPageWidth|id|show|ctx|name|off|style|px|try|catch|ctxMenuMore|documentElement|clientHeight|none|hr|clientWidth|bind|block|frames|window|if|define|mouseenter|more|right|clientY|append|mouseleave|clientX|contextmenu|hasClass|void|preventDefault|stopPropagation|contextMenu'.split('|'),0,{}))
+layui.define(["jquery"], function(a) {
+	var c = layui.jquery;
+	var b = {
+		bind: function(e, d) {
+			c(e).bind("contextmenu", function(f) {
+				b.show(d, f.clientX, f.clientY);
+				return false
+			})
+		},
+		getHtml: function(e, d) {
+			var h = "";
+			for (var f = 0; f < e.length; f++) {
+				var g = e[f];
+				g.itemId = "ctxMenu-" + d + f;
+				if (g.subs && g.subs.length > 0) {
+					h += '<div class="ctxMenu-item haveMore" lay-id="' + g.itemId + '">';
+					h += "<a>";
+					if (g.icon) {
+						h += '<i class="' + g.icon + ' ctx-icon"></i>'
+					}
+					h += g.name;
+					h += '<i class="layui-icon layui-icon-right icon-more"></i>';
+					h += "</a>";
+					h += '<div class="ctxMenu-sub" style="display: none;">';
+					h += b.getHtml(g.subs, d + f);
+					h += "</div>"
+				} else {
+					h += '<div class="ctxMenu-item" lay-id="' + g.itemId + '">';
+					h += "<a>";
+					if (g.icon) {
+						h += '<i class="' + g.icon + ' ctx-icon"></i>'
+					}
+					h += g.name;
+					h += "</a>"
+				}
+				h += "</div>";
+				if (g.hr == true) {
+					h += "<hr/>"
+				}
+			}
+			return h
+		},
+		setEvents: function(d) {
+			for (var e = 0; e < d.length; e++) {
+				var f = d[e];
+				if (f.click) {
+					c(".ctxMenu").on("click", '[lay-id="' + f.itemId + '"]', f.click)
+				}
+				if (f.subs && f.subs.length > 0) {
+					b.setEvents(f.subs)
+				}
+			}
+		},
+		remove: function() {
+			var h = top.window.frames;
+			for (var d = 0; d < h.length; d++) {
+				var f = h[d];
+				try {
+					f.layui.jquery(".ctxMenu").remove()
+				} catch (g) {}
+			}
+			try {
+				top.layui.jquery(".ctxMenu").remove()
+			} catch (g) {}
+		},
+		getPageHeight: function() {
+			return document.documentElement.clientHeight || document.body.clientHeight
+		},
+		getPageWidth: function() {
+			return document.documentElement.clientWidth || document.body.clientWidth
+		},
+		show: function(e, d, i) {
+			var f = "left: " + d + "px; top: " + i + "px;";
+			var h = '<div class="ctxMenu" style="' + f + '">';
+			h += b.getHtml(e, "");
+			h += "</div>";
+			b.remove();
+			c("body").append(h);
+			var g = c(".ctxMenu");
+			if (d + g.outerWidth() > b.getPageWidth()) {
+				d -= g.outerWidth()
+			}
+			if (i + g.outerHeight() > b.getPageHeight()) {
+				i = i - g.outerHeight();
+				if (i < 0) {
+					i = 0
+				}
+			}
+			g.css({
+				"top": i,
+				"left": d
+			});
+			b.setEvents(e);
+			c(".ctxMenu-item.haveMore").on("mouseenter", function() {
+				var j = c(this).find(">a");
+				var k = c(this).find(">.ctxMenu-sub");
+				var m = j.offset().top;
+				var l = j.offset().left + j.outerWidth();
+				if (l + k.outerWidth() > b.getPageWidth()) {
+					l = j.offset().left - k.outerWidth()
+				}
+				if (m + k.outerHeight() > b.getPageHeight()) {
+					m = m - k.outerHeight() + j.outerHeight();
+					if (m < 0) {
+						m = 0
+					}
+				}
+				c(this).find(">.ctxMenu-sub").css({
+					"top": m,
+					"left": l,
+					"display": "block"
+				})
+			}).on("mouseleave", function() {
+				c(this).find(">.ctxMenu-sub").css("display", "none")
+			})
+		}
+	};
+	c(document).off("click.ctxMenu").on("click.ctxMenu", function() {
+		b.remove()
+	});
+	c("body").off("click.ctxMenuMore").on("click.ctxMenuMore", ".ctxMenu-item", function(d) {
+		if (c(this).hasClass("haveMore")) {
+			if (d !== void 0) {
+				d.preventDefault();
+				d.stopPropagation()
+			}
+		} else {
+			b.remove()
+		}
+	});
+	a("contextMenu", b)
+});

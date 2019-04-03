@@ -2,7 +2,7 @@ package cn.luozc.etu_web.bean.sys;
 
 
 import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.Id;
+import org.nutz.dao.entity.annotation.Name;
 import org.nutz.dao.entity.annotation.Table;
 
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
 @Table("sys_user") //映射的表名称
 public class SysUser {
 
-    @Column
+    @Name
     private String id;
 
     @Column
@@ -28,7 +28,7 @@ public class SysUser {
     @Column
     private String phone;
 
-    @Column
+    @Column("create_time")
     private Date createTime;
 
 

@@ -1,3 +1,367 @@
-/** EasyWeb iframe v3.1.0 data:2019-01-17 */
+﻿/** EasyWeb iframe v3.1.1 data:2019-03-24 License By http://easyweb.vip */
 
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3.2e(["1I","4","1q","1F"],5(n){i e=3.2G,m=3.1I,d=3.4,h=3.1q,p=3.1F,k=3.N(d.O).u,l={},c={C:!0,17:20,1a:!0,u:E 0==k?!0:k,q:[],D:E 0,H:5(a){i b=a.w,f=a.Q;t(b){t(c.C){i g=!1;e(".3-8-4>.3-o>.3-7>.3-7-J>S").2F(5(){t(e(x).r("j-y")===b)13 g=!0,!1});t(!g){t(c.q.L>=c.17){m.1f("\\2E\\2D\\2B\\2A"+c.17+"\\2x\\2w\\2u\\2s",{9:2});d.U(c.D);13}h.2r("4-F",{y:b,J:f?f:"\\2q\\2p\\2o",1L:\'<z j-y="\'+b+\'" 10="\'+b+\'" 1c="0" 1d="4-z"></z>\'});c.q.1e(a);c.u&&d.v("A",c.q)}h.1g("4-F",b)}R f=e(".3-8-4>.3-o>.4-z"),!f||0>=f.L?e(".3-8-4>.3-o").2l(\'<z j-y="\'+b+\'" 10="\'+b+\'" 1c="0" 1d="4-z"></z>\'):(f.r("j-y",b),f.r("10",b)),c.q.1j(0,c.q.L),c.q.1e(a),c.u&&d.v("A",c.q),c.D=a.w,c.u&&d.v("P",c.D);1l>=d.1m()&&d.1n(!0)}R 1M.2f("Y\\1r\\1s\\1b\\1u"),m.1f("Y\\1r\\1s\\1b\\1u",{9:2})},2d:5(a){c.H({w:a.w,Q:a.Q});c.C||d.U(a.w)},1w:5(a){i b=a.Y,d=a.J;a.1x&&(l[b]=a.1x);c.H({w:b,Q:d})},25:5(a){h.1z("4-F",a)},24:5(){t(c.u){i a=d.1B("A");t(a){23(i b=d.1B("P"),f=-1,g=0;g<a.L;g++)c.C&&c.H(a[g]),a[g].w==b&&(f=g);-1!=f&&22(5(){c.H(a[f]);c.C||d.U(b)},21)}}g=3.N(d.O).1Z;E 0!=g&&0==g&&e("o.3-8-o").V("15-1W");3.N(d.O).1U&&e(".3-8-4>.3-o>.3-7").r("j-16","W")},1P:5(a){3.N(d.O,{1O:"u",2k:a});(c.u=a)?(d.v("A",c.q),d.v("P",c.D)):(d.v("A",[]),d.v("P",E 0))},1N:5(){d.v("A",E 0)}};h.M("6(4-K-6)",5(a){i b=e(a);a=b.r("j-1Q");i f=b.r("j-y");f||(f=a);t(a&&"1R:;"!=a)b=b.1S().1T(/(^\\s*)|(\\s*$)/g,""),c.H({1V:f,w:a,Q:b});R t("W"===e(".3-8-4>.3-K>.3-K-1H>.3-6-1X").r("j-1Y")&&b.G().12("3-6-I")){t(b.G().12("3-6-X")||b.G().12("3-x"))e(".3-8-4>.3-K>.3-K-1H>.3-6 .3-6-I").Z("3-6-X"),b.G().V("3-6-X");b.1y("26")}R d.27(b.28(".3-6-I").G().29().2a(0))});h.M("7(4-F)",5(a){a=e(x).r("j-y");c.D=a;c.u&&d.v("P",c.D);d.2b("2c");d.U(a);i b=e(".3-8-4>.3-o>.3-7>.3-7-1L>.3-7-I.3-1v .4-z")[0];b&&(b.1t.1p="2g%",b.2h,b.1t.1p="2i%");b.2j();"W"===e(".3-8-4>.3-o>.3-7").r("j-16")&&d.19(a)});h.M("1z(4-F)",5(a){i b=c.q[a.11].w;c.q.1j(a.11,1);c.u&&d.v("A",c.q);l[b]&&l[b].2m();0>=e(".3-8-4>.3-o>.3-7>.3-7-J>S.3-x").L&&e(".3-8-4>.3-o>.3-7>.3-7-J>S:2n").1y("B")});k=3.N(d.O).1w;E 0!=k&&(c.C=k);e("o").1K("B.1J").M("B.1J","[6-1G]",5(){i a=e(x).r("6-1G");e(\'1D[j-2t="4-K-6"]\').V("3-1C");e(\'1D[6-y="\'+a+\'"]\').Z("3-1C");1l>=d.1m()&&d.1n(!1);e(".3-8-4>.3-2v>.3-6 .3-6-I").Z("3-x");e(x).G(".3-6-I").V("3-x")});t(c.1a&&c.C)e(".3-8-4>.3-o>.3-7>.3-7-J").1K("1A.7").M("1A.7","S",5(a){i b=e(x).r("j-y");p.1v([{9:"3-9 3-9-19",T:"\\2y\\2z\\1o\\1k",B:5(){h.1g("4-F",b);i a=e(".3-8-4>.3-o>.3-7").r("j-16");a&&"W"===a||d.19(b)}},{9:"3-9 3-9-15-2C 1i-1h-1E",T:"\\14\\18\\1o\\1k",B:5(){d.2H(b)}},{9:"3-9 3-9-2I",T:"\\14\\18\\2J\\2K",B:5(){d.2L(b)}},{9:"3-9 3-9-15 1i-1h-1E",T:"\\14\\18\\2M\\2N",B:5(){d.2O()}}],a.2P,a.2Q);13!1});n("11",c)});',62,177,'|||layui|admin|function|nav|tab|layout|icon|||||||||var|lay|||||body||mTabList|attr||if|cacheTab|putTempData|menuPath|this|id|iframe|indexTabs|click|pageTabs|mTabPosition|void|pagetabs|parent|loadView|item|title|side|length|on|data|tableName|tabPosition|menuName|else|li|name|activeNav|addClass|true|itemed|url|removeClass|src|index|hasClass|return|u5173|close|autoRefresh|maxTabNum|u95ed|refresh|openTabCtxMenu|u4e3a|frameborder|class|push|msg|tabChange|ic|ctx|splice|u524d|750|getPageWidth|flexible|u5f53|height|element|u4e0d|u80fd|style|u7a7a|show|openTab|end|trigger|tabDelete|contextmenu|getTempData|hide|ul|lg|contextMenu|bind|scroll|layer|navMore|off|content|console|closeTabCache|key|setTabCache|href|javascript|text|replace|tabAutoRefresh|menuId|footer|tree|accordion|openFooter||150|setTimeout|for|loadSetting|closeTab|mouseenter|setNavHoverCss|parentsUntil|children|eq|rollPage|auto|loadHome|define|error|99|scrollWidth|100|focus|value|html|call|last|u9898|u6807|u65e0|tabAdd|u5361|filter|u9879|header|u9009|u4e2a|u5237|u65b0|u5f00|u6253|fill|u591a|u6700|each|jquery|closeThisTabs|unlink|u5176|u4ed6|closeOtherTabs|u5168|u90e8|closeAllTabs|clientX|clientY'.split('|'),0,{}))
+layui.define(["layer", "element", "admin", "contextMenu"], function(s) {
+	var d = layui.jquery;
+	var r = layui.layer;
+	var b = layui.element;
+	var m = layui.admin;
+	var t = layui.contextMenu;
+	var a = ".layui-layout-admin>.layui-header";
+	var o = ".layui-layout-admin>.layui-side>.layui-side-scroll";
+	var j = ".layui-layout-admin>.layui-body";
+	var n = j + ">.layui-tab";
+	var q = j + ">.layui-body-header";
+	var i = "admin-pagetabs";
+	var p = "admin-side-nav";
+	var k = {};
+	var f = false;
+	var c;
+	var h = {
+		pageTabs: true,
+		cacheTab: true,
+		openTabCtxMenu: true,
+		maxTabNum: 20,
+		mTabList: [],
+		mTabPosition: undefined,
+		loadView: function(z) {
+			var x = z.menuPath;
+			var w = z.menuName;
+			if (!x) {
+				console.error("url不能为空");
+				r.msg("url不能为空", {
+					icon: 2
+				});
+				return
+			}
+			if (h.pageTabs) {
+				var v = false;
+				d(n + ">.layui-tab-title>li").each(function() {
+					if (d(this).attr("lay-id") === x) {
+						v = true;
+						return false
+					}
+				});
+				if (!v) {
+					if (h.mTabList.length >= h.maxTabNum) {
+						r.msg("最多打开" + h.maxTabNum + "个选项卡", {
+							icon: 2
+						});
+						m.activeNav(h.mTabPosition);
+						return
+					}
+					f = true;
+					b.tabAdd(i, {
+						id: x,
+						title: w ? w : "无标题",
+						content: '<iframe lay-id="' + x + '" src="' + x + '" frameborder="0" class="admin-iframe"></iframe>'
+					});
+					if (x != c) {
+						h.mTabList.push(z)
+					}
+					if (h.cacheTab) {
+						m.putTempData("indexTabs", h.mTabList)
+					}
+				}
+				b.tabChange(i, x)
+			} else {
+				var u = d(j + ">.admin-iframe");
+				if (!u || u.length <= 0) {
+					var y = '<div class="layui-body-header">';
+					y += '      <span class="layui-body-header-title"></span>';
+					y += '      <span class="layui-breadcrumb pull-right">';
+					y += '         <a ew-href="' + c + '">首页</a>';
+					y += "         <a><cite></cite></a>";
+					y += "      </span>";
+					y += "   </div>";
+					y += '   <div style="-webkit-overflow-scrolling: touch;">';
+					y += '      <iframe lay-id="' + x + '" src="' + x + '" frameborder="0" class="admin-iframe"></iframe>';
+					y += "   </div>";
+					d(j).html(y);
+					if (x != c) {
+						h.setTabTitle(w)
+					}
+					b.render("breadcrumb")
+				} else {
+					u.attr("lay-id", x);
+					u.attr("src", x);
+					h.setTabTitle(w)
+				}
+				m.activeNav(x);
+				h.mTabList.splice(0, h.mTabList.length);
+				if (x != c) {
+					h.mTabList.push(z);
+					h.mTabPosition = x
+				} else {
+					h.mTabPosition = undefined
+				}
+				if (h.cacheTab) {
+					m.putTempData("indexTabs", h.mTabList);
+					m.putTempData("tabPosition", h.mTabPosition)
+				}
+			}
+			if (m.getPageWidth() <= 750) {
+				m.flexible(true)
+			}
+		},
+		loadHome: function(w) {
+			c = w.menuPath;
+			var x = m.getTempData("indexTabs");
+			var u = m.getTempData("tabPosition");
+			var v = (w.loadSetting == undefined ? true : w.loadSetting);
+			h.loadView({
+				menuPath: c,
+				menuName: w.menuName
+			});
+			if (!h.pageTabs) {
+				m.activeNav(w.menuPath)
+			}
+			if (v) {
+				h.loadSettings(x, u)
+			}
+		},
+		openTab: function(w) {
+			var u = w.url;
+			var v = w.title;
+			if (w.end) {
+				k[u] = w.end
+			}
+			h.loadView({
+				menuPath: u,
+				menuName: v
+			})
+		},
+		closeTab: function(u) {
+			b.tabDelete(i, u)
+		},
+		loadSettings: function(z, y) {
+			if (h.cacheTab) {
+				var A = z;
+				var w = y;
+				if (A) {
+					var v = -1;
+					for (var x = 0; x < A.length; x++) {
+						if (h.pageTabs) {
+							h.loadView(A[x])
+						}
+						if (A[x].menuPath == w) {
+							v = x
+						}
+					}
+					if (v != -1) {
+						setTimeout(function() {
+							h.loadView(A[v]);
+							if (!h.pageTabs) {
+								m.activeNav(w)
+							}
+						}, 150)
+					}
+				}
+			}
+			var u = layui.data(m.tableName);
+			if (u) {
+				if (u.openFooter != undefined && u.openFooter == false) {
+					d("body.layui-layout-body").addClass("close-footer")
+				}
+				if (u.tabAutoRefresh) {
+					d(n).attr("lay-autoRefresh", "true")
+				}
+			}
+		},
+		setTabCache: function(u) {
+			layui.data(m.tableName, {
+				key: "cacheTab",
+				value: u
+			});
+			h.cacheTab = u;
+			if (u) {
+				m.putTempData("indexTabs", h.mTabList);
+				m.putTempData("tabPosition", h.mTabPosition)
+			} else {
+				m.putTempData("indexTabs", []);
+				m.putTempData("tabPosition", undefined)
+			}
+		},
+		clearTabCache: function() {
+			m.putTempData("indexTabs", undefined)
+		},
+		setTabTitle: function(u) {
+			if (!h.pageTabs) {
+				if (u) {
+					d(q).addClass("show");
+					var v = d(q + ">.layui-body-header-title");
+					v.text(u);
+					v.next(".layui-breadcrumb").find("cite").last().text(u)
+				} else {
+					d(q).removeClass("show")
+				}
+			}
+		},
+		setTabTitleHtml: function(u) {
+			if (!h.pageTabs) {
+				if (u) {
+					d(q).addClass("show");
+					d(q).html(u)
+				} else {
+					d(q).removeClass("show")
+				}
+			}
+		},
+		closeTabCache: function() {
+			console.warn("closeTabCache() has been deprecated, please use clearTabCache().");
+			h.clearTabCache()
+		},
+		loadSetting: function() {
+			console.warn("loadSetting() has been deprecated.")
+		}
+	};
+	var l = layui.data(m.tableName);
+	if (l) {
+		if (l.openTab != undefined) {
+			h.pageTabs = l.openTab
+		}
+		if (l.cacheTab != undefined) {
+			h.cacheTab = l.cacheTab
+		}
+	}
+	var g = ".layui-layout-admin .site-mobile-shade";
+	if (d(g).length <= 0) {
+		d(".layui-layout-admin").append('<div class="site-mobile-shade"></div>')
+	}
+	d(g).click(function() {
+		m.flexible(true)
+	});
+	if (h.pageTabs && d(n).length <= 0) {
+		var e = '<div class="layui-tab" lay-allowClose="true" lay-filter="admin-pagetabs">';
+		e += '       <ul class="layui-tab-title"></ul>';
+		e += '      <div class="layui-tab-content"></div>';
+		e += "   </div>";
+		e += '   <div class="layui-icon admin-tabs-control layui-icon-prev" ew-event="leftPage"></div>';
+		e += '   <div class="layui-icon admin-tabs-control layui-icon-next" ew-event="rightPage"></div>';
+		e += '   <div class="layui-icon admin-tabs-control layui-icon-down">';
+		e += '      <ul class="layui-nav admin-tabs-select" lay-filter="admin-pagetabs-nav">';
+		e += '         <li class="layui-nav-item" lay-unselect>';
+		e += "            <a></a>";
+		e += '            <dl class="layui-nav-child layui-anim-fadein">';
+		e += '               <dd ew-event="closeThisTabs" lay-unselect><a>关闭当前标签页</a></dd>';
+		e += '               <dd ew-event="closeOtherTabs" lay-unselect><a>关闭其它标签页</a></dd>';
+		e += '               <dd ew-event="closeAllTabs" lay-unselect><a>关闭全部标签页</a></dd>';
+		e += "            </dl>";
+		e += "         </li>";
+		e += "      </ul>";
+		e += "   </div>";
+		d(j).html(e);
+		b.render("nav")
+	}
+	b.on("nav(" + p + ")", function(x) {
+		var w = d(x);
+		var u = w.attr("lay-href");
+		var y = w.attr("lay-id");
+		if (!y) {
+			y = u
+		}
+		if (u && u != "javascript:;") {
+			var v = w.text().replace(/(^\s*)|(\s*$)/g, "");
+			h.loadView({
+				menuId: y,
+				menuPath: u,
+				menuName: v
+			})
+		} else {
+			m.setNavHoverCss(w.parentsUntil(".layui-nav-item").parent().children().eq(0))
+		}
+		if ("true" == (d(o + ">.layui-nav-tree").attr("lay-accordion"))) {
+			if ((w.parent().hasClass("layui-nav-itemed")) || (w.parent().hasClass("layui-this"))) {
+				d(o + ">.layui-nav .layui-nav-itemed").not(w.parents(".layui-nav-child").parent()).removeClass("layui-nav-itemed");
+				w.parent().addClass("layui-nav-itemed")
+			}
+			w.trigger("mouseenter")
+		}
+	});
+	b.on("tab(" + i + ")", function(w) {
+		var v = d(this).attr("lay-id");
+		if (v != c) {
+			h.mTabPosition = v
+		} else {
+			h.mTabPosition = undefined
+		}
+		if (h.cacheTab) {
+			m.putTempData("tabPosition", h.mTabPosition)
+		}
+		m.rollPage("auto");
+		m.activeNav(v);
+		var x = d(n + ">.layui-tab-content>.layui-tab-item.layui-show .admin-iframe")[0];
+		if (x) {
+			x.style.height = "99%";
+			x.scrollWidth;
+			x.style.height = "100%"
+		}
+		x.focus();
+		var u = d(n).attr("lay-autoRefresh");
+		if (u === "true" && !f) {
+			m.refresh(v)
+		}
+		f = false
+	});
+	b.on("tabDelete(" + i + ")", function(w) {
+		var u = h.mTabList[w.index - 1];
+		if (u) {
+			var v = u.menuPath;
+			h.mTabList.splice(w.index - 1, 1);
+			if (h.cacheTab) {
+				m.putTempData("indexTabs", h.mTabList)
+			}
+			if (k[v]) {
+				k[v].call()
+			}
+		}
+		if (d(n + ">.layui-tab-title>li.layui-this").length <= 0) {
+			d(n + ">.layui-tab-title>li:last").trigger("click")
+		}
+	});
+	d("body").off("click.navMore").on("click.navMore", "[nav-bind]", function() {
+		var u = d(this).attr("nav-bind");
+		d('ul[lay-filter="' + p + '"]').addClass("layui-hide");
+		d('ul[nav-id="' + u + '"]').removeClass("layui-hide");
+		if (m.getPageWidth() <= 750) {
+			m.flexible(false)
+		}
+		d(a + ">.layui-nav .layui-nav-item").removeClass("layui-this");
+		d(this).parent(".layui-nav-item").addClass("layui-this")
+	});
+	if (h.openTabCtxMenu && h.pageTabs) {
+		d(n + ">.layui-tab-title").off("contextmenu.tab").on("contextmenu.tab", "li", function(v) {
+			var u = d(this).attr("lay-id");
+			t.show([{
+				icon: "layui-icon layui-icon-refresh",
+				name: "刷新当前",
+				click: function() {
+					b.tabChange(i, u);
+					var w = d(n).attr("lay-autoRefresh");
+					if (!w || w !== "true") {
+						m.refresh(u)
+					}
+				}
+			}, {
+				icon: "layui-icon layui-icon-close-fill ctx-ic-lg",
+				name: "关闭当前",
+				click: function() {
+					m.closeThisTabs(u)
+				}
+			}, {
+				icon: "layui-icon layui-icon-unlink",
+				name: "关闭其他",
+				click: function() {
+					m.closeOtherTabs(u)
+				}
+			}, {
+				icon: "layui-icon layui-icon-close ctx-ic-lg",
+				name: "关闭全部",
+				click: function() {
+					m.closeAllTabs()
+				}
+			}], v.clientX, v.clientY);
+			return false
+		})
+	}
+	s("index", h)
+});

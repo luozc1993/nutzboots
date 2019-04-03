@@ -10,21 +10,15 @@ layui.config({
     dtree: 'dtree/dtree',
     citypicker: 'city-picker/city-picker',
     tableSelect: 'tableSelect/tableSelect'
-}).use(['layer', 'admin', 'element'], function () {
+}).use(['layer', 'admin'], function () {
     var $ = layui.jquery;
     var layer = layui.layer;
     var admin = layui.admin;
-    var element = layui.element;
-
-    // 单标签模式需要根据子页面的地址联动侧边栏的选中，用于适配浏览器前进后退按钮
-    if (window != top && top.layui && top.layui.index && !top.layui.index.pageTabs) {
-        top.layui.admin.activeNav(location.href.substring(getProjectUrl().length));
-    }
 
     // 移除loading动画
     setTimeout(function () {
         admin.removeLoading();
-    }, window == top ? 300 : 150);
+    }, window == top ? 600 : 100);
 
 });
 
@@ -43,4 +37,33 @@ function getProjectUrl() {
         layuiDir = jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
     }
     return layuiDir.substring(0, layuiDir.indexOf('assets'));
+}
+
+/**
+ * 判断数据是否为空
+ * @param data
+ * @returns {*}
+ */
+function isNull(data){
+    var gettype=Object.prototype.toString;
+    if(gettype.call(data)==="[object Object]"){
+        return (isEmptyObject(data)) ? "" : data;
+    }
+    if(data !== undefined&&data != null&&data.toString()==="0"){
+        return 0;
+    }
+    return (data === "" || data === undefined ||data === 'undefined'|| data == null) ? "" : data;
+}
+
+/**
+ * 检查一个对象（Object）是否为空
+ * @param obj
+ * @returns {boolean}
+ */
+
+function isEmptyObject(obj) {
+    for (var key in obj) {
+        return false;
+    }
+    return true;
 }

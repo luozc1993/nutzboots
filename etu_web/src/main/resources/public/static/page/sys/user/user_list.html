@@ -22,17 +22,10 @@
     </div>
 
     <!-- 加载动画，移除位置在common.js中 -->
-    <div class='page-loading'>
-        <div class='rubik-loader'></div>
-    </div>
-
-    <!-- 关闭Tab时顶部标题 -->
-    <div class='layui-body-header'>
-        <span class='layui-body-header-title'>个人中心</span>
-        <span class='layui-breadcrumb pull-right'>
-            <a href='../console/console.html'>首页</a>
-            <a><cite>个人中心</cite></a>
-        </span>
+    <div class="page-loading">
+        <div class="ball-loader">
+            <span></span><span></span><span></span><span></span>
+        </div>
     </div>
 
     <!-- 表格操作列 -->
@@ -53,18 +46,18 @@
     <script type='text/javascript'>
         layui.use(['form','layer','jquery','table','admin'],function(){
             var table = layui.table;
+            var admin = layui.admin;
             $ = layui.$;
             createTable();
             function createTable(){
-
                 //执行渲染
                 table.render({
                     elem: '#table' //指定原始表格元素选择器（推荐id选择器）
                     ,toolbar: '#toolbar'
-                    ,url:'/sysUser/list'
+                    ,url:'/sys/user/list'
                     ,page:true
                     ,cellMinWidth:100
-                    ,height: 'full-70'
+                    ,height: 'full-65'
                     ,cols: [ [
                         {field:'id',title:'ID',hide:true},
                         {field:'uname',title:'账号'},
@@ -80,8 +73,7 @@
                 table.on('toolbar(table)', function(obj){
                     switch(obj.event){
                         case 'add':
-                            console.log(obj.data)
-                            showAddModel(obj.data)
+                            showFormModel();
                             break;
                     };
                 });
@@ -95,35 +87,19 @@
                             layer.close(index);
                         });
                     } else if(obj.event === 'edit'){
-                        showEditModel(data);
+                        showFormModel(data);
                     }
                 });
             }
 
             // 显示表单弹窗
-            function showEditModel(data) {
-                var id = 0;
-                if(data){
-                    id = data.id;
-                }
+            function showFormModel(data) {
+                admin.putTempData("SysUser",isNull(data));
                 top.layui.admin.open({
                     type: 2,
-                    title:  '修改用户' ,
+                    title:  (data?'编辑':'添加')+'用户' ,
                     area: ['500px', '400px'],
-                    content: 'user_add.html',
-                    end: function () {
-                        table.reload('table');  // 成功刷新表格
-                    }
-                });
-            }
-            // 显示表单弹窗
-            function showAddModel(data) {
-
-                top.layui.admin.open({
-                    type: 2,
-                    title: '添加用户',
-                    area: ['500px', '400px'],
-                    content: 'user_add.html',
+                    content: '/page/sys/user/user_form.html',
                     end: function () {
                         table.reload('table');  // 成功刷新表格
                     }

@@ -33,11 +33,11 @@ public class MainLauncher {
 
     
     public void init() {
-//        String path = this.getClass().getClassLoader().getResource("").getPath();
-//        execSql(path);
+        String path = this.getClass().getClassLoader().getResource("").getPath();
+        execSql(path);
 
-        List<SysUser> list = userDao.getList();
-        System.err.println(list);
+//        List<SysUser> list = userDao.getList(0,10,"");
+//        System.err.println(list);
         // NB自身初始化完成后会调用这个方法
     }
 
