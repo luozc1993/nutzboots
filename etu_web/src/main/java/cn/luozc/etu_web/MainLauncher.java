@@ -53,18 +53,19 @@ public class MainLauncher {
         //判断是否为文件夹
         if(db.isDirectory()) {
             File[] listFiles = db.listFiles(new FileFilter() {
-
                 @Override
                 public boolean accept(File pathname) {
                     String name = pathname.getName();
-                    return version.compareTo(name)<=0&&!"version.txt".equals(name);
+                    return version.compareTo(name)<0&&!"version.txt".equals(name);
                 }
             });
+
             for (File file : listFiles) {
                 FileSqlManager fm = new FileSqlManager("db/"+file.getName());
                 List<Sql> sqlList = fm.createCombo(fm.keys());
 
                 try {
+                    Sql[] sqls = sqlList.toArray(new Sql[sqlList.size()]);
                     dao.execute(sqlList.toArray(new Sql[sqlList.size()]));
                     File exec = new File(execpath);
                     PrintStream ps = new PrintStream(new FileOutputStream(exec));
