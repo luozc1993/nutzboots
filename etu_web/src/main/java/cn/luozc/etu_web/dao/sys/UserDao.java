@@ -1,5 +1,6 @@
 package cn.luozc.etu_web.dao.sys;
 
+import cn.luozc.etu_web.bean.sys.SysRoleUser;
 import cn.luozc.etu_web.bean.sys.SysUser;
 import cn.luozc.etu_web.dao.BaseDao;
 import org.nutz.dao.Cnd;
@@ -21,5 +22,9 @@ public class UserDao extends BaseDao<SysUser> {
 
     public SysUser getSysUserByPhoneNotId(String phone,String id){
         return dao.fetch(SysUser.class,Cnd.where("phone","=",phone).and("id","<>",id));
+    }
+
+    public SysRoleUser getSysRoleUser(){
+        return dao.fetch(SysRoleUser.class);
     }
 }

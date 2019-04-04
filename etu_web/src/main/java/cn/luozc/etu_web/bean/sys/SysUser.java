@@ -1,12 +1,10 @@
 package cn.luozc.etu_web.bean.sys;
 
 
-import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.Default;
-import org.nutz.dao.entity.annotation.Name;
-import org.nutz.dao.entity.annotation.Table;
+import org.nutz.dao.entity.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Table("sys_user") //映射的表名称
 public class SysUser {
@@ -34,6 +32,13 @@ public class SysUser {
 
     @Column
     private int enable;
+
+    @ManyMany(relation = "sys_role_user",
+            from = "uid:id",
+            to = "rid")
+    public List<SysRole> roles;
+
+
 
     public int getEnable() {
         return enable;
@@ -109,7 +114,19 @@ public class SysUser {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", createTime=" + createTime +
+                ", enable=" + enable +
+                ", roles=" + roles +
                 '}';
     }
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
+    }
+
 }
 

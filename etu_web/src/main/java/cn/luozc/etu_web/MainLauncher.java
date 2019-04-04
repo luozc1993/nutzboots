@@ -1,5 +1,7 @@
 package cn.luozc.etu_web;
 
+import cn.luozc.etu_web.bean.sys.SysRole;
+import cn.luozc.etu_web.bean.sys.SysRoleUser;
 import cn.luozc.etu_web.bean.sys.SysUser;
 import cn.luozc.etu_web.dao.BaseDao;
 import cn.luozc.etu_web.dao.sys.UserDao;
@@ -35,6 +37,19 @@ public class MainLauncher {
     public void init() {
         String path = this.getClass().getClassLoader().getResource("").getPath();
         execSql(path);
+//        SysUser food = dao.fetch(SysUser.class, "e2460c47-dd91-478f-a096-087147ef3159");
+//        System.err.println(food);
+//        SysUser sysUser = dao.fetchLinks(food,"roles");
+//        System.err.println(sysUser);
+//
+//        SysRole sysRole = dao.fetch(SysRole.class);
+//        System.err.println(sysRole);
+//        SysRole sysRoles = dao.fetchLinks(sysRole,"");
+//        System.err.println(sysRoles);
+
+
+        //SysUser fetch = userDao.getDataById("e2460c47-dd91-478f-a096-087147ef3159");
+
 
 //        List<SysUser> list = userDao.getList(0,10,"");
 //        System.err.println(list);
