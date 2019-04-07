@@ -1,10 +1,12 @@
 package cn.luozc.etu_web.service.sys;
 
+import cn.luozc.etu_web.bean.sys.SysRoleUser;
 import cn.luozc.etu_web.bean.sys.SysUser;
-import cn.luozc.etu_web.dao.sys.UserDao;
+import cn.luozc.etu_web.dao.sys.SysUserDao;
 import cn.luozc.etu_web.util.JsonData;
 import cn.luozc.etu_web.util.LayuiTableResult;
 import cn.luozc.etu_web.util.MD5Util;
+import org.apache.commons.lang3.StringUtils;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 
@@ -17,7 +19,7 @@ import java.util.UUID;
 public class UserService {
 
     @Inject
-    private UserDao userDao;
+    private SysUserDao sysUserDao;
 
     /**
      * 获取用户列表数据 模糊分页查询
@@ -32,7 +34,11 @@ public class UserService {
         list.add("phone");
         list.add("email");
         list.add("nickname");
-        return LayuiTableResult.result(0,"",userDao.size(value,list),userDao.getList(pageNumber,pageSize,value,list));
+        List<SysUser> sysUsers = sysUserDao.getList(pageNumber, pageSize, value, list);
+        for (int i = 0; i < sysUsers.size(); i++) {
+            sysUsers.get(i).setRoles(sysUserDao.getRolesLinks(sysUsers.get(i)).getRoles());
+        }
+        return LayuiTableResult.result(0,"",sysUserDao.size(value,list),sysUsers);
     }
 
     /**
@@ -40,17 +46,39 @@ public class UserService {
      * @param sysUser   用户信息
      * @return          插入的数据
      */
-    public JsonData add(SysUser sysUser){
-        if(userDao.getSysUserByUname(sysUser.getUname())!=null){
+    public JsonData add(SysUser sysUser,String roleId){
+        if(sysUserDao.getSysUserByUname(sysUser.getUname())!=null){
             return JsonData.fail("账号已被注册");
         }
-        if(userDao.getSysUserByPhone(sysUser.getPhone())!=null){
+        if(sysUserDao.getSysUserByPhone(sysUser.getPhone())!=null){
             return JsonData.fail("手机号已被注册");
         }
         sysUser.setCreateTime(new Date());
         sysUser.setPassword(MD5Util.getMD5Str("123456"));
         sysUser.setId(UUID.randomUUID().toString());
-        return JsonData.success(userDao.add(sysUser),"添加成功");
+        SysUser s = sysUserDao.add(sysUser);
+
+        if(s==null){
+            return JsonData.fail("添加失败");
+        }
+        //添加用户角色
+        addUserRole(roleId, s);
+        return JsonData.success(s,"添加成功");
+    }
+
+    private void addUserRole(String roleIds, SysUser sysUser) {
+        if(StringUtils.isNotEmpty(roleIds)){
+            String[] roleIdArr = roleIds.split(",");
+            List<SysRoleUser> sysRoleUsers = new ArrayList<>();
+            for (String rid:roleIdArr) {
+                sysRoleUsers.add(new SysRoleUser(UUID.randomUUID().toString(),rid,sysUser.getId()));
+            }
+            sysUser = sysUserDao.getUserRoleLinks(sysUser);
+            sysUserDao.delUserRoleBySysUser(sysUser);
+            sysUser.setSysRoleUsers(sysRoleUsers);
+            sysUserDao.addUserRole(sysUser);
+
+        }
     }
 
     /**
@@ -58,18 +86,24 @@ public class UserService {
      * @param sysUser   用户信息
      * @return          插入的数据
      */
-    public JsonData edit(SysUser sysUser){
-        SysUser s = userDao.getDataById(sysUser.getId());
+    public JsonData edit(SysUser sysUser,String roleId){
+        SysUser s = sysUserDao.getDataById(sysUser.getId());
         if(s==null){
             return JsonData.fail("改用户不存在");
         }
-        if(userDao.getSysUserByPhoneNotId(sysUser.getPhone(),s.getId())!=null){
+        if(sysUserDao.getSysUserByPhoneNotId(sysUser.getPhone(),s.getId())!=null){
             return JsonData.fail("手机号已存在");
         }
         s.setEmail(sysUser.getEmail());
         s.setNickname(sysUser.getNickname());
         s.setPhone(sysUser.getPhone());
-        return JsonData.success(userDao.update(s),"修改成功");
+        int update = sysUserDao.update(s);
+        if(update==0){
+            return JsonData.fail("修改失败");
+        }
+        //添加用户角色
+        addUserRole(roleId, s);
+        return JsonData.success(s,"修改成功");
     }
 
     /**
@@ -78,12 +112,19 @@ public class UserService {
      * @return
      */
     public JsonData del(String id){
-        return JsonData.success(userDao.delete(id),"删除成功");
+        SysUser sysUser = new SysUser();
+        sysUser.setId(id);
+        sysUser = sysUserDao.getUserRoleLinks(sysUser);
+        return JsonData.success(sysUserDao.delete(sysUser),"删除成功");
     }
 
     public JsonData enable(int enable,String id){
-        SysUser sysUser = userDao.getDataById(id);
+        SysUser sysUser = sysUserDao.getDataById(id);
         sysUser.setEnable(enable);
-        return JsonData.success(userDao.update(sysUser),"修改成功");
+        return JsonData.success(sysUserDao.update(sysUser),"修改成功");
+    }
+
+    public JsonData addUserRole(SysRoleUser sysRoleUser){
+        return JsonData.success();
     }
 }

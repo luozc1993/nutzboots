@@ -40,15 +40,6 @@
         <buttin class='layui-btn layui-btn-sm layui-btn-normal' lay-event='search' style="    position: relative;left: -5px;height: 34px;line-height: 34px;">搜索</buttin>
     </script>
 
-    <!--启用模板-->
-    <script type="text/html" id="enable">
-        <input type="checkbox" name="sex" value="{{d.id}}" data-enable="{{d.enable}}" lay-skin="switch" lay-text="已启用|未启用" lay-filter="enable" {{ d.enable == 0 ? 'checked' : '' }}>
-    </script>
-    <script type="text/html" id="rolesTemplate">
-        {{# for(var i = 0, len = d.roles.length; i < len; i++){ }}
-        <span class="layui-badge layui-bg-orange">{{d.roles[i].name}}</span>
-        {{# } }}
-    </script>
 
     <!-- js部分 -->
     <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
@@ -65,7 +56,7 @@
                 var tableIns = table.render({
                     elem: '#table' //指定原始表格元素选择器（推荐id选择器）
                     ,toolbar: '#toolbar'
-                    ,url:'/sys/user/list'
+                    ,url:'/sys/role/list'
                     ,page:true
                     ,cellMinWidth:100
                     ,where: { //设定异步数据接口的额外参数，任意设
@@ -74,12 +65,8 @@
                     ,height: 'full-70'
                     ,cols: [ [
                         {field:'id',title:'ID',hide:true},
-                        {field:'uname',title:'账号'},
-                        {field:'nickname',title:'昵称'},
-                        {field:'phone',title:'手机号'},
-                        {field:'email',title:'邮箱'},
-                        {field:'roles',title:'角色',templet: '#rolesTemplate', unresize: true,minWidth:110},
-                        {field:'enable',title:'是否启用',templet: '#enable', unresize: true,minWidth:110},
+                        {field:'name',title:'角色'},
+                        {field:'remarks',title:'备注'},
                         {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:120}
                     ] ] //设置表头
 
@@ -113,37 +100,16 @@
                     }
                 });
 
-                //监听锁定操作
-                form.on('switch(enable)', function(obj){
-                    var enable = obj.elem.dataset.enable;
-                    enable = enable==0?1:0
-                    var id = obj.value;
-                    $.ajax({
-                        url:"/sys/user/enable",
-                        data:{id:id,enable:enable},
-                        dataType:"json",
-                        type:"post",
-                        success:function(res){
-                            if (res.status) {
-                                top.layer.closeAll();
-                                top.layer.msg(res.msg, {icon: 1});
-                            } else {
-                                layer.closeAll('loading'); //关闭加载层
-                                top.layer.msg(res.msg, {icon: 2});
-                            }
-                        }
-                    });
-                });
             }
 
             // 显示表单弹窗
             function showFormModel(data) {
-                admin.putTempData("SysUser",isNull(data));
+                admin.putTempData("SysRole",isNull(data));
                 top.layui.admin.open({
                     type: 2,
-                    title:  (data?'编辑':'添加')+'用户' ,
+                    title:  (data?'编辑':'添加')+'角色' ,
                     area: ['500px', '400px'],
-                    content: '/page/sys/user/user_form.html',
+                    content: '/page/sys/user/role_form.html',
                     end: function () {
                         table.reload('table');  // 成功刷新表格
                     }
@@ -153,7 +119,7 @@
 
             function del(id){
                 $.ajax({
-                    url:"/sys/user/del",
+                    url:"/sys/role/del",
                     data:{id:id},
                     dataType:"json",
                     type:"post",
@@ -171,23 +137,7 @@
 
         })
 
-        function lockEnable(id){
-            $.ajax({
-                url:"/sys/user/enable",
-                data:{id:id},
-                dataType:"json",
-                type:"post",
-                success:function(res){
-                    if (res.status) {
-                        top.layer.closeAll();
-                        top.layer.msg(res.msg, {icon: 1});
-                    } else {
-                        layer.closeAll('loading'); //关闭加载层
-                        top.layer.msg(res.msg, {icon: 2});
-                    }
-                }
-            });
-        }
+
     </script>
 </body>
 </html>

@@ -7,25 +7,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="assets/images/favicon.ico" rel="icon">
     <title>轻办公</title>
-    <link rel="stylesheet" href="assets/libs/layui/css/layui.css"/>
-    <link rel="stylesheet" href="assets/module/admin.css?v=311"/>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=311"/>
 </head>
 
 <body class="layui-layout-body">
 
 <div class="layui-layout layui-layout-admin">
 
-    <!--头部-->
-    <include src="page/public/header.html"></include>
+    <!-- 头部 -->
+    <div class="layui-header">
+        <div class="layui-logo">
+            <img src="/assets/images/logo.png"/>
+            <cite>&nbsp;EasyWeb Pro&emsp;</cite>
+        </div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" lay-unselect>
+                <a ew-event="flexible" title="侧边伸缩"><i class="layui-icon layui-icon-shrink-right"></i></a>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a ew-event="refresh" title="刷新"><i class="layui-icon layui-icon-refresh-3"></i></a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs layui-this" lay-unselect><a nav-bind="xt1">系统一</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect><a nav-bind="xt2">系统二</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect><a nav-bind="xt3">系统三</a></li>
+            <li class="layui-nav-item layui-hide-sm layui-show-xs-inline-block" lay-unselect>
+                <a>更多</a>
+                <dl class="layui-nav-child">
+                    <dd lay-unselect><a nav-bind="xt1">系统一</a></dd>
+                    <dd lay-unselect><a nav-bind="xt2">系统二</a></dd>
+                    <dd lay-unselect><a nav-bind="xt3">系统二</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item " lay-unselect>
+                <a ew-event="message" title="消息"><i class="layui-icon layui-icon-notice"></i></a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a ew-event="note" title="便签"><i class="layui-icon layui-icon-note"></i></a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs " lay-unselect>
+                <a ew-event="fullScreen" title="全屏"><i class="layui-icon layui-icon-screen-full"></i></a>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a>
+                    <img src="assets/images/head.png" class="layui-nav-img">
+                    <cite>管理员</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd lay-unselect>
+                        <a ew-href="page/template/user-info.html">个人中心</a>
+                    </dd>
+                    <dd lay-unselect>
+                        <a ew-event="psw">修改密码</a>
+                    </dd>
+                    <hr>
+                    <dd lay-unselect>
+                        <a ew-event="logout" data-url="page/template/login.html">退出</a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a ew-event="theme" title="主题"><i class="layui-icon layui-icon-more-vertical"></i></a>
+            </li>
+        </ul>
+    </div>
 
     <!-- 侧边栏 -->
-    <include src="page/public/side.html"></include>
+    <div class="layui-side">
+        <div class="layui-side-scroll">
+            <!-- 系统一的菜单 -->
+            <ul class="layui-nav layui-nav-tree" nav-id="xt1" lay-filter="admin-side-nav" style="margin: 15px 0;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a><i class="layui-icon layui-icon-home"></i>&emsp;<cite>用户</cite></a>
+                    <dl class="layui-nav-child">
+                        <dd><a lay-href="/page/sys/user/user_list.html">用户管理</a></dd>
+                        <dd><a lay-href="/page/sys/user/role_list.html">角色管理</a></dd>
+                        <dd><a lay-href="/page/sys/user/menu_list.html">菜单管理</a></dd>
+                        <dd><a lay-href="/page/sys/user/menu_tree.html">菜单管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-nav-tree layui-hide" nav-id="xt2" lay-filter="admin-side-nav"
+                style="margin: 15px 0;">
+                <li class="layui-nav-item">
+                    <a><i class="layui-icon layui-icon-table"></i>&emsp;<cite>表格页</cite></a>
+                    <dl class="layui-nav-child">
+                        <dd><a lay-href="/page/sys/user/user_list2.html">用户管理2</a></dd>
+                        <dd><a lay-href="/page/sys/user/role_list2.html">角色管理2</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-nav-tree layui-hide" nav-id="xt3" lay-filter="admin-side-nav" lay-accordion="true"
+                style="margin: 15px 0;">
+                <li class="layui-nav-item">
+                    <a><i class="layui-icon layui-icon-home"></i>&emsp;<cite>用户</cite></a>
+                    <dl class="layui-nav-child">
+                        <dd><a lay-href="/page/sys/user/user_list3.html">用户管理3</a></dd>
+                        <dd><a lay-href="/page/sys/user/role_list3.html">角色管理3</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- 主体部分 -->
-    <include src="page/public/body.html"></include>
+    <div class="layui-body"></div>
 
     <!-- 底部 -->
-    <include src="page/public/footer.html"></include>
+    <div class="layui-footer">
+        copyright © 2019 luozc.cn all rights reserved. <span class="pull-right">Version 0.0.1</span>
+    </div>
 
 
 </div>
@@ -38,9 +131,8 @@
 </div>
 
 <!-- js部分 -->
-<script type="text/javascript" src="assets/libs/layui/layui.js"></script>
-<script type="text/javascript" src="assets/js/common.js?v=311"></script>
-<script type="text/javascript" src="assets/js/include.js"></script>
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=311"></script>
 <script>
     layui.use(['index'], function () {
         var $ = layui.jquery;
@@ -48,8 +140,9 @@
 
         // 默认加载主页
         index.loadHome({
-            menuPath: 'page/console/console.html',
-            menuName: '<i class="layui-icon layui-icon-home"></i>'
+            menuPath: '../../page/console/console.html',
+            menuName: '<i class="layui-icon layui-icon-home"></i>',
+            loadSetting: false
         });
 
     });

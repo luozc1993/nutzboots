@@ -1,23 +1,13 @@
 package cn.luozc.etu_web;
 
-import cn.luozc.etu_web.bean.sys.SysRole;
-import cn.luozc.etu_web.bean.sys.SysRoleUser;
-import cn.luozc.etu_web.bean.sys.SysUser;
-import cn.luozc.etu_web.dao.BaseDao;
-import cn.luozc.etu_web.dao.sys.UserDao;
-import org.apache.catalina.Globals;
-import org.apache.commons.lang3.ClassUtils;
-import org.apache.log4j.lf5.util.ResourceUtils;
+import cn.luozc.etu_web.dao.sys.SysUserDao;
 import org.nutz.boot.NbApp;
 import org.nutz.dao.Dao;
 import org.nutz.dao.impl.FileSqlManager;
 import org.nutz.dao.sql.Sql;
 import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.ioc.loader.annotation.*;
-import org.nutz.mvc.NutConfig;
-import org.nutz.mvc.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.List;
 
@@ -31,7 +21,7 @@ public class MainLauncher {
     protected Dao dao;
 
     @Inject
-    protected UserDao userDao;
+    protected SysUserDao userDao;
 
     
     public void init() {

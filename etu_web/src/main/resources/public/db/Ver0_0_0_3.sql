@@ -1,7 +1,9 @@
 /*创建角色用户关联表*/
 CREATE TABLE If Not Exists `sys_role_user` (
+  `id`  varchar(36) NOT NULL,
 	`rid`  varchar(36) NOT NULL COMMENT '角色id' ,
-	`uid`  varchar(36) NOT NULL COMMENT '用户id'
+	`uid`  varchar(36) NOT NULL COMMENT '用户id',
+	PRIMARY KEY (`id`)
 );
 
 /*删除临时存储过程temporary*/
@@ -45,6 +47,6 @@ DROP PROCEDURE IF EXISTS temporary;
 
 
 /*插入超级管理员和角色关系*/
-INSERT INTO sys_role_user(rid,uid)
-VALUE('f59a4c93-c153-49a9-bfb7-5ef53dff7077','e2460c47-dd91-478f-a096-087147ef3159')
+INSERT INTO sys_role_user(id,rid,uid)
+VALUE(uuid(),'f59a4c93-c153-49a9-bfb7-5ef53dff7077','e2460c47-dd91-478f-a096-087147ef3159')
 ON DUPLICATE KEY UPDATE rid= 'f59a4c93-c153-49a9-bfb7-5ef53dff7077',uid='e2460c47-dd91-478f-a096-087147ef3159';

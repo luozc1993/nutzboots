@@ -3,17 +3,14 @@ package cn.luozc.etu_web.dao;
 import org.apache.commons.lang3.StringUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
-import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Criteria;
 import org.nutz.dao.util.cri.SqlExpressionGroup;
-import org.nutz.el.Operator;
 import org.nutz.ioc.loader.annotation.Inject;
-import org.nutz.lang.Lang;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+
 public class BaseDao<T> {
     private Class<T> bean  = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
@@ -59,11 +56,11 @@ public class BaseDao<T> {
 
     /**
      * 删除数据
-     * @param id    数据id
+     * @param t    需要删除的对象
      * @return  删除的条数
      */
-    public int delete(String id){
-        return dao.delete(bean,id);
+    public int delete(T t){
+        return dao.deleteWith(t,"");
     }
 
     /**

@@ -1,5 +1,6 @@
 package cn.luozc.etu_web.module.sys;
 
+import cn.luozc.etu_web.bean.sys.SysRoleUser;
 import cn.luozc.etu_web.bean.sys.SysUser;
 import cn.luozc.etu_web.service.sys.UserService;
 import cn.luozc.etu_web.util.JsonData;
@@ -28,12 +29,17 @@ public class UserModule {
     }
 
     @At("/add")
-    public Object add(SysUser sysUser){
+    public Object add(SysUser sysUser,String roleId){
+        JsonData jsonData = null;
         if(StringUtils.isEmpty(sysUser.getId())){
-            return userService.add(sysUser);
+            jsonData = userService.add(sysUser,roleId);
         }else{
-            return userService.edit(sysUser);
+            jsonData = userService.edit(sysUser,roleId);
         }
+
+
+
+        return jsonData;
     }
 
     @At

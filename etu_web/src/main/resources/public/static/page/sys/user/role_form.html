@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>角色添加</title>
+
+    <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
+    <link rel='stylesheet' href='../../../assets/module/admin.css'/>
+</head>
+<body>
+    <!-- 正文开始 -->
+    <div class='layui-fluid'>
+        <div class="layui-form layui-form-pane" lay-filter="form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" id="name" name="name" autocomplete="off" lay-verify="required" placeholder="请输入账号" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" class="layui-textarea" name="remarks"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item text-center">
+                <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+                <button class="layui-btn" lay-filter="formSubmit" lay-submit>保存</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- js部分 -->
+    <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
+    <script type='text/javascript' src='../../../assets/js/common.js'></script>
+    <script type='text/javascript'>
+        layui.use(['layer', 'form', 'admin'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var admin = layui.admin;
+            var SysRole = admin.getTempData("SysRole");
+
+            if(SysRole){
+                form.val("form", SysRole);
+            }
+
+            admin.iframeAuto();  // 让当前iframe弹层高度适应
+
+            // 表单提交事件
+            form.on('submit(formSubmit)', function (data) {
+                layer.load(2);
+                var d = data.field;
+                d['id'] = SysRole.id;
+                $.ajax({
+                    url:"/sys/role/add",
+                    data:d,
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        if (res.status) {
+                            top.layer.closeAll();
+                            top.layer.msg(res.msg, {icon: 1});
+                        } else {
+                            layer.closeAll('loading'); //关闭加载层
+                            top.layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

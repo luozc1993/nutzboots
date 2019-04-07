@@ -38,7 +38,17 @@ public class SysUser {
             to = "rid")
     public List<SysRole> roles;
 
+    @Many(field = "uid")
+    private List<SysRoleUser> sysRoleUsers;
 
+
+    public List<SysRoleUser> getSysRoleUsers() {
+        return sysRoleUsers;
+    }
+
+    public void setSysRoleUsers(List<SysRoleUser> sysRoleUsers) {
+        this.sysRoleUsers = sysRoleUsers;
+    }
 
     public int getEnable() {
         return enable;

@@ -24,6 +24,7 @@ layui.define(['layer', 'table'], function (exports) {
             var mData = [];
             var doneCallback = param.done;
             var tNodes = data;
+            console.log(data)
             // 补上id和pid字段
             for (var i = 0; i < tNodes.length; i++) {
                 var tt = tNodes[i];
@@ -41,8 +42,8 @@ layui.define(['layer', 'table'], function (exports) {
                     }
                     tt.pid = tt[param.treePidName];
                 }
-            }
 
+            }
             // 对数据进行排序
             var sort = function (s_pid, data) {
                 for (var i = 0; i < data.length; i++) {

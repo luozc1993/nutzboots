@@ -1,10 +1,7 @@
 package cn.luozc.etu_web.bean.sys;
 
 
-import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.ManyMany;
-import org.nutz.dao.entity.annotation.Name;
-import org.nutz.dao.entity.annotation.Table;
+import org.nutz.dao.entity.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +22,11 @@ public class SysRole {
             from = "rid:id",
             to = "uid")
     public List<SysUser> users;
+
+    @Many(field = "rid")
+    private List<SysRoleUser> sysRoleUsers;
+
+
 
     public String getId() {
         return id;
