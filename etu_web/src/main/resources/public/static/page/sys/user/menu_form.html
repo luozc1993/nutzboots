@@ -6,6 +6,7 @@
 
     <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
     <link rel='stylesheet' href='../../../assets/module/admin.css'/>
+    <link rel="stylesheet" href="../../../assets/module/formSelects/formSelects-v4.css"/>
 </head>
 <body>
     <!-- 正文开始 -->
@@ -14,13 +15,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">名称</label>
                 <div class="layui-input-block">
-                    <input type="text" id="name" name="name" autocomplete="off" lay-verify="required" placeholder="请输入账号" class="layui-input">
+                    <input type="text" id="name" name="name" autocomplete="off" lay-verify="required" placeholder="请输入菜单名称" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">网站</label>
                 <div class="layui-input-block">
-                    <input type="text" id="url" name="url" autocomplete="off" lay-verify="required" placeholder="请输入账号" class="layui-input">
+                    <input type="text" id="url" name="url" autocomplete="off"  placeholder="请输入链接地址" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -28,6 +29,14 @@
                 <div class="layui-input-block">
                     <input type="text" id="parentName" name="parentName" autocomplete="off" placeholder="请选择上级id" class="layui-input">
                     <input type="hidden" id="parentId" name="parentId" autocomplete="off" placeholder="请输入账号" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色权限</label>
+                <div class="layui-input-block">
+                    <select name="roleId" id="roleId" xm-select="roleId" lay-verType="tips" lay-verify="required">
+
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item text-center">
@@ -43,16 +52,23 @@
     <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
     <script type='text/javascript' src='../../../assets/js/common.js'></script>
     <script type='text/javascript'>
-        layui.use(['layer', 'form', 'admin'], function () {
+        layui.use(['layer', 'form', 'admin', 'formSelects'], function () {
             var $ = layui.jquery;
             var layer = layui.layer;
             var form = layui.form;
             var admin = layui.admin;
+            var formSelects = layui.formSelects;
             var SysRole = admin.getTempData("SysMenu");
 
+            var roleIds = [];
             if(SysRole){
                 form.val("form", SysRole);
                 $("#name").attr("readonly","readonly")
+                //角色列表
+                var sysRoles = SysRole.sysRoleMenus;
+                for (var i = 0; i < sysRoles.length; i++) {
+                    roleIds.push(sysRoles[i].rid)
+                }
             }
 
             admin.iframeAuto();  // 让当前iframe弹层高度适应
@@ -97,6 +113,25 @@
             }
             function setParent(name){
                 $("#parentName").val(name);
+            }
+
+            getRoles();
+            function getRoles(){
+                $.ajax({
+                    url:"/sys/role/list",
+                    data:{page:0,limit:999,value:""},
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        var datas = res.data;
+                        for (var i = 0; i < datas.length; i++) {
+                            var data = datas[i];
+                            $("#roleId").append(`<option value="${data.id}">${data.name}</option>`);
+                        }
+                        //初始化角色表单
+                        formSelects.render('roleId', {init: roleIds});
+                    }
+                });
             }
         });
 

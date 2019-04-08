@@ -1,10 +1,9 @@
 package cn.luozc.etu_web.bean.sys;
 
-import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.Name;
-import org.nutz.dao.entity.annotation.Table;
+import org.nutz.dao.entity.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Table("sys_menu")
 public class SysMenu {
@@ -28,7 +27,27 @@ public class SysMenu {
   @Column("update_time")
   private Date updateTime;
 
-  public String getId() {
+    @Many(field = "mid")
+    private List<SysRoleMenu> sysRoleMenus;
+
+
+    public long getSort() {
+        return sort;
+    }
+
+    public void setSort(long sort) {
+        this.sort = sort;
+    }
+
+    public List<SysRoleMenu> getSysRoleMenus() {
+        return sysRoleMenus;
+    }
+
+    public void setSysRoleMenus(List<SysRoleMenu> sysRoleMenus) {
+        this.sysRoleMenus = sysRoleMenus;
+    }
+
+    public String getId() {
     return id;
   }
 

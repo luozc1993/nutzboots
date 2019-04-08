@@ -28,9 +28,11 @@ public class MenuModule {
     }
 
     @At("/add")
-    public JsonData add(SysMenu sysMenu){
-        sysMenu.setId(UUID.randomUUID().toString());
-        return menuService.add(sysMenu);
+    public JsonData add(SysMenu sysMenu,String roleId){
+        if(StringUtils.isEmpty(sysMenu.getId())){
+            return menuService.add(sysMenu,roleId);
+        }
+        return JsonData.fail("添加失败");
     }
 
 }
