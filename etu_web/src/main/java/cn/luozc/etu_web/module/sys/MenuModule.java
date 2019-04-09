@@ -31,8 +31,17 @@ public class MenuModule {
     public JsonData add(SysMenu sysMenu,String roleId){
         if(StringUtils.isEmpty(sysMenu.getId())){
             return menuService.add(sysMenu,roleId);
+        }else{
+            return menuService.edit(sysMenu,roleId);
         }
-        return JsonData.fail("添加失败");
+    }
+
+    @At("/del")
+    public JsonData del(String id){
+        if(StringUtils.isNotEmpty(id)){
+            return menuService.del(id);
+        }
+        return JsonData.fail("删除失败");
     }
 
 }

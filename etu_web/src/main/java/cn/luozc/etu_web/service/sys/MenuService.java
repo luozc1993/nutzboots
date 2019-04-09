@@ -45,12 +45,12 @@ public class MenuService {
         }
         SysMenu add = sysMenuDao.add(sysMenu);
         if(add!=null){
-            addUserRole(roleIds,sysMenu);
+            addMenuRole(roleIds,sysMenu);
         }
         return JsonData.success();
     }
 
-    private void addUserRole(String roleIds, SysMenu sysMenu) {
+    private void addMenuRole(String roleIds, SysMenu sysMenu) {
         if(StringUtils.isNotEmpty(roleIds)){
             String[] roleIdArr = roleIds.split(",");
             List<SysRoleMenu> sysRoleMenus = new ArrayList<>();
@@ -65,4 +65,35 @@ public class MenuService {
         }
     }
 
+
+    /**
+     * 删除数据
+     * @param id
+     * @return
+     */
+    public JsonData del(String id){
+        SysMenu sysMenu = new SysMenu();
+        sysMenu.setId(id);
+        sysMenu = sysMenuDao.getUserRoleLinks(sysMenu);
+        return JsonData.success(sysMenuDao.delete(sysMenu),"删除成功");
+    }
+
+    /**
+     * 修改用户信息
+     * @param sysMenu   用户信息
+     * @return          插入的数据
+     */
+    public JsonData edit(SysMenu sysMenu,String roleId){
+        if(sysMenu.getId().equals(sysMenu.getParentId())){
+            return JsonData.fail("上级菜单不能是当前菜单");
+        }
+
+        int update = sysMenuDao.update(sysMenu);
+        if(update==0){
+            return JsonData.fail("修改失败");
+        }
+        //添加用户角色
+        addMenuRole(roleId,sysMenu);
+        return JsonData.success(sysMenu,"修改成功");
+    }
 }

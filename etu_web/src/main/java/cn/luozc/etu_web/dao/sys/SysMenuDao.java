@@ -14,7 +14,7 @@ public class SysMenuDao extends BaseDao<SysMenu> {
      * @return 菜单对象
      */
     public SysMenu getUserRoleLinks(SysMenu sysMenu){
-        return dao.fetchLinks(sysMenu,"sysRoleMenus");
+        return dao.fetchLinks(sysMenu,"");
     }
 
     /**

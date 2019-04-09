@@ -7,41 +7,52 @@
     <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
     <link rel='stylesheet' href='../../../assets/module/admin.css'/>
     <link rel="stylesheet" href="../../../assets/module/formSelects/formSelects-v4.css"/>
+    <style type="text/css">
+        .layui-form-item{margin:5px}
+    </style>
 </head>
 <body>
     <!-- 正文开始 -->
     <div class='layui-fluid'>
-        <div class="layui-form layui-form-pane" lay-filter="form" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">名称</label>
-                <div class="layui-input-block">
-                    <input type="text" id="name" name="name" autocomplete="off" lay-verify="required" placeholder="请输入菜单名称" class="layui-input">
+        <div class="layui-form layui-form-pane layui-row" lay-filter="form" action="">
+            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="name" name="name" autocomplete="off" lay-verify="required" placeholder="请输入菜单名称" class="layui-input">
+                    </div>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">网站</label>
-                <div class="layui-input-block">
-                    <input type="text" id="url" name="url" autocomplete="off"  placeholder="请输入链接地址" class="layui-input">
+            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">网站</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="url" name="url" autocomplete="off"  placeholder="请输入链接地址" class="layui-input">
+                    </div>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">上级菜单</label>
-                <div class="layui-input-block">
-                    <input type="text" id="parentName" name="parentName" autocomplete="off" placeholder="请选择上级id" class="layui-input">
-                    <input type="hidden" id="parentId" name="parentId" autocomplete="off" placeholder="请输入账号" class="layui-input">
+            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上级菜单</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="parentName" name="parentName" autocomplete="off" placeholder="请选择上级id" class="layui-input">
+                        <input type="hidden" id="parentId" name="parentId" autocomplete="off" placeholder="请输入账号" class="layui-input">
+                    </div>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">角色权限</label>
-                <div class="layui-input-block">
-                    <select name="roleId" id="roleId" xm-select="roleId" lay-verType="tips" lay-verify="required">
+            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色权限</label>
+                    <div class="layui-input-block">
+                        <select name="roleId" id="roleId" xm-select="roleId" lay-verType="tips" lay-verify="required">
 
-                    </select>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="layui-form-item text-center">
-                <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+            <div class="layui-form-item text-center" style="bottom: 0; position: fixed;left: 50%;">
                 <button class="layui-btn" lay-filter="formSubmit" lay-submit>保存</button>
+                <button class="layui-btn layui-btn-primary" type="button" id="closePage" ew-event="closeDialog">取消</button>
             </div>
         </div>
     </div>
@@ -58,16 +69,18 @@
             var form = layui.form;
             var admin = layui.admin;
             var formSelects = layui.formSelects;
-            var SysRole = admin.getTempData("SysMenu");
-
+            var SysMenu = admin.getTempData("SysMenu");
             var roleIds = [];
-            if(SysRole){
-                form.val("form", SysRole);
-                $("#name").attr("readonly","readonly")
+            if(SysMenu){
+                form.val("form", SysMenu);
                 //角色列表
-                var sysRoles = SysRole.sysRoleMenus;
+                var sysRoles = SysMenu.sysRoleMenus;
                 for (var i = 0; i < sysRoles.length; i++) {
                     roleIds.push(sysRoles[i].rid)
+                }
+                var parent = SysMenu.parent;
+                if(parent){
+                    $("#parentName").val(parent.name);
                 }
             }
 
@@ -77,7 +90,7 @@
             form.on('submit(formSubmit)', function (data) {
                 layer.load(2);
                 var d = data.field;
-                d['id'] = SysRole.id;
+                d['id'] = SysMenu.id;
                 $.ajax({
                     url:"/sys/menu/add",
                     data:d,
@@ -86,6 +99,8 @@
                     success:function(res){
                         if (res.status) {
                             top.layui.index.closeTab('/page/sys/user/menu_form.html');
+                        }else{
+                            layer.msg(res.msg, {icon: 2});
                         }
                         layer.closeAll('loading'); //关闭加载层
                     }
@@ -99,6 +114,9 @@
             $("#parentName").on("click",function(e){
                 menuTree()
             });
+            $("#closePage").on("click",function(){
+                top.layui.index.closeTab('/page/sys/user/menu_form.html');
+            })
             function menuTree(data){
                 layui.admin.open({
                     type: 2,

@@ -27,9 +27,34 @@ public class SysMenu {
   @Column("update_time")
   private Date updateTime;
 
+    @ManyMany(relation = "sys_role_menu",
+            from = "mid:id",
+            to = "rid")
+    public List<SysRole> roles;
+
     @Many(field = "mid")
     private List<SysRoleMenu> sysRoleMenus;
 
+    @One(field = "parentId")
+    // 1.r.59之前需要写target参数
+    // @One(target = Master.class, field = "masterId")
+    public SysMenu parent;
+
+    public SysMenu getSysMenu() {
+        return parent;
+    }
+
+    public void setSysMenu(SysMenu parent) {
+        this.parent = parent;
+    }
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
+    }
 
     public long getSort() {
         return sort;
