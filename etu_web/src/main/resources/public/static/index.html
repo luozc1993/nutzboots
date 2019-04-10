@@ -21,23 +21,16 @@
             <img src="/assets/images/logo.png"/>
             <cite>&nbsp;EasyWeb Pro&emsp;</cite>
         </div>
-        <ul class="layui-nav layui-layout-left">
+        <ul id="system" class="layui-nav layui-layout-left">
             <li class="layui-nav-item" lay-unselect>
                 <a ew-event="flexible" title="侧边伸缩"><i class="layui-icon layui-icon-shrink-right"></i></a>
             </li>
             <li class="layui-nav-item" lay-unselect>
                 <a ew-event="refresh" title="刷新"><i class="layui-icon layui-icon-refresh-3"></i></a>
             </li>
-            <li class="layui-nav-item layui-hide-xs layui-this" lay-unselect><a nav-bind="xt1">系统一</a></li>
-            <li class="layui-nav-item layui-hide-xs" lay-unselect><a nav-bind="xt2">系统二</a></li>
-            <li class="layui-nav-item layui-hide-xs" lay-unselect><a nav-bind="xt3">系统三</a></li>
             <li class="layui-nav-item layui-hide-sm layui-show-xs-inline-block" lay-unselect>
                 <a>更多</a>
-                <dl class="layui-nav-child">
-                    <dd lay-unselect><a nav-bind="xt1">系统一</a></dd>
-                    <dd lay-unselect><a nav-bind="xt2">系统二</a></dd>
-                    <dd lay-unselect><a nav-bind="xt3">系统二</a></dd>
-                </dl>
+                <dl class="layui-nav-child" id="systemMobile"></dl>
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
@@ -76,7 +69,7 @@
 
     <!-- 侧边栏 -->
     <div class="layui-side">
-        <div class="layui-side-scroll">
+        <div class="layui-side-scroll" id="menus">
             <!-- 系统一的菜单 -->
             <ul class="layui-nav layui-nav-tree" nav-id="xt1" lay-filter="admin-side-nav" style="margin: 15px 0;">
                 <li class="layui-nav-item layui-nav-itemed">
@@ -85,6 +78,36 @@
                         <dd><a lay-href="/page/sys/user/user_list.html">用户管理</a></dd>
                         <dd><a lay-href="/page/sys/user/role_list.html">角色管理</a></dd>
                         <dd><a lay-href="/page/sys/user/menu_list.html">菜单管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a><i class="layui-icon layui-icon-unlink"></i>&emsp;<cite>多级菜单</cite></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a>二级菜单</a>
+                            <dl class="layui-nav-child"></dl>
+                        </dd>
+                        <dd>
+                            <a>二级菜单</a>
+                            <dl class="layui-nav-child">
+                                <dd><a>三级菜单</a></dd>
+                                <dd>
+                                    <a>三级菜单</a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a>四级菜单</a></dd>
+                                        <dd>
+                                            <a>四级菜单</a>
+                                            <dl class="layui-nav-child">
+                                                <dd><a>五级菜单</a></dd>
+                                                <dd>
+                                                    <a lay-href="https://baidu.com">百度一下</a>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </dd>
                     </dl>
                 </li>
             </ul>
@@ -137,12 +160,51 @@
         var $ = layui.jquery;
         var index = layui.index;
 
+
+
+
+        $.ajax({
+            url:"/sys/menu/listTree",
+            success:function(res){
+                if(res.status){
+                    var datas = res.data;
+                    for (let i = 0; i < datas.length; i++) {
+                        var data = datas[i];
+                        if(i==0){
+                            $("#system").append(`<li class="layui-nav-item layui-hide-xs layui-this" lay-unselect><a nav-bind="${data.id}">${data.name}</a></li>`)
+                            $("#menus").append(`<ul class="layui-nav layui-nav-tree" nav-id="${data.id}" id="${data.id}" lay-filter="admin-side-nav" style="margin: 15px 0;"></ul>`);
+                        }else{
+
+                            $("#system").append(`<li class="layui-nav-item layui-hide-xs " lay-unselect><a nav-bind="${data.id}">${data.name}</a></li>`)
+                            $("#menus").append(`<ul class="layui-nav layui-nav-tree layui-hide" nav-id="${data.id}" id="${data.id}" lay-filter="admin-side-nav" style="margin: 15px 0;"></ul>`);
+                        }
+                        $("#systemMobile").append( `<dd lay-unselect><a nav-bind="${data.id}">${data.name}</a></dd>`);
+
+                        var childs = data.child;
+                        if(childs){
+                            for (let j = 0; j < childs.length; j++) {
+                                var child = childs[i];
+                                $("#"+child.parentId).append(
+                                    `<li class="layui-nav-item" id="${child.id}">
+                                        <a><i class="layui-icon layui-icon-unlink"></i>&emsp;<cite>${child.name}</cite></a>
+                                     </li>`);
+                                if(child.child){
+
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        })
         // 默认加载主页
         index.loadHome({
             menuPath: '../../page/console/console.html',
             menuName: '<i class="layui-icon layui-icon-home"></i>',
             loadSetting: false
         });
+
 
     });
 </script>

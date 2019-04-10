@@ -105,11 +105,9 @@
             //监听行工具事件
             table.on('tool(treeTable)', function(obj){
                 var data = obj.data;
-                //console.log(obj)
                 if(obj.event === 'delete'){
                     layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        del(data.id);
+                        del(data.id,obj);
                         layer.close(index);
                     });
                 } else if(obj.event === 'edit'){
@@ -117,7 +115,7 @@
                 }
             });
 
-            function del(id){
+            function del(id,obj){
                 $.ajax({
                     url:"/sys/menu/del",
                     data:{id:id},
@@ -127,6 +125,7 @@
                         if (res.status) {
                             top.layer.closeAll();
                             top.layer.msg(res.msg, {icon: 1});
+                            obj.del();
                         } else {
                             layer.closeAll('loading'); //关闭加载层
                             top.layer.msg(res.msg, {icon: 2});

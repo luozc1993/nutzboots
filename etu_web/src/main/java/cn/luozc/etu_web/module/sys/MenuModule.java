@@ -44,4 +44,9 @@ public class MenuModule {
         return JsonData.fail("删除失败");
     }
 
+    @At("/listTree")
+    public JsonData list(){
+        return menuService.getList("a17d8b28-d70e-4a7a-979e-7c6912ce3ace");
+    }
+
 }

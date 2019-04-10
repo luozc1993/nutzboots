@@ -36,6 +36,16 @@ public class BaseDao<T> {
     public List<T> getListSortAsc(int pageNumber,int pageSize,String value,List<String> feilds){
         return dao.query(bean, getVagueCriteria(value,feilds).getOrderBy().asc("sort"),  getPager(pageNumber, pageSize));
     }
+    /**
+     * 模糊分页查询
+     * @param pageNumber    页数
+     * @param pageSize      没有人显示数量
+     * @param value         模糊查询值
+     * @return  返回实体对象列表
+     */
+    public List<T> getListByRoleIdSortAsc(int pageNumber,int pageSize,String value,List<String> feilds){
+        return dao.query(bean, getVagueCriteria(value,feilds).getOrderBy().asc("sort"),  getPager(pageNumber, pageSize));
+    }
 
     /**
      * 添加数据
