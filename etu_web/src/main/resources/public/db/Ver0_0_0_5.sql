@@ -43,8 +43,10 @@ call temporary();
 /*删除临时存储过程temporary*/
 DROP PROCEDURE IF EXISTS temporary;
 
-
-
+/*插入超级管理员和系统一目录关系*/
+INSERT INTO sys_role_menu(id,rid,mid)
+VALUE('66598d3c-fd53-4819-b164-2b011a8e668e','f59a4c93-c153-49a9-bfb7-5ef53dff7077','5847f351-b800-44cd-8a0b-298cda2f916f')
+ON DUPLICATE KEY UPDATE id= '66598d3c-fd53-4819-b164-2b011a8e668e';
 
 /*插入超级管理员和用户管理目录关系*/
 INSERT INTO sys_role_menu(id,rid,mid)

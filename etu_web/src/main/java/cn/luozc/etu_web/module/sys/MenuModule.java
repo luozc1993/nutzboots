@@ -46,7 +46,7 @@ public class MenuModule {
 
     @At("/listTree")
     public JsonData list(){
-        return menuService.getList("a17d8b28-d70e-4a7a-979e-7c6912ce3ace");
+        return menuService.getList("f59a4c93-c153-49a9-bfb7-5ef53dff7077");
     }
 
 }

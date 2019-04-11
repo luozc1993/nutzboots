@@ -12,9 +12,14 @@ CREATE TABLE If Not Exists `sys_menu` (
   PRIMARY KEY (`id`)
 );
 
+/*添加默认系统一菜单*/
+INSERT INTO sys_menu(id,name,url,parent_id,icon)
+VALUE('5847f351-b800-44cd-8a0b-298cda2f916f','系统一','','0','layui-icon-home')
+ON DUPLICATE KEY UPDATE id= '5847f351-b800-44cd-8a0b-298cda2f916f';
+
 /*添加默认系统菜单*/
 INSERT INTO sys_menu(id,name,url,parent_id,icon)
-VALUE('7e956aab-7827-47e3-a69d-f2c0fbfb66e8','用户管理','','0','layui-icon-home')
+VALUE('7e956aab-7827-47e3-a69d-f2c0fbfb66e8','用户管理','','5847f351-b800-44cd-8a0b-298cda2f916f','layui-icon-home')
 ON DUPLICATE KEY UPDATE id= '7e956aab-7827-47e3-a69d-f2c0fbfb66e8';
 /*添加默认用户管理*/
 INSERT INTO sys_menu(id,name,url,parent_id,icon,is_menu,sort)

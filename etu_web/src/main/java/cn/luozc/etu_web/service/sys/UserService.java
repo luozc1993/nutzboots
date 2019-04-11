@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -125,6 +127,19 @@ public class UserService {
     }
 
     public JsonData addUserRole(SysRoleUser sysRoleUser){
+        return JsonData.success();
+    }
+
+
+    public JsonData login(String uname, String password, HttpSession session){
+        SysUser sysUser = sysUserDao.getSysUserByUname(uname);
+        if(sysUser==null||!sysUser.getPassword().equals(MD5Util.getMD5Str(password))){
+            return JsonData.fail("账号或密码错误");
+        }
+        session.setAttribute("user",sysUser);
+        session.setAttribute("userId",sysUser.getId());
+        sysUserDao.getRolesLinks(sysUser);
+        session.setAttribute("roles",sysUser.getRoles());
         return JsonData.success();
     }
 }

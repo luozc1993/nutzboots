@@ -57,7 +57,7 @@
                     </dd>
                     <hr>
                     <dd lay-unselect>
-                        <a ew-event="logout" data-url="page/template/login.html">退出</a>
+                        <a ew-event="logout" data-url="/sys/user/logout">退出</a>
                     </dd>
                 </dl>
             </li>
@@ -70,67 +70,7 @@
     <!-- 侧边栏 -->
     <div class="layui-side">
         <div class="layui-side-scroll" id="menus">
-            <!-- 系统一的菜单 -->
-            <ul class="layui-nav layui-nav-tree" nav-id="xt1" lay-filter="admin-side-nav" style="margin: 15px 0;">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a><i class="layui-icon layui-icon-home"></i>&emsp;<cite>用户</cite></a>
-                    <dl class="layui-nav-child">
-                        <dd><a lay-href="/page/sys/user/user_list.html">用户管理</a></dd>
-                        <dd><a lay-href="/page/sys/user/role_list.html">角色管理</a></dd>
-                        <dd><a lay-href="/page/sys/user/menu_list.html">菜单管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a><i class="layui-icon layui-icon-unlink"></i>&emsp;<cite>多级菜单</cite></a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a>二级菜单</a>
-                            <dl class="layui-nav-child"></dl>
-                        </dd>
-                        <dd>
-                            <a>二级菜单</a>
-                            <dl class="layui-nav-child">
-                                <dd><a>三级菜单</a></dd>
-                                <dd>
-                                    <a>三级菜单</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a>四级菜单</a></dd>
-                                        <dd>
-                                            <a>四级菜单</a>
-                                            <dl class="layui-nav-child">
-                                                <dd><a>五级菜单</a></dd>
-                                                <dd>
-                                                    <a lay-href="https://baidu.com">百度一下</a>
-                                                </dd>
-                                            </dl>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-                        </dd>
-                    </dl>
-                </li>
-            </ul>
-            <ul class="layui-nav layui-nav-tree layui-hide" nav-id="xt2" lay-filter="admin-side-nav"
-                style="margin: 15px 0;">
-                <li class="layui-nav-item">
-                    <a><i class="layui-icon layui-icon-table"></i>&emsp;<cite>表格页</cite></a>
-                    <dl class="layui-nav-child">
-                        <dd><a lay-href="/page/sys/user/user_list2.html">用户管理2</a></dd>
-                        <dd><a lay-href="/page/sys/user/role_list2.html">角色管理2</a></dd>
-                    </dl>
-                </li>
-            </ul>
-            <ul class="layui-nav layui-nav-tree layui-hide" nav-id="xt3" lay-filter="admin-side-nav" lay-accordion="true"
-                style="margin: 15px 0;">
-                <li class="layui-nav-item">
-                    <a><i class="layui-icon layui-icon-home"></i>&emsp;<cite>用户</cite></a>
-                    <dl class="layui-nav-child">
-                        <dd><a lay-href="/page/sys/user/user_list3.html">用户管理3</a></dd>
-                        <dd><a lay-href="/page/sys/user/role_list3.html">角色管理3</a></dd>
-                    </dl>
-                </li>
-            </ul>
+
         </div>
     </div>
 
@@ -156,10 +96,10 @@
 <script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="../../../assets/js/common.js?v=311"></script>
 <script>
-    layui.use(['index'], function () {
+    layui.use(['index','element'], function () {
         var $ = layui.jquery;
         var index = layui.index;
-
+        var element = layui.element;
 
 
 
@@ -183,21 +123,50 @@
                         var childs = data.child;
                         if(childs){
                             for (let j = 0; j < childs.length; j++) {
-                                var child = childs[i];
-                                $("#"+child.parentId).append(
-                                    `<li class="layui-nav-item" id="${child.id}">
+                                var child = childs[j];
+                                if(child.child){
+                                    $("#"+child.parentId).append(
+                                        `<li class="layui-nav-item" id="${child.id}">
                                         <a><i class="layui-icon layui-icon-unlink"></i>&emsp;<cite>${child.name}</cite></a>
                                      </li>`);
-                                if(child.child){
-
+                                    addChildMenu(child);
+                                }else{
+                                    $("#"+child.parentId).append(
+                                        `<li class="layui-nav-item" id="${child.id}">
+                                        <a lay-href="${child.url}" ><i class="layui-icon layui-icon-unlink"></i>&emsp;<cite>${child.name}</cite></a>
+                                     </li>`);
                                 }
+
                             }
                         }
                     }
+                    element.render('nav');
 
                 }
             }
-        })
+        });
+
+        function addChildMenu(menu){
+            var childs = menu.child;
+            if(childs){
+                var id = menu.id;
+                $("#"+id).append(`<dl class="layui-nav-child" id="${id}_child"></dl>`);
+                for (let i = 0; i < childs.length; i++) {
+                    var child = childs[i];
+                    if(child.child){
+                        $("#"+id+"_child").append(`<dd  id="${child.id}"><a>${child.name}</a></dd>`);
+                        addChildMenu(child);
+                    }else{
+                        $("#"+id+"_child").append(`<dd  id="${child.id}"><a lay-href="${child.url}">${child.name}</a></dd>`);
+                    }
+
+
+                }
+            }
+        }
+
+
+
         // 默认加载主页
         index.loadHome({
             menuPath: '../../page/console/console.html',

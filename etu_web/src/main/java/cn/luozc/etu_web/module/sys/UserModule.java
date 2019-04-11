@@ -12,6 +12,7 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.UUID;
 
@@ -53,5 +54,15 @@ public class UserModule {
     }
 
 
+    @At("/login")
+    public JsonData login(String uname, String password, HttpSession session){
+        return userService.login(uname,password,session);
+    }
+
+    @At
+    @Ok(">>:/login.html")
+    public void logout(HttpSession session){
+        session.invalidate();
+    }
 
 }
