@@ -19,6 +19,15 @@ public class SysMenuDao extends BaseDao<SysMenu> {
     }
 
     /**
+     * 获取菜单关联角色关联表信息
+     * @param sysMenu 菜单对象
+     * @return 菜单对象
+     */
+    public SysMenu getMenuParentLinks(SysMenu sysMenu){
+        return dao.fetchLinks(sysMenu,"parent");
+    }
+
+    /**
      * 删除用户关联的所有角色关联表
      * @param sysMenu 用户对象
      */

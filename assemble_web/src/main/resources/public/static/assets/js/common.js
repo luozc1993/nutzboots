@@ -9,7 +9,8 @@ layui.config({
     step: 'step-lay/step',
     dtree: 'dtree/dtree',
     citypicker: 'city-picker/city-picker',
-    tableSelect: 'tableSelect/tableSelect'
+    tableSelect: 'tableSelect/tableSelect',
+    iconPicker: 'iconPicker/iconPicker'
 }).use(['layer', 'admin'], function () {
     var $ = layui.jquery;
     var layer = layui.layer;

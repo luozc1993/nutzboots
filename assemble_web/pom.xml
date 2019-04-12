@@ -94,6 +94,12 @@
             <version>1.2</version>
         </dependency>
         <!--===================json 需要依赖的6个包结束=======================-->
+        <!--伪静态-->
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.4</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

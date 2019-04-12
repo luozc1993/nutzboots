@@ -46,6 +46,10 @@
         <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
     </script>
 
+    <script type='text/html' id='iconBar'>
+        <i class="layui-icon {{d.icon}}"></i>
+    </script>
+
 
 
     <!-- js部分 -->
@@ -73,6 +77,7 @@
                         {type: 'numbers'},
                         {field: 'name', title: '名称', minWidth: 200},
                         {field: 'url', title: '菜单url'},
+                        {field: 'icon',title: '图标', templet: '#iconBar', align: 'center'},
                         {field: 'order', title: '排序号', align: 'center'},
                         {
                             title: '类型', templet: function (d) {

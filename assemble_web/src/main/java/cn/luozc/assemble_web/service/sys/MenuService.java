@@ -38,7 +38,7 @@ public class MenuService {
         list.add("remarks");
         List<SysMenu> menus = sysMenuDao.getListSortAsc(pageNumber, pageSize, value, list);
         for (int i = 0; i < menus.size(); i++) {
-            menus.get(i).setSysRoleMenus(sysMenuDao.getMenuRoleLinks(menus.get(i)).getSysRoleMenus());
+            menus.get(i).setSysRoleMenus(sysMenuDao.getMenuParentLinks(sysMenuDao.getMenuRoleLinks(menus.get(i))).getSysRoleMenus());
         }
         return LayuiTableResult.result(0,"",sysMenuDao.size(value,list),menus);
     }

@@ -23,11 +23,12 @@
                     </div>
                 </div>
             </div>
+
             <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
-                <div class="layui-form-item ">
-                    <label class="layui-form-label">地址</label>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
                     <div class="layui-input-block">
-                        <input type="text" id="url" name="url" autocomplete="off"  placeholder="请输入链接地址" class="layui-input">
+                        <input type="text" id="sort" name="sort" autocomplete="off"  placeholder="请输入排序" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -40,21 +41,29 @@
                     </div>
                 </div>
             </div>
-            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">角色权限</label>
-                    <div class="layui-input-block">
-                        <select name="roleId" id="roleId" xm-select="roleId" lay-verType="tips" >
 
-                        </select>
+            <div class=" layui-col-xs12 layui-col-sm12 layui-col-md12">
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="url" name="url" autocomplete="off"  placeholder="请输入链接地址" class="layui-input">
                     </div>
                 </div>
             </div>
             <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">排序</label>
+                    <label class="layui-form-label">角色权限</label>
                     <div class="layui-input-block">
-                        <input type="text" id="sort" name="sort" autocomplete="off"  placeholder="请输入菜单名称" class="layui-input">
+                        <select name="roleId" id="roleId" xm-select="roleId" lay-verType="tips" ></select>
+                    </div>
+                </div>
+            </div>
+            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">图标</label>
+                    <div class="layui-input-block">
+                        <input type="hidden" id="icon" name="icon" autocomplete="off"   class="layui-input">
+                        <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -71,12 +80,13 @@
     <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
     <script type='text/javascript' src='../../../assets/js/common.js'></script>
     <script type='text/javascript'>
-        layui.use(['layer', 'form', 'admin', 'formSelects'], function () {
+        layui.use(['layer', 'form', 'admin', 'formSelects','iconPicker'], function () {
             var $ = layui.jquery;
             var layer = layui.layer;
             var form = layui.form;
             var admin = layui.admin;
             var formSelects = layui.formSelects;
+            var iconPicker = layui.iconPicker;
             var SysMenu = admin.getTempData("SysMenu");
             var roleIds = [];
             if(SysMenu){
@@ -160,6 +170,42 @@
                     }
                 });
             }
+
+
+            iconPicker.render({
+                // 选择器，推荐使用input
+                elem: '#iconPicker',
+                // 数据类型：fontClass/unicode，推荐使用fontClass
+                type: 'fontClass',
+                // 是否开启搜索：true/false
+                search: true,
+                // 是否开启分页
+                page: true,
+                // 每页显示数量，默认12
+                limit: 12,
+                // 每个图标格子的宽度：'43px'或'20%'
+                cellWidth: '43px',
+                // 点击回调
+                click: function (data) {
+                    $("#icon").val(data.icon)
+                    console.log(data);
+                },
+                // 渲染成功后的回调
+                success: function(d) {
+                    console.log(d);
+                }
+            });
+
+            /**
+             * 选中图标 （常用于更新时默认选中图标）
+             * @param filter lay-filter
+             * @param iconName 图标名称，自动识别fontClass/unicode
+             */
+            iconPicker.checkIcon('iconPicker', SysMenu.icon);
+
+
+
+
         });
 
         function setParent(name){
