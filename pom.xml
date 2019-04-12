@@ -21,7 +21,7 @@
         </dependencies>
     </dependencyManagement>
     <modules>
-        <module>etu_web</module>
+        <module>assemble_web</module>
     </modules>
 
 
