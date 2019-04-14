@@ -10,7 +10,8 @@ layui.config({
     dtree: 'dtree/dtree',
     citypicker: 'city-picker/city-picker',
     tableSelect: 'tableSelect/tableSelect',
-    iconPicker: 'iconPicker/iconPicker'
+    iconPicker: 'iconPicker/iconPicker',
+    dynamicForm: 'dynamicForm/dynamicForm'
 }).use(['layer', 'admin'], function () {
     var $ = layui.jquery;
     var layer = layui.layer;

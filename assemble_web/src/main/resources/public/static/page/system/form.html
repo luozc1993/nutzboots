@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>流程</title>
+    <base href="${ctxPath}">
+    <link rel='stylesheet' href='/assets/libs/layui/css/layui.css'/>
+    <link rel='stylesheet' href='/assets/module/admin.css'/>
+</head>
+
+<body>
+
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+
+            <div id="form" ></div>
+
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/assets/js/common.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery','dynamicForm','admin'],function(){
+
+        var form = layui.form;
+        var dynamicForm = layui.dynamicForm;
+        var admin = layui.admin;
+        $ = layui.$;
+        var form = layui.form;
+        $ = layui.$;
+        $.ajax({
+            url:"./form.json",
+            dataType:"json",
+            type:"get",
+            success:function(res){
+                var datas = res;
+                console.log(datas)
+
+                dynamicForm.form({
+                    id:"#form",
+                    title:"",
+                    showBtn:true,
+                    yesBtnName:"提交",
+                    pane:true,
+                    data:datas,
+                    success:function(obj){
+                        console.log(obj)
+                    },
+                    yes:function(obj){
+                        console.log(obj)
+                    },
+                    cancel:function(obj){
+                        console.log(obj)
+                    },
+                    change:function(data,value){
+                        console.log(data,value)
+                    }
+                });
+            }
+        })
+
+    })
+</script>
+</body>
+</html>

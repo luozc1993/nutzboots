@@ -1,0 +1,111 @@
+
+[ {
+    "type": "text",
+    "label": "",
+    "value": "标题",
+    "col": 6,
+    "offset":3
+  },
+  {
+      "key": "text-input",
+      "type": "text-input",
+      "label":"输入框",
+      "value": "1查看",
+      "col": 4,
+      "offset":0,
+      "power":1
+  },
+  {
+    "key": "text-input2",
+    "type": "text-input",
+    "label":"输入框",
+    "value": "2隐藏",
+    "col": 4,
+    "offset":0,
+    "power":2
+  },
+  {
+    "key": "text-input3",
+    "type": "text-input",
+    "label":"输入框",
+    "value": "0编辑",
+    "col": 4,
+    "offset":0,
+    "power":0
+  },
+  {
+      "key": "date",
+      "type": "date",
+      "label": "开始时间",
+      "tips": "请选择时间",
+      "value": "2018-11-02",
+      "col": 4,
+      "power":3
+  },
+  {
+      "key": "time",
+      "type": "time",
+      "label": "开始时间",
+      "tips": "请选择日期时间",
+      "value": "",
+      "col": 4
+  },
+  {
+      "key": "datetime",
+      "type": "datetime",
+      "label": "开始时间",
+      "tips": "请选择日期时间",
+      "value": "",
+      "col": 4
+  },
+  {
+      "key": "month",
+      "type": "month",
+      "label": "开始时间",
+      "tips": "请选择日期时间",
+      "value": "",
+      "col": 4
+  },
+  {
+      "key": "year",
+      "type": "year",
+      "label": "开始时间",
+      "tips": "请选择日期时间",
+      "value": "",
+      "col": 4
+  },
+  {
+      "key": "col",
+      "type": "select",
+      "label": "占位",
+      "value": "一",
+      "option":"一|二|三",
+      "col": 4
+  },
+  {
+      "type": "text",
+      "label": "标签",
+      "value": "文本显示",
+      "col": 4
+  },
+  {
+      "key": "textarea",
+      "type": "textarea",
+      "label": "文本域",
+      "tips": "请输入内容",
+      "value": "",
+      "col": 4
+  },
+  {
+    "key": "isMenu",
+    "type": "switch",
+    "label": "创建菜单",
+    "tips": "ID",
+    "option":"NO|OFF",
+    "value": "",
+    "col": 4,
+    "power":0,
+    "offset":0,
+    "correlation":"hide_or_show:NO→remarks,flow_name※hide&hide_or_show:OFF→remarks,flow_name※hide"
+  }
+]

@@ -19,28 +19,34 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 			//是否显示按钮
             var showBtn = obj.showBtn;
 			yesBtnName = yesBtnName?yesBtnName:"提交";
+			var pane = obj.pane;
+			var paneAtr = "";
+			console.log(pane)
+			if(pane){
+                paneAtr = 'layui-form-pane';
+            }
 			//添加容器
-			$(id).html('<div id="dynamicForm" class="layui-form  layui-row" ></div>');
+			$(id).html(`<div id="dynamicForm" class="layui-form layui-row ${paneAtr}" ></div>`);
             dynamicFormBom = $("#dynamicForm");
             //标题
             var title = obj.title;
             if(title){
-                dynamicFormBom.append('<h1 style="text-align: center;padding:30px">'+title+'</h1>');
+                dynamicFormBom.append(`<h1 style="text-align: center;padding:30px">${title}</h1>`);
             }
 
             //循环生成表单
 			$.each(datas,function(index,data){
-				dynamicForm.createForm(data)
+				dynamicForm.createForm(data,obj)
 			});
             //是否显示确定按钮
             if(showBtn){
                 //确定取消按钮
-                dynamicFormBom.append('<div class="layui-form-item layui-row layui-col-xs12" style="    margin: 20px 0px;">'
-                    +'	<div class="layui-input-block " style="    margin-left:0px;text-align: center;">'
-                    +'		<button class="layui-btn " lay-submit="" lay-filter="yes">'+yesBtnName+'</button>'
-                    +'		<button lay-submit="" class="layui-btn layui-btn-primary " lay-filter="cancel">取消</button>'
-                    +'	</div>'
-                    +'</div>');
+                dynamicFormBom.append(`<div class="layui-form-item layui-row layui-col-xs12" style="    margin: 20px 0px;">
+                                            <div class="layui-input-block " style="    margin-left:0px;text-align: center;">
+                                                <button class="layui-btn " lay-submit="" lay-filter="yes">${yesBtnName}</button>
+                                                <button lay-submit="" class="layui-btn layui-btn-primary " lay-filter="cancel">取消</button>
+                                            </div>
+                                        </div>`);
             }
 
 			//刷新渲染
@@ -65,14 +71,14 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 				}
 			});
 		},
-		createForm:function(obj){
-			var formHtml = '';
+		createForm:function(data,obj){
+
 			//表单占比 栅格模式
-			var col = obj.col?obj.col:12;
+			var col = data.col?data.col:12;
 			//表单偏移量
-			var offset =  obj.offset?obj.offset:0;
+			var offset =  data.offset?"layui-col-md-offset"+data.offset:"";
 			//标签
-			var label = obj.label;
+			var label = data.label;
 			//标签样式
 			var nolabel = "";
 			if(label){
@@ -82,78 +88,93 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                 nolabel = "nolabel"
             }
 			//标签的id
-            var key = obj.key;
+            var key = data.key;
 			//表单值
-            var value = obj.value;
+            var value = data.value;
             //占位提示文本
-            var tips = obj.tips;
-
-            var type = obj.type;
+            var tips = data.tips;
+            //选项
+            var option = data.option;
+            var type = data.type;
             //0查看 1编辑 2隐藏
-            var power = obj.power;
+            var power = data.power;
             if(power===1){
                 type = "text";
             }if(power===2){
                 return "";
             }
+            var change = obj.change;
 
+            var formHtml = `<div class="layui-col-md${col} ${offset}">formHtml</div>`;
 			switch (type){
 				case 'text-input'://文本输入框
-                    formHtml ='<div class="layui-form-item layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-							+label
-							+'<div class="layui-input-block '+nolabel+'">'
-							+'  <input type="text" name="'+key+'" id="'+key+'" value="'+value+'"  lay-verify="title" autocomplete="off" placeholder="'+tips+'" class="layui-input">'
-							+'</div>'
-						  +'</div>';
-							dynamicFormBom.append(formHtml);
+                    var html = `<div class="layui-form-item ">
+                                    ${label}
+                                    <div class="layui-input-block ${nolabel}">
+                                      <input type="text" name="${key}" id="${key}" value="${value}"  lay-verify="${key}" autocomplete="off" placeholder="${tips}" class="layui-input">
+                                    </div>
+                                  </div>`;
+                    dynamicFormBom.append(formHtml.replace("formHtml",html));
+							$("#"+key).change(function (o) {
+                                if (change&&typeof change === "function"){
+                                    change(data,$(this).val());     //调用传入的回调函数
+                                }
+                            });
 					break;
+                case 'hide-input'://文本输入框
+                    var html = `<div class="layui-form-item" style="display: none">
+                                    ${label}
+                                    <div class="layui-input-block ${nolabel}">
+                                <input type="text" name="${key}" id="${key}" value="${value}"  lay-verify="${key}" autocomplete="off" placeholder="${tips}" class="layui-input">
+                                </div>
+                                </div>`;
+                    dynamicFormBom.append(formHtml.replace("formHtml",html));
+                    break;
 				case 'text'://文本显示
-                    formHtml ='<div class="layui-form-item layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-							+label
-							+'<div class="layui-input-block '+nolabel+'" style="line-height: 36px;">'
-							+value
-							+'</div>'
-						+'</div>';
-						dynamicFormBom.append(formHtml);
+                    var html =`<div class="layui-form-item">
+                                    ${label}
+                                    <div class="layui-input-block ${nolabel}" style="line-height: 36px;">${value}</div>
+                                </div>`;
+                    dynamicFormBom.append(formHtml.replace("formHtml",html));
 					break;
 				case 'select'://下拉
-					//判断数据是否为空
-					if(value==null||value==="")break;
-					//拆分下拉框值和默认数据
-					var arr = value.split("$");	
-					var defaultValue = "";
-					if(arr.length>1){
-						defaultValue = arr[1];
-					}
-					var options = arr[0].split("|");
-					var option = "";
+					if(option==null||option==="")break;
+					//拆分下拉框值
+					var options = option.split("|");
+					var optionHtml = "";
 					for (var index in options) {
 					    var str = options[index];
-						if(str===defaultValue){
-							option +='<option  selected="" value="'+str.split("&")[0]+'">'+str.split("&")[1]+'</option>'
+						if(str===value){
+                            optionHtml +='<option  selected="" value="'+str+'">'+str+'</option>'
 						}else{
-							option +='<option value="'+str.split("&")[0]+'">'+str.split("&")[1]+'</option>'
+                            optionHtml +='<option value="'+str+'">'+str+'</option>'
 						}
 						
 					}
-                    formHtml = '<div class="layui-form-item layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-							+label
-							+'<div class="layui-input-block '+nolabel+'">'
-							+'  <select name="'+key+'" lay-filter="'+key+'">'
-							+	option
-							+'  </select>'
-							+'</div>'
-						  +'</div>';
-							dynamicFormBom.append(formHtml);
+                    var html =`<div class="layui-form-item">
+                                                ${label}
+                                                <div class="layui-input-block ${nolabel}">
+                                                  <select name="${key}" lay-filter="${key}">
+                                                   ${optionHtml}
+                                                  </select>
+                                                </div>
+                                              </div>`;
+                    dynamicFormBom.append(formHtml.replace("formHtml",html));
+                    //监听表单点击事件
+                    form.on('select('+key+')', function(o){
+                        if (change&&typeof change === "function"){
+                            change(data,o.value);     //调用传入的回调函数
+                        }
+                    });
 					break;
 					case "date":
-                        formHtml ='<div class="layui-form-item layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-								+label
-								+'<div class="layui-input-block '+nolabel+'">'
-								+'  <input type="text" name="'+key+'" id="'+key+'" lay-verify="title" autocomplete="off" placeholder="'+tips+'" class="layui-input">'
-								+'</div>'
-								+'</div>';
-								dynamicFormBom.append(formHtml);
+                        var html =`<div class="layui-form-item">
+                                                    ${label}
+                                                    <div class="layui-input-block ${nolabel}">
+                                                      <input type="text" name="${key}" id="${key}" lay-verify="${key}" autocomplete="off" class="layui-input">
+                                                    </div>
+                                                </div>`;
+                        dynamicFormBom.append(formHtml.replace("formHtml",html));
 								if(!value){
 									value = new Date();
 								}
@@ -161,17 +182,22 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 								laydate.render({
 									elem: '#'+key,
 									type: 'date',
-									value: value
+									value: value,
+                                    done: function(value, date, endDate){
+                                        if (change&&typeof change === "function"){
+                                            change(data,value);     //调用传入的回调函数
+                                        }
+									}
 								});
 					break;
 					case "time":
-                        formHtml ='<div class="layui-form-item layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-								+label
-								+'<div class="layui-input-block '+nolabel+'">'
-								+'  <input type="text" name="'+key+'" id="'+key+'" lay-verify="title" autocomplete="off" placeholder="'+tips+'" class="layui-input">'
-								+'</div>'
-								+'</div>';
-								dynamicFormBom.append(formHtml);
+                        var html =`<div class="layui-form-item">
+                                                    ${label}
+                                                    <div class="layui-input-block ${nolabel}">
+                                                      <input type="text" name="${key}" id="${key}" lay-verify="${key}" autocomplete="off" class="layui-input">
+                                                    </div>
+                                                </div>`;
+                        dynamicFormBom.append(formHtml.replace("formHtml",html));
 								if(!value){
 									value = new Date();
 								}
@@ -179,17 +205,22 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 								laydate.render({
 									elem: '#'+key,
 									type:"time",
-									value: value
+									value: value,
+                                    done: function(value, date, endDate){
+                                        if (change&&typeof change === "function"){
+                                            change(data,value);     //调用传入的回调函数
+                                        }
+                                    }
 								});
 					break;
 					case "datetime":
-                        formHtml ='<div class="layui-form-item layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-								+label
-								+'<div class="layui-input-block '+nolabel+'">'
-								+'  <input type="text" name="'+key+'" id="'+key+'" lay-verify="title" autocomplete="off" placeholder="'+tips+'" class="layui-input">'
-								+'</div>'
-								+'</div>';
-								dynamicFormBom.append(formHtml);
+                        var html =`<div class="layui-form-item">
+                                                    ${label}
+                                                    <div class="layui-input-block ${nolabel}">
+                                                      <input type="text" name="${key}" id="${key}" lay-verify="${key}" autocomplete="off" class="layui-input">
+                                                    </div>
+                                                </div>`;
+                        dynamicFormBom.append(formHtml.replace("formHtml",html));
 								if(!value){
 									value = new Date();
 								}
@@ -197,17 +228,22 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 								laydate.render({
 									elem: '#'+key,
 									type:"datetime",
-									value: value
+									value: value,
+                                    done: function(value, date, endDate){
+                                        if (change&&typeof change === "function"){
+                                            change(data,value);     //调用传入的回调函数
+                                        }
+                                    }
 								});
 					break;
 					case "month":
-                        formHtml ='<div class="layui-form-item layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-								+label
-								+'<div class="layui-input-block '+nolabel+'">'
-								+'  <input type="text" name="'+key+'" id="'+key+'" lay-verify="title" autocomplete="off" placeholder="'+tips+'" class="layui-input">'
-								+'</div>'
-								+'</div>';
-								dynamicFormBom.append(formHtml);
+                        var html =`<div class="layui-form-item">
+                                                    ${label}
+                                                    <div class="layui-input-block ${nolabel}">
+                                                      <input type="text" name="${key}" id="${key}" lay-verify="${key}" autocomplete="off" class="layui-input">
+                                                    </div>
+                                                </div>`;
+                        dynamicFormBom.append(formHtml.replace("formHtml",html));
 								if(!value){
 									value = new Date();
 								}
@@ -215,17 +251,22 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 								laydate.render({
 									elem: '#'+key,
 									type:"month",
-									value: value
+									value: value,
+                                    done: function(value, date, endDate){
+                                        if (change&&typeof change === "function"){
+                                            change(data,value);     //调用传入的回调函数
+                                        }
+                                    }
 								});
 					break;
 					case "year":
-                        formHtml ='<div class="layui-form-item layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-								+label
-								+'<div class="layui-input-block '+nolabel+'">'
-								+'  <input type="text" name="'+key+'" id="'+key+'" lay-verify="title" autocomplete="off" placeholder="'+tips+'" class="layui-input">'
-								+'</div>'
-								+'</div>';
-								dynamicFormBom.append(formHtml);
+                        var html =`<div class="layui-form-item">
+                                                    ${label}
+                                                    <div class="layui-input-block ${nolabel}">
+                                                      <input type="text" name="${key}" id="${key}" lay-verify="${key}" autocomplete="off" class="layui-input">
+                                                    </div>
+                                                </div>`;
+                        dynamicFormBom.append(formHtml.replace("formHtml",html));
 								if(!value){
 									value = new Date();
 								}
@@ -233,19 +274,44 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 								laydate.render({
 									elem: '#'+key,
 									type:"year",
-									value: value
+									value: value,
+                                    done: function(value, date, endDate){
+                                        if (change&&typeof change === "function"){
+                                            change(data,value);     //调用传入的回调函数
+                                        }
+                                    }
 								});
 					break;
 					case 'textarea':
-						formHtml = '<div class="layui-form-item layui-form-text layui-col-md'+col+' layui-col-md-offset'+ offset+'">'
-											+label
-											+'	<div class="layui-input-block '+nolabel+'">'
-											+'		<textarea name="'+key+'" id="'+key+'" placeholder="'+tips+'" class="layui-textarea">'+value+'</textarea>'
-											+'	</div>'
-											+'</div>';
-											
-													dynamicFormBom.append(formHtml);
+                        var html = `<div class="layui-form-item layui-form-text">
+										${label}
+												<div class="layui-input-block ${nolabel}">
+													<textarea name="${key}" id="${key}" placeholder="${tips}" class="layui-textarea">${value}</textarea>
+												</div>
+											</div>`;
+
+                        dynamicFormBom.append(formHtml.replace("formHtml",html));
+                                    $("#"+key).change(function (o) {
+                                        if (change&&typeof change === "function"){
+                                            change(data,$(this).val());     //调用传入的回调函数
+                                        }
+                                    });
 					break;
+                case 'switch':
+                    var html = ` <div class="layui-form-item" pane="">
+                                    ${label}
+                                    <div class="layui-input-block">
+                                      <input type="checkbox" checked="" name="${key}" id="${key}" lay-text="${option}" lay-filter="${key}"  lay-skin="switch" title="开关">
+                                    </div>
+                                 </div>`;
+                    dynamicFormBom.append(formHtml.replace("formHtml",html));
+                    //监听表单点击事件
+                    form.on('switch('+key+')', function(o){
+                        if (change&&typeof change === "function"){
+                            change(data,o.value);     //调用传入的回调函数
+                        }
+                    });
+                    break;
 				default:
 					break;
 			}
