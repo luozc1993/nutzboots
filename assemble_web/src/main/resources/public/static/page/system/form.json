@@ -79,7 +79,7 @@
       "type": "select",
       "label": "占位",
       "value": "一",
-      "option":"一|二|三",
+      "options":[{"id":1,"name":"一"},{"id":2,"name":"二"},{"id":3,"name":"三"}],
       "col": 4
   },
   {
@@ -101,11 +101,19 @@
     "type": "switch",
     "label": "创建菜单",
     "tips": "ID",
-    "option":"NO|OFF",
-    "value": "",
+    "options":[{"id":1,"name":"是"},{"id":2,"name":"否"}],
+    "value": "是",
     "col": 4,
     "power":0,
     "offset":0,
     "correlation":"hide_or_show:NO→remarks,flow_name※hide&hide_or_show:OFF→remarks,flow_name※hide"
+  },
+  {
+    "key": "checkbox",
+    "type": "checkbox",
+    "label": "多选",
+    "value": "一",
+    "options":[{"id":1,"name":"一"},{"id":2,"name":"二"},{"id":3,"name":"三"}],
+    "col": 4
   }
 ]
