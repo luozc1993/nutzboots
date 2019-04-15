@@ -26,6 +26,9 @@
             var form = layui.form;
             var admin = layui.admin;
             var dtree = layui.dtree;
+            let menuTreeNameKey = admin.getTempData("menuTreeNameKey");
+            let menuTreeIdKey = admin.getTempData("menuTreeIdKey");
+            let menuTreeFun= admin.getTempData("menuTreeFun");
 
 
             $.ajax({
@@ -50,8 +53,11 @@
             //单击节点 监听事件
             dtree.on("node('demoTree1')" ,function(param){
                 var $ = parent.layui.jquery ;
-                $("#parentName").val(param.param.context);
-                $("#parentId").val(param.param.nodeId);
+                $("#"+menuTreeNameKey).val(param.param.context);
+                $("#"+menuTreeIdKey).val(param.param.nodeId);
+                if (menuTreeFun&&typeof menuTreeFun === "function"){
+                    menuTreeFun(param);     //调用传入的回调函数
+                }
                 parent.layer.closeAll();
             });
         })

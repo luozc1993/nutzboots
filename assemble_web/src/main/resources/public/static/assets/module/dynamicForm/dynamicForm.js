@@ -89,7 +89,7 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                 value: value,
                 done: function (value, date, endDate) {
                     if (change && typeof change === "function") {
-                        change(data, value);     //调用传入的回调函数
+                        change(o,data, value);     //调用传入的回调函数
                     }
                 }
             });
@@ -125,9 +125,10 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
             if(power===1){
                 type = "text";
             }if(power===2){
-                return "";
+                return "hide-input";
             }
             var change = obj.change;
+            var click = obj.click;
 
             var formHtml = `<div class="layui-col-md${col} ${offset}">formHtml</div>`;
 			switch (type){
@@ -136,14 +137,20 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                                     ${label}
                                     <div class="layui-input-block ${nolabel}">
                                       <input type="text" name="${key}" id="${key}" value="${value}"  lay-verify="${key}" autocomplete="off" placeholder="${tips}" class="layui-input">
+                                      <input type="hidden" name="${key}_hide" id="${key}_hide"  class="layui-input">
                                     </div>
                                   </div>`;
                     dynamicFormBom.append(formHtml.replace("formHtml",html));
-							$("#"+key).change(function (o) {
-                                if (change&&typeof change === "function"){
-                                    change(data,$(this).val());     //调用传入的回调函数
-                                }
-                            });
+                    $("#"+key).change(function (o) {
+                        if (change&&typeof change === "function"){
+                            change(o,data,$(this).val());     //调用传入的回调函数
+                        }
+                    });
+                    $("#"+key).click(function (o) {
+                        if (click&&typeof click === "function"){
+                            click(o,data,$(this).val());     //调用传入的回调函数
+                        }
+                    });
 					break;
                 case 'hide-input'://文本输入框
                     var html = `<div class="layui-form-item" style="display: none">
@@ -168,9 +175,9 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 					for (var i in options) {
 					    var option = options[i];
 						if(option.name===value){
-                            optionHtml +='<option  selected="" value="'+option.id+'">'+option.name+'</option>'
+                            optionHtml +='<option  selected="" value="'+option.id?option.id:option.name+'">'+option.name+'</option>'
 						}else{
-                            optionHtml +='<option  value="'+option.id+'">'+option.name+'</option>'
+                            optionHtml +='<option  value="'+option.id?option.id:option.name+'">'+option.name+'</option>'
 						}
 					}
                     var html =`<div class="layui-form-item">
@@ -185,7 +192,7 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                     //监听表单点击事件
                     form.on('select('+key+')', function(o){
                         if (change&&typeof change === "function"){
-                            change(data,o.value);     //调用传入的回调函数
+                            change(o,data,o.value);     //调用传入的回调函数
                         }
                     });
 					break;
@@ -205,11 +212,16 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                                 </div>`;
 
                     dynamicFormBom.append(formHtml.replace("formHtml",html));
-                                $("#"+key).change(function (o) {
-                                    if (change&&typeof change === "function"){
-                                        change(data,$(this).val());     //调用传入的回调函数
-                                    }
-                                });
+                    $("#"+key).change(function (o) {
+                        if (change&&typeof change === "function"){
+                            change(o,data,$(this).val());     //调用传入的回调函数
+                        }
+                    });
+                    $("#"+key).click(function (o) {
+                        if (click&&typeof click === "function"){
+                            click(o,data,$(this).val());     //调用传入的回调函数
+                        }
+                    });
                 break;
                 case 'switch':
                     if(options.length<2)break;
@@ -231,17 +243,28 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                     dynamicFormBom.append(formHtml.replace("formHtml",html));
                     //监听表单点击事件
                     form.on('switch('+key+')', function(o){
-                        console.log(o)
                         if (change&&typeof change === "function"){
-                            change(data,o.value);     //调用传入的回调函数
+                            change(o,data,o.elem.checked);     //调用传入的回调函数
                         }
                     });
                     break;
                 case 'checkbox':
                     var input = "";
+                    let values = value.split(",");
                     for (let i = 0; i < options.length; i++) {
                         var option = options[i];
-                        input += `<input type="checkbox" name="${key}[${option.id}]" lay-skin="primary" lay-filter="${key}" title="${option.name}">`;
+                        var b = false;
+                        for (let j = 0; j < values.length; j++) {
+                            if(option.name==values[j]){
+                                b = true;
+                            }
+                        }
+                        if(b){
+                            input += `<input  type="checkbox" name="${key}[${option.id?option.id:option.name}]" lay-skin="primary" lay-filter="${key}" value="${option.id?option.id:option.name}" title="${option.name}" checked="">`;
+                        }else{
+                            input += `<input type="checkbox" name="${key}[${option.id?option.id:option.name}]" lay-skin="primary" lay-filter="${key}" value="${option.id?option.id:option.name}" title="${option.name}">`;
+                        }
+
                     }
 
                     var html = ` <div class="layui-form-item " pane="">
@@ -253,7 +276,32 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                     dynamicFormBom.append(formHtml.replace("formHtml",html));
                     form.on('checkbox('+key+')', function(o){
                         if (change&&typeof change === "function"){
-                            change(data,o.value);     //调用传入的回调函数
+                            change(o,data,o.value);     //调用传入的回调函数
+                        }
+                    });
+                    break;
+                case 'radio':
+                    var input = "";
+                    for (let i = 0; i < options.length; i++) {
+                        var option = options[i];
+                        if(option.name==value){
+                            input += `<input type="radio" name="${key}" lay-skin="primary" lay-filter="${key}" value="${option.id?option.id:option.name}" title="${option.name}" checked="">`;
+                        }else{
+                            input += `<input type="radio" name="${key}" lay-skin="primary" lay-filter="${key}" value="${option.id?option.id:option.name}" title="${option.name}">`;
+                        }
+
+                    }
+
+                    var html = ` <div class="layui-form-item " pane="">
+                                    ${label}
+                                    <div class="layui-input-block ${nolabel}">
+                                      ${input}
+                                    </div>
+                                  </div>`;
+                    dynamicFormBom.append(formHtml.replace("formHtml",html));
+                    form.on('radio('+key+')', function(o){
+                        if (change&&typeof change === "function"){
+                            change(o,data,o.value);     //调用传入的回调函数
                         }
                     });
                     break;

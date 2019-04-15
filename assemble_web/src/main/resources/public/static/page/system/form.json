@@ -94,7 +94,7 @@
       "label": "文本域",
       "tips": "请输入内容",
       "value": "",
-      "col": 4
+      "col": 12
   },
   {
     "key": "isMenu",
@@ -106,13 +106,20 @@
     "col": 4,
     "power":0,
     "offset":0,
-    "correlation":"hide_or_show:NO→remarks,flow_name※hide&hide_or_show:OFF→remarks,flow_name※hide"
   },
   {
     "key": "checkbox",
     "type": "checkbox",
     "label": "多选",
-    "value": "一",
+    "value": "二",
+    "options":[{"id":1,"name":"一"},{"id":2,"name":"二"},{"id":3,"name":"三"}],
+    "col": 4
+  },
+  {
+    "key": "radio",
+    "type": "radio",
+    "label": "单选",
+    "value": "三",
     "options":[{"id":1,"name":"一"},{"id":2,"name":"二"},{"id":3,"name":"三"}],
     "col": 4
   }

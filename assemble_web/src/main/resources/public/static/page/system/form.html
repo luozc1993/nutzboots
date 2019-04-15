@@ -60,8 +60,13 @@
                     cancel:function(obj){
                         console.log(obj)
                     },
-                    change:function(data,value){
-                        console.log(data,value)
+                    change:function(o,data,value){
+                        console.log(o,data)
+                        console.log(value)
+                    },
+                    click:function(o,data,value){
+                        console.log(o,data)
+                        console.log(value)
                     }
                 });
             }

@@ -59,8 +59,26 @@
                     cancel:function(obj){
                         console.log(obj)
                     },
-                    change:function(data,value){
-                        console.log(data,value)
+                    change:function(o,data,value){
+                        console.log(o,data,value)
+                    },
+                    click:function(o,data,value){
+                        if(data.key=="parent_menu"){
+                            admin.putTempData("menuTreeNameKey",data.key);
+                            admin.putTempData("menuTreeIdKey",data.key+"_hide");
+                            layui.admin.open({
+                                type: 2,
+                                title:  '菜单' ,
+                                area: ['500px', '400px'],
+                                content: '/page/sys/user/menu_tree.html',
+                                zIndex: layer.zIndex, //重点1
+                                end: function () {
+
+                                }
+                            });
+                        }
+                        console.log(o,data)
+                        console.log(value)
                     }
                 });
             }

@@ -137,6 +137,8 @@
                 top.layui.index.closeTab('/page/sys/user/menu_form.html');
             })
             function menuTree(data){
+                admin.putTempData("menuTreeNameKey","parentName");
+                admin.putTempData("menuTreeIdKey","parentId");
                 layui.admin.open({
                     type: 2,
                     title:  '菜单' ,
