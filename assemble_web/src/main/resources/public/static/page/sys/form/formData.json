@@ -18,14 +18,6 @@
 		"tips": "请输入流程名称",
 		"value": "",
 		"col": 4
-	},{
-		"key": "parent_menu",
-		"type": "text-input",
-		"label": "上级菜单",
-		"value":"系统一",
-		"tips": "请输入选择",
-		"value": "",
-		"col": 4
 	},
 	{
 		"key": "remarks",

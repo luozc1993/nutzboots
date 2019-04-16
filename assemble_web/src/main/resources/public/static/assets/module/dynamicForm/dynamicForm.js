@@ -175,9 +175,9 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 					for (var i in options) {
 					    var option = options[i];
 						if(option.name===value){
-                            optionHtml +='<option  selected="" value="'+option.id?option.id:option.name+'">'+option.name+'</option>'
+                            optionHtml +=`<option  selected="" value="${option.id?option.id:option.name}">${option.name}</option>`
 						}else{
-                            optionHtml +='<option  value="'+option.id?option.id:option.name+'">'+option.name+'</option>'
+                            optionHtml +=`<option  value="${option.id?option.id:option.name}">${option.name}</option>`
 						}
 					}
                     var html =`<div class="layui-form-item">

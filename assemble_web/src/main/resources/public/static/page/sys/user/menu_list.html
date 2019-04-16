@@ -97,7 +97,10 @@
                 menuForm("");
             })
             function menuForm(data){
+
+                top.layui.index.closeTab('/page/sys/user/menu_form.html');
                 admin.putTempData("SysMenu",isNull(data));
+
                 top.layui.index.openTab({
                     title: (data?'编辑':'添加')+'菜单',
                     url: '/page/sys/user/menu_form.html',
