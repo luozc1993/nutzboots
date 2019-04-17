@@ -21,7 +21,6 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 			yesBtnName = yesBtnName?yesBtnName:"提交";
 			var pane = obj.pane;
 			var paneAtr = "";
-			console.log(pane)
 			if(pane){
                 paneAtr = 'layui-form-pane';
             }
@@ -127,16 +126,25 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
             }if(power===2){
                 return "hide-input";
             }
+            //输入框改变事件调用方法
             var change = obj.change;
+            //输入框点击事件调用方法
             var click = obj.click;
+            //是否必填
+            var isRequired = data.isRequired;
+            console.log(isRequired)
+            var verify = "";
+            if(isRequired==1){
+                verify = "required";
+            }
 
-            var formHtml = `<div class="layui-col-md${col} ${offset}">formHtml</div>`;
+            var formHtml = `<div class="layui-col-sm6 layui-col-md${col} ${offset}">formHtml</div>`;
 			switch (type){
 				case 'text-input'://文本输入框
-                    var html = `<div class="layui-form-item ">
+                    var html = `<div class="layui-form-item ${verify}">
                                     ${label}
                                     <div class="layui-input-block ${nolabel}">
-                                      <input type="text" name="${key}" id="${key}" value="${value}"  lay-verify="${key}" autocomplete="off" placeholder="${tips}" class="layui-input">
+                                      <input type="text" name="${key}" id="${key}" value="${value}"  lay-verify="${verify}" autocomplete="off" placeholder="${tips}" required class="layui-input">
                                       <input type="hidden" name="${key}_hide" id="${key}_hide"  class="layui-input">
                                     </div>
                                   </div>`;
@@ -156,7 +164,7 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                     var html = `<div class="layui-form-item" style="display: none">
                                     ${label}
                                     <div class="layui-input-block ${nolabel}">
-                                        <input type="text" name="${key}" id="${key}" value="${value}"  lay-verify="${key}" autocomplete="off" placeholder="${tips}" class="layui-input">
+                                        <input type="text" name="${key}" id="${key}" value="${value}"  lay-verify="${verify}" autocomplete="off" placeholder="${tips}" class="layui-input">
                                     </div>
                                 </div>`;
                     dynamicFormBom.append(formHtml.replace("formHtml",html));
@@ -207,7 +215,7 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                     var html = `<div class="layui-form-item layui-form-text">
                                     ${label}
                                     <div class="layui-input-block ${nolabel}">
-                                        <textarea name="${key}" id="${key}" placeholder="${tips}" class="layui-textarea">${value}</textarea>
+                                        <textarea name="${key}" id="${key}" placeholder="${tips}" lay-verify="${verify}" class="layui-textarea">${value}</textarea>
                                     </div>
                                 </div>`;
 
@@ -229,9 +237,9 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
                     var text = options[0].name+"|"+options[1].name;
                     var input = "";
                     if(options[0].name==value){
-                        input = `<input type="checkbox" checked="" name="${key}" id="${key}" lay-text="${text}" lay-filter="${key}" value="${value}"  lay-skin="switch" title="开关">`;
+                        input = `<input type="checkbox"  checked="" name="${key}" id="${key}" lay-text="${text}" lay-filter="${key}" value="${value}"  lay-skin="switch" title="${text}">`;
                     }else{
-                        input = `<input type="checkbox"  name="${key}" id="${key}" lay-text="${text}" lay-filter="${key}" value="${value}"  lay-skin="switch" title="开关">`;
+                        input = `<input type="checkbox"  name="${key}" id="${key}" lay-text="${text}" lay-filter="${key}" value="${value}"  lay-skin="switch" title="${text}">`;
                     }
 
                     var html = ` <div class="layui-form-item" pane="">

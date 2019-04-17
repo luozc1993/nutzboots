@@ -17,6 +17,7 @@
 		"label": "表单标识",
 		"tips": "请输入字段标识",
 		"value": "",
+		"isRequired":1,
 		"col": 4
 	},
 	{
@@ -87,6 +88,16 @@
 		"value": "编辑",
 		"options":[{"id":0,"name":"编辑"},{"id":1,"name":"查看"},{"id":2,"name":"隐藏"}],
 		"col": 4
+	},
+	{
+		"key": "isRequired",
+		"type": "switch",
+		"label": "是否必填",
+		"options":[{"id":1,"name":"是"},{"id":0,"name":"否"}],
+		"value": "1",
+		"col": 4,
+		"power":0,
+		"offset":0
 	},
 	{
 		"key": "options",
