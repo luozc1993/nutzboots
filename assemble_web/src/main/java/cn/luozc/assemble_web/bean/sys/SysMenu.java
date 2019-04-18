@@ -6,38 +6,46 @@ import java.util.Date;
 import java.util.List;
 
 @Table("sys_menu")
+@Comment("菜单表")
 public class SysMenu {
 
   @Name
   private String id;
   @Column
+  @Comment("菜单名称")
   private String name;
   @Column
+  @Comment("菜单地址")
   private String url;
   @Column("parent_id")
+  @Comment("上级菜单")
   private String parentId;
   @Column
+  @Comment("菜单图标")
   private String icon;
   @Column("is_menu")
+  @Comment("菜单类型")
   private long isMenu;
   @Column
+  @Comment("排序")
   private long sort;
   @Column("create_time")
+  @Comment("创建时间")
   private Date createTime;
   @Column("update_time")
+  @Comment("修改时间")
   private Date updateTime;
 
+    @Comment("菜单关联角色")
     @ManyMany(relation = "sys_role_menu",
             from = "mid:id",
             to = "rid")
     public List<SysRole> roles;
-
+    @Comment("菜单角色对着表")
     @Many(field = "mid")
     private List<SysRoleMenu> sysRoleMenus;
-
+    @Comment("菜单上级对着表")
     @One(field = "parentId")
-    // 1.r.59之前需要写target参数
-    // @One(target = Master.class, field = "masterId")
     public SysMenu parent;
 
     public SysMenu getSysMenu() {

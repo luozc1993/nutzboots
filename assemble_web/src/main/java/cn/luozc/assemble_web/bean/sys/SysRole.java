@@ -6,27 +6,33 @@ import org.nutz.dao.entity.annotation.*;
 import java.util.List;
 
 @Table("sys_role") //映射的表名称
+@Comment("角色表")
 public class SysRole {
 
     @Name
     private String id;
 
     @Column
+    @Comment("角色名称")
     private String name;
 
     @Column
+    @Comment("备注")
     private String remarks;
 
+    @Comment("用户列表")
     @ManyMany(relation = "sys_role_user",
             from = "rid:id",
             to = "uid")
     public List<SysUser> users;
 
+    @Comment("菜单列表")
     @ManyMany(relation = "sys_role_menu",
             from = "rid:id",
             to = "mid")
     public List<SysMenu> menus;
 
+    @Comment("角色用户对照表")
     @Many(field = "rid")
     private List<SysRoleUser> sysRoleUsers;
 

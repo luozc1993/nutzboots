@@ -26,6 +26,7 @@ public class Base2Dao {
      * @return  返回实体对象列表
      */
     public List<Record> getList(String table, int pageNumber, int pageSize, String value, List<String> feilds){
+
         return dao.query(table, getVagueCriteria(value,feilds),  getPager(pageNumber, pageSize));
     }
 

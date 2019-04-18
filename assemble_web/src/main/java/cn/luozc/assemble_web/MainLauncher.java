@@ -25,25 +25,8 @@ public class MainLauncher {
 
     
     public void init() {
-        String path = this.getClass().getClassLoader().getResource("").getPath();
-        execSql(path);
-//        SysUser food = dao.fetch(SysUser.class, "e2460c47-dd91-478f-a096-087147ef3159");
-//        System.err.println(food);
-//        SysUser sysUser = dao.fetchLinks(food,"roles");
-//        System.err.println(sysUser);
-//
-//        SysRole sysRole = dao.fetch(SysRole.class);
-//        System.err.println(sysRole);
-//        SysRole sysRoles = dao.fetchLinks(sysRole,"");
-//        System.err.println(sysRoles);
+        execSql(this.getClass().getClassLoader().getResource("").getPath());
 
-
-        //SysUser fetch = userDao.getDataById("e2460c47-dd91-478f-a096-087147ef3159");
-
-
-//        List<SysUser> list = userDao.getList(0,10,"");
-//        System.err.println(list);
-        // NB自身初始化完成后会调用这个方法
     }
 
     //执行sql语句

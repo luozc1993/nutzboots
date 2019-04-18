@@ -7,37 +7,47 @@ import java.util.Date;
 import java.util.List;
 
 @Table("sys_user") //映射的表名称
+@Comment("用户表")
 public class SysUser {
 
     @Name
     private String id;
 
     @Column
+    @Comment("账号")
     private String uname;
 
     @Column
+    @Comment("昵称")
     private String nickname;
 
     @Column
+    @Comment("密码")
     private String password;
 
     @Column
+    @Comment("邮箱")
     private String email;
 
     @Column
+    @Comment("手机号")
     private String phone;
 
     @Column("create_time")
+    @Comment("创建时间")
     private Date createTime;
 
     @Column
+    @Comment("是否启用")
     private int enable;
 
+    @Comment("角色列表")
     @ManyMany(relation = "sys_role_user",
             from = "uid:id",
             to = "rid")
     public List<SysRole> roles;
 
+    @Comment("角色用户关联表")
     @Many(field = "uid")
     private List<SysRoleUser> sysRoleUsers;
 

@@ -3,14 +3,17 @@ package cn.luozc.assemble_web.bean.sys;
 import org.nutz.dao.entity.annotation.*;
 
 @Table("sys_role_user") //映射的表名称
+@Comment("角色用户关联表")
 public class SysRoleUser {
 
     @Name
     private String id;
 
     @Column("rid")
+    @Comment("角色id")
     private String rid;
     @Column("uid")
+    @Comment("用户id")
     private String uid;
 
     public SysRoleUser(String id,String rid,String uid){
