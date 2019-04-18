@@ -9,10 +9,12 @@ import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Criteria;
 import org.nutz.dao.util.cri.SqlExpressionGroup;
 import org.nutz.ioc.loader.annotation.Inject;
+import org.nutz.ioc.loader.annotation.IocBean;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+@IocBean
 public class Base2Dao {
     @Inject public Dao dao;
 

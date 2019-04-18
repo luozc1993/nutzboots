@@ -1,6 +1,7 @@
 package cn.luozc.assemble_web.module.sys;
 
 import cn.luozc.assemble_web.bean.sys.SysRole;
+import cn.luozc.assemble_web.module.BaseModule;
 import cn.luozc.assemble_web.service.sys.RoleService;
 import cn.luozc.assemble_web.util.JsonData;
 import cn.luozc.assemble_web.util.LayuiTableResult;
