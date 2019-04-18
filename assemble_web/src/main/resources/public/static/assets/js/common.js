@@ -22,6 +22,12 @@ layui.config({
         admin.removeLoading();
     }, window == top ? 600 : 100);
 
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
 });
 
 // 获取当前项目的根路径，通过获取layui.js全路径截取assets之前的地址

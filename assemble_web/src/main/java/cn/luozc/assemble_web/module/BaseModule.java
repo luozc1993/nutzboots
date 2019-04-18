@@ -20,6 +20,7 @@ public class BaseModule {
     public LayuiTableResult list(HttpServletRequest request){
         int page = Integer.valueOf(request.getParameter("page"));
         int limit = Integer.valueOf(request.getParameter("limit"));
+        String mid = request.getParameter("mid");
         String value = request.getParameter("value");
         List<String> searchField = new ArrayList<>();
         searchField.add("name");

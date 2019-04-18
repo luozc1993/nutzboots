@@ -7,8 +7,8 @@
 
     <!-- 静态网页 -->
     <rule>
-        <from>^/flow/(\w+)/(\w+)\.html$</from>
-        <to>/sys/flow/page?m=$1&amp;f=$2</to>
+        <from>^/report/([A-Za-z0-9_-]+).html$</from>
+        <to>/page/report/report.html</to>
     </rule>
 
 </urlrewrite>
