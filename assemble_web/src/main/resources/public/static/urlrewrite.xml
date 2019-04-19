@@ -8,7 +8,11 @@
     <!-- 静态网页 -->
     <rule>
         <from>^/report/([A-Za-z0-9_-]+).html$</from>
-        <to>/page/report/report.html</to>
+        <to>/sys/report/page?mid=$1</to>
     </rule>
-
+    <!-- 静态网页 -->
+    <rule>
+        <from>^/botton/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+).html$</from>
+        <to>/sys/report/botton?mid=$1&amp;bid=$2</to>
+    </rule>
 </urlrewrite>

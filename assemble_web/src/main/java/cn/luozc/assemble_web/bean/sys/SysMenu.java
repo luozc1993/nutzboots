@@ -25,7 +25,7 @@ public class SysMenu {
   private String icon;
   @Column("is_menu")
   @Comment("菜单类型")
-  private long isMenu;
+  private String isMenu;
   @Column
   @Comment("排序")
   private long sort;
@@ -35,6 +35,34 @@ public class SysMenu {
   @Column("update_time")
   @Comment("修改时间")
   private Date updateTime;
+  @Column
+  private String type;
+  @Column
+  private String pid;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public SysMenu getParent() {
+        return parent;
+    }
+
+    public void setParent(SysMenu parent) {
+        this.parent = parent;
+    }
 
     @Comment("菜单关联角色")
     @ManyMany(relation = "sys_role_menu",
@@ -120,11 +148,11 @@ public class SysMenu {
     this.icon = icon;
   }
 
-  public long getIsMenu() {
+  public String getIsMenu() {
     return isMenu;
   }
 
-  public void setIsMenu(long isMenu) {
+  public void setIsMenu(String isMenu) {
     this.isMenu = isMenu;
   }
 

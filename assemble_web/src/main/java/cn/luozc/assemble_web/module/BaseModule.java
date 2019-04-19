@@ -1,10 +1,15 @@
 package cn.luozc.assemble_web.module;
 
+import cn.luozc.assemble_web.bean.sys.SysData;
+import cn.luozc.assemble_web.bean.sys.SysMenu;
 import cn.luozc.assemble_web.service.BaseService;
+import cn.luozc.assemble_web.service.sys.DataService;
+import cn.luozc.assemble_web.service.sys.MenuService;
 import cn.luozc.assemble_web.util.JsonData;
 import cn.luozc.assemble_web.util.LayuiTableResult;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.nutz.dao.entity.Record;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.mvc.annotation.At;
 
@@ -14,19 +19,9 @@ import java.util.*;
 public class BaseModule {
 
     @Inject private BaseService baseService;
+    @Inject private MenuService menuService;
 
 
-    @At("/list")
-    public LayuiTableResult list(HttpServletRequest request){
-        int page = Integer.valueOf(request.getParameter("page"));
-        int limit = Integer.valueOf(request.getParameter("limit"));
-        String mid = request.getParameter("mid");
-        String value = request.getParameter("value");
-        List<String> searchField = new ArrayList<>();
-        searchField.add("name");
-        searchField.add("ramarks");
-        return baseService.getList("sys_table",page,limit,value,searchField);
-    }
 
     @At("/add")
     public Object add(HttpServletRequest request){

@@ -16,7 +16,6 @@
         <div class='layui-card'>
             <div class='layui-card-body'>
                 <table id='table' lay-filter='table'></table>
-
             </div>
         </div>
     </div>
@@ -37,7 +36,7 @@
     <script type='text/html' id='toolbar'>
         <button class='layui-btn layui-btn-sm' lay-event='add'>添加</button>
         <input type="search" id="search" name="search" placeholder="请输入需要搜索的内容" class="layui-input">
-        <buttin class='layui-btn layui-btn-sm layui-btn-normal' lay-event='search' style="    position: relative;left: -5px;height: 34px;line-height: 34px;">搜索</buttin>
+        <buttin class='layui-btn layui-btn-sm layui-btn-normal' lay-event='search' style="position: relative;left: -5px;height: 34px;line-height: 34px;">搜索</buttin>
     </script>
 
 
@@ -55,6 +54,16 @@
             if(url.startsWith("/report/")&&url.endsWith(".html")){
                 mid = url.replace("/report/","").replace(".html","")
             }
+            $.ajax({
+                url:"/sys/report/fields",
+                data:{"mid":mid},
+                dataType:"json",
+                type:"post",
+                success:function(){
+
+                }
+            });
+
             createTable('');
             function createTable(value){
                 //执行渲染
@@ -71,7 +80,7 @@
                     ,cols: [ [
                         {field:'id',title:'ID',hide:true},
                         {field:'name',title:'表名'},
-                        {field:'remarks',title:'备注'},
+                        {field:'table',title:'数据表名'},
                         {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:120}
                     ] ] //设置表头
 
@@ -124,7 +133,7 @@
 
             function del(id){
                 $.ajax({
-                    url:"/sys/table/del",
+                    url:"/sys/report/del",
                     data:{id:id},
                     dataType:"json",
                     type:"post",

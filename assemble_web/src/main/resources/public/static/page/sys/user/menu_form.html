@@ -28,7 +28,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">排序</label>
                     <div class="layui-input-block">
-                        <input type="text" id="sort" name="sort" autocomplete="off"  placeholder="请输入排序" class="layui-input">
+                        <input type="number" id="sort" name="sort" value="0" autocomplete="off"   placeholder="请输入排序" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -64,6 +64,27 @@
                     <div class="layui-input-block">
                         <input type="hidden" id="icon" name="icon" autocomplete="off"   class="layui-input">
                         <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="type" value="url" title="链接" checked="">
+                        <input type="radio" name="type" value="report" title="报表" >
+                        <input type="radio" name="type" value="data" title="数据">
+                        <input type="radio" name="type" value="flow" title="流程">
+                    </div>
+                </div>
+            </div>
+            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">菜单类型</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="isMenu" value="0" title="目录" >
+                        <input type="radio" name="isMenu" value="1" title="菜单" checked="">
+                        <input type="radio" name="isMenu" value="2" title="按钮">
                     </div>
                 </div>
             </div>
@@ -203,7 +224,7 @@
              * @param filter lay-filter
              * @param iconName 图标名称，自动识别fontClass/unicode
              */
-            iconPicker.checkIcon('iconPicker', SysMenu.icon);
+            iconPicker.checkIcon('iconPicker', SysMenu.icon?SysMenu.icon:"layui-icon-home");
 
 
 

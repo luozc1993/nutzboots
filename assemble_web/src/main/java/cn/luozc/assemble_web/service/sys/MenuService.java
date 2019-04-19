@@ -49,6 +49,9 @@ public class MenuService {
         if(StringUtils.isEmpty(sysMenu.getParentId())){
             sysMenu.setParentId("0");
         }
+        if("1".equals(sysMenu.getIsMenu())&&StringUtils.isNotEmpty(sysMenu.getType())){
+            sysMenu.setUrl("/"+sysMenu.getType()+"/"+sysMenu.getId()+".html");
+        }
         SysMenu add = sysMenuDao.add(sysMenu);
         if(add!=null){
             addMenuRole(roleIds,sysMenu);
@@ -162,5 +165,10 @@ public class MenuService {
         }
 
         return result;
+    }
+
+
+    public SysMenu getMenuById(String mid){
+        return sysMenuDao.getDataById(mid);
     }
 }

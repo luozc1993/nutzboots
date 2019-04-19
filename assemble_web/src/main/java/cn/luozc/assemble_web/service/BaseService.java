@@ -5,16 +5,16 @@ import cn.luozc.assemble_web.util.JsonData;
 import cn.luozc.assemble_web.util.LayuiTableResult;
 import net.sf.json.JSONObject;
 import org.nutz.dao.Chain;
-import org.nutz.dao.Dao;
+import org.nutz.dao.entity.Record;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 
 import java.util.List;
-import java.util.UUID;
 
 @IocBean
 public class BaseService {
     @Inject private Base2Dao base2Dao;
+
 
     /**
      * 获取用户列表数据 模糊分页查询
@@ -66,4 +66,10 @@ public class BaseService {
         return JsonData.success(base2Dao.delete(table,id),"删除成功");
     }
 
+    /**
+     * 通过id获取数据
+     */
+    public Record getDataById(String table,String id){
+       return base2Dao.getDataById(table,id);
+    }
 }
