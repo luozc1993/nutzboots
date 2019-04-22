@@ -13,7 +13,7 @@ public class DataService {
 
 
 
-    public SysData getSyDataById(String id){
+    public SysData getSysDataById(String id){
         return sysDataDao.getDataById(id);
     }
 

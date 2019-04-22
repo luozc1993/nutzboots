@@ -8,7 +8,16 @@
     <!-- 静态网页 -->
     <rule>
         <from>^/report/([A-Za-z0-9_-]+).html$</from>
-        <to>/sys/report/page?mid=$1</to>
+        <to>/sys/report/page?fid=$1</to>
+    </rule>
+    <rule>
+        <from>^/menu/([A-Za-z0-9_-]+).html$</from>
+        <to>/sys/menu/page?mid=$1</to>
+    </rule>
+    <!-- 静态网页 -->
+    <rule>
+        <from>^/data/([A-Za-z0-9_-]+).html$</from>
+        <to>/sys/data/page?did=$1</to>
     </rule>
     <!-- 静态网页 -->
     <rule>

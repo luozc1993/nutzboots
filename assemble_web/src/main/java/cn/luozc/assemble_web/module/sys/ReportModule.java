@@ -2,22 +2,28 @@ package cn.luozc.assemble_web.module.sys;
 
 import cn.luozc.assemble_web.bean.sys.SysMenu;
 import cn.luozc.assemble_web.bean.sys.SysReport;
+import cn.luozc.assemble_web.bean.sys.SysReportBtn;
+import cn.luozc.assemble_web.bean.sys.SysReportForm;
 import cn.luozc.assemble_web.module.BaseModule;
 import cn.luozc.assemble_web.service.BaseService;
 import cn.luozc.assemble_web.service.sys.MenuService;
 import cn.luozc.assemble_web.service.sys.ReportService;
 import cn.luozc.assemble_web.util.JsonData;
 import cn.luozc.assemble_web.util.LayuiTableResult;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.lf5.util.ResourceUtils;
 import org.nutz.dao.Dao;
 import org.nutz.dao.entity.Record;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.lang.segment.CharSegment;
 import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,45 +39,101 @@ public class ReportModule extends BaseModule {
     public LayuiTableResult list(HttpServletRequest request){
         int page = Integer.valueOf(request.getParameter("page"));
         int limit = Integer.valueOf(request.getParameter("limit"));
-        String mid = request.getParameter("mid");
+        String fid = request.getParameter("fid");
         String value = request.getParameter("value");
         List<String> searchField = new ArrayList<>();
-        searchField.add("name");
-        searchField.add("ramarks");
-        SysMenu menu = menuService.getMenuById(mid);
-        if(menu==null|| StringUtils.isEmpty(menu.getPid())){
-            return LayuiTableResult.result(1,"数据错误",0,new ArrayList<>());
-        }
-
-        SysReport sysReport = reportService.getSysReportById(menu.getPid());
+        searchField.add("report_name");
+        SysReport sysReport = reportService.getSysReportById(fid);
         if(sysReport==null){
             return LayuiTableResult.result(1,"数据错误",0,new ArrayList<>());
         }
-        return baseService.getList(sysReport.getTable(),page,limit,value,searchField);
+        return baseService.getList(sysReport.getTableName(),page,limit,value,searchField);
     }
 
     @At
     public JsonData fields(String mid) {
         SysMenu menu = menuService.getMenuById(mid);
-        reportService.getSysReportFormsByPid(menu.getPid());
+        reportService.getSysReportFormsByPid(menu.getFid());
         return null;
     }
 
 
 
     @At
-    @Ok("th:/report/${obj.mid}/list.html")
-    public NutMap page(String mid){
-        NutMap map = new NutMap();
-        map.put("mid",mid);
-        return map;
+    @Ok("beetl:/report/${obj.fid}.html")
+    public JSONObject page(String fid){
+        JSONObject json = new JSONObject();
+        json.put("fid",fid);
+        return json;
     }
+
+    @At("/form_list")
+    public LayuiTableResult form_list(String reportId){
+        List<SysReportForm> sysReportForms = reportService.getSysReportFormsByPid(reportId);
+        return LayuiTableResult.result(0,"",sysReportForms.size(),sysReportForms);
+    }
+
     @At
-    @Ok("th:/report/${obj.mid}/${obj.bid}.html")
-    public NutMap botton(String mid,String bid){
-        NutMap map = new NutMap();
-        map.put("mid",mid);
-        map.put("bid",bid);
-        return map;
+    public JsonData createReport(String reportId,HttpServletRequest request){
+
+
+        String html = getReportHtml().toString();
+
+        SysReport sysReport = reportService.getSysReportById(reportId);
+        html = html.replace("${title}",sysReport.getReportName());
+        List<SysReportBtn> reportBtns = reportService.getReportBtnListByPid(sysReport.getId());
+        String topBtnHtml = "";
+        for (SysReportBtn btn:reportBtns) {
+            topBtnHtml += "<button class='layui-btn layui-btn-sm toolbarBtn' data-type=\""+btn.getType()+"\" data-jump=\""+btn.getJump()+"\" data-title=\""+btn.getTitle()+"\" data-id=\""+btn.getDataId()+"\">"+btn.getTitle()+"</button>";
+        }
+        html = html.replace("${topBtn}",topBtnHtml);
+
+        try {
+            String path = this.getClass().getResource("/").getPath() + "template/report/" + sysReport.getId() + ".html";
+            File file = new File(path);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(html);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return JsonData.success(html);
     }
+
+    /**
+     * 获取模板文件内容
+     * @return
+     */
+    private StringBuffer getReportHtml() {
+        StringBuffer html = new StringBuffer();
+        BufferedReader br = null;
+        try {
+            String path = this.getClass().getResource("/").getPath() + "report.html";
+            File file = new File(path);
+            br = new BufferedReader(new FileReader(file));
+            String str = null;
+            while ((str=br.readLine())!=null){
+                html.append(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(br!=null){
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return html;
+    }
+
 }

@@ -38,7 +38,7 @@ public class SysMenu {
   @Column
   private String type;
   @Column
-  private String pid;
+  private String fid;
 
     public String getType() {
         return type;
@@ -48,15 +48,15 @@ public class SysMenu {
         this.type = type;
     }
 
-    public String getPid() {
-        return pid;
-    }
+  public String getFid() {
+    return fid;
+  }
 
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
+  public void setFid(String fid) {
+    this.fid = fid;
+  }
 
-    public SysMenu getParent() {
+  public SysMenu getParent() {
         return parent;
     }
 

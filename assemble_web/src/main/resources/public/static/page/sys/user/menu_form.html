@@ -15,7 +15,7 @@
     <!-- 正文开始 -->
     <div class='layui-fluid'>
         <div class="layui-form layui-form-pane layui-row" lay-filter="form" action="">
-            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md4">
                 <div class="layui-form-item">
                     <label class="layui-form-label">名称</label>
                     <div class="layui-input-block">
@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md4">
                 <div class="layui-form-item">
                     <label class="layui-form-label">排序</label>
                     <div class="layui-input-block">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md4">
                 <div class="layui-form-item">
                     <label class="layui-form-label">上级菜单</label>
                     <div class="layui-input-block">
@@ -41,16 +41,35 @@
                     </div>
                 </div>
             </div>
-
-            <div class=" layui-col-xs12 layui-col-sm12 layui-col-md12">
-                <div class="layui-form-item ">
-                    <label class="layui-form-label">地址</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="url" name="url" autocomplete="off"  placeholder="请输入链接地址" class="layui-input">
+            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md6">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-block" >
+                        <input type="radio" name="type" lay-filter="type" value="url" title="链接" checked="">
+                        <input type="radio" name="type" lay-filter="type" value="report" title="报表" >
+                        <input type="radio" name="type" lay-filter="type" value="data" title="数据">
+                        <input type="radio" name="type" lay-filter="type" value="flow" title="流程">
                     </div>
                 </div>
             </div>
-            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md6">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">菜单类型</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="isMenu" lay-filter="isMenu" value="0" title="目录" >
+                        <input type="radio" name="isMenu" lay-filter="isMenu" value="1" title="菜单" checked="">
+                    </div>
+                </div>
+            </div>
+            <div id="urlDiv" class=" layui-col-xs12 layui-col-sm12 layui-col-md12">
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="url" name="url" autocomplete="off"  placeholder="链接地址在类型选择链接时有效" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md4">
                 <div class="layui-form-item">
                     <label class="layui-form-label">角色权限</label>
                     <div class="layui-input-block">
@@ -58,36 +77,16 @@
                     </div>
                 </div>
             </div>
-            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
+            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md4">
                 <div class="layui-form-item ">
                     <label class="layui-form-label">图标</label>
                     <div class="layui-input-block">
-                        <input type="hidden" id="icon" name="icon" autocomplete="off"   class="layui-input">
+                        <input type="hidden" id="icon" name="icon" autocomplete="off" value="layui-icon-home"   class="layui-input">
                         <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input">
                     </div>
                 </div>
             </div>
-            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">类型</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="type" value="url" title="链接" checked="">
-                        <input type="radio" name="type" value="report" title="报表" >
-                        <input type="radio" name="type" value="data" title="数据">
-                        <input type="radio" name="type" value="flow" title="流程">
-                    </div>
-                </div>
-            </div>
-            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md4">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">菜单类型</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="isMenu" value="0" title="目录" >
-                        <input type="radio" name="isMenu" value="1" title="菜单" checked="">
-                        <input type="radio" name="isMenu" value="2" title="按钮">
-                    </div>
-                </div>
-            </div>
+
             <div class="layui-form-item text-center" style="bottom: 0; position: fixed;left: 50%;">
                 <button class="layui-btn" lay-filter="formSubmit" lay-submit>保存</button>
                 <button class="layui-btn layui-btn-primary" type="button" id="closePage" ew-event="closeDialog">取消</button>
@@ -226,8 +225,25 @@
              */
             iconPicker.checkIcon('iconPicker', SysMenu.icon?SysMenu.icon:"layui-icon-home");
 
+            var type = "url";
 
-
+            form.on('radio(type)', function(data){
+                type = data.value;
+                if(type=="url"&&isMenu==1){
+                    $("#urlDiv").show();
+                }else{
+                    $("#urlDiv").hide();
+                }
+            });
+            var isMenu = 1;
+            form.on('radio(isMenu)', function(data){
+                isMenu = data.value;
+                if(type=="url"&&isMenu==1){
+                    $("#urlDiv").show();
+                }else{
+                    $("#urlDiv").hide();
+                }
+            });
 
         });
 

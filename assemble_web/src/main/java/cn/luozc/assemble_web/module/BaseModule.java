@@ -20,18 +20,28 @@ public class BaseModule {
 
     @Inject private BaseService baseService;
     @Inject private MenuService menuService;
+    @Inject private DataService dataService;
 
 
 
     @At("/add")
     public Object add(HttpServletRequest request){
-        String id = request.getParameter("id");
-        JSONObject json = getRequestData(request);
+        String pid = request.getParameter("pid");
+        String type = request.getParameter("type");
+        String table = "";
+        if("data".equals(type)){
+            SysData sysData = dataService.getSysDataById(pid);
+            table = sysData.getTableName();
+        }
+
+        String data = request.getParameter("data");
+        JSONObject json = JSONObject.fromObject(data);
+        String id = json.get("id")==null?"":json.getString("id");
         if(StringUtils.isEmpty(id)){
             json.put("id", UUID.randomUUID().toString());
-            return baseService.add("sys_table",json);
+            return baseService.add(table,json);
         }else{
-            return baseService.edit("sys_table",json,id);
+            return baseService.edit(table,json,id);
         }
     }
 

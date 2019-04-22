@@ -1,17 +1,23 @@
 package cn.luozc.assemble_web.dao;
 
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
+import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Criteria;
+import org.nutz.dao.sql.Sql;
 import org.nutz.dao.util.cri.SqlExpressionGroup;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @IocBean
@@ -104,4 +110,19 @@ public class Base2Dao {
         return cri;
     }
 
+
+    public Object call(String funName, JSONObject data){
+        Iterator keys = data.keys();
+        List<String> list = new ArrayList<>();
+        while (keys.hasNext()){
+            String key = (String) keys.next();
+            list.add("'"+data.getString(key)+"'");
+
+        }
+        Sql sql = Sqls.create("Call "+funName+"("+ StringUtils.join(list,",") +")");
+        sql.setCallback(Sqls.callback.records());
+        dao.execute(sql);
+        Record record = sql.getOutParams();
+        return record;
+    }
 }

@@ -15,7 +15,7 @@ public class HomeModule {
 
     @At({"/","/index"})
     @Ok("->:/index.html")
-    public String now() {
+    public String index() {
 
         return null;
     }

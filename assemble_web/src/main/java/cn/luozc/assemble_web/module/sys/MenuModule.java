@@ -4,6 +4,7 @@ import cn.luozc.assemble_web.bean.sys.SysMenu;
 import cn.luozc.assemble_web.service.sys.MenuService;
 import cn.luozc.assemble_web.util.JsonData;
 import cn.luozc.assemble_web.util.LayuiTableResult;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -48,6 +49,17 @@ public class MenuModule {
         String s = roles==null? "":(String)roles;
 
         return menuService.getList(s);
+    }
+
+    @At
+    @Ok("beetl:/${obj.type}/${obj.fid}.html")
+    public JSONObject page(String mid){
+        SysMenu menu = menuService.getMenuById(mid);
+        JSONObject json = new JSONObject();
+        json.put("mid",mid);
+        json.put("type",menu.getType());
+        json.put("fid",menu.getFid());
+        return json;
     }
 
 }

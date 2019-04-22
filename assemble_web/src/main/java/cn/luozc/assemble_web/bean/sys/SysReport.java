@@ -13,10 +13,10 @@ public class SysReport {
 
     @Name
     private String id;
-    @Column
-    private String name;
-    @Column
-    private String table;
+    @Column("report_name")
+    private String reportName;
+    @Column("table_name")
+    private String tableName;
     @Column("create_time")
     @Comment("创建时间")
     private Date createTime;
@@ -32,23 +32,21 @@ public class SysReport {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getReportName() {
+        return reportName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
     }
 
-    public String getTable() {
-        return table;
+    public String getTableName() {
+        return tableName;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
-
-
 
     public Date getCreateTime() {
         return createTime;

@@ -3,18 +3,26 @@ package cn.luozc.assemble_web.bean.sys;
 
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Comment;
+import org.nutz.dao.entity.annotation.Name;
 import org.nutz.dao.entity.annotation.Table;
 
 import java.util.Date;
-@Table
+@Table("sys_report_form")
 public class SysReportForm {
 
+  @Name
   private String id;
+  @Column
   private String pid;
+  @Column
   private String field;
+  @Column
   private String title;
+  @Column
   private String minWidth;
+  @Column
   private String fixed;
+  @Column
   private String hide;
     @Column("create_time")
     @Comment("创建时间")

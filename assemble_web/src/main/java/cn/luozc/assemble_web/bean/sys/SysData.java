@@ -13,10 +13,10 @@ public class SysData {
 
     @Name
     private String id;
-    @Column
-    private String name;
-    @Column
-    private String table;
+    @Column("data_name")
+    private String dataName;
+    @Column("table_name")
+    private String tableName;
     @Column("parent_id")
     private String parentId;
     @Column("create_time")
@@ -34,20 +34,20 @@ public class SysData {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDataName() {
+        return dataName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDataName(String dataName) {
+        this.dataName = dataName;
     }
 
-    public String getTable() {
-        return table;
+    public String getTableName() {
+        return tableName;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
     public String getParentId() {

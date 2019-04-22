@@ -100,6 +100,9 @@ public class MenuService {
         if(sysMenu.getId().equals(sysMenu.getParentId())){
             return JsonData.fail("上级菜单不能是当前菜单");
         }
+        if("1".equals(sysMenu.getIsMenu())&&StringUtils.isNotEmpty(sysMenu.getType())){
+            sysMenu.setUrl("/"+sysMenu.getType()+"/"+sysMenu.getId()+".html");
+        }
 
         int update = sysMenuDao.update(sysMenu);
         if(update==0){
