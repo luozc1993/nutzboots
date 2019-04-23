@@ -1,6 +1,6 @@
 package cn.luozc.assemble_web.dao;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.pager.Pager;

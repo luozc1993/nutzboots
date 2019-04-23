@@ -6,8 +6,9 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
-        <nutzboot.version>2.2.9</nutzboot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nutzboot.version>2.3.5-SNAPSHOT</nutzboot.version>
+        <nutz.version>1.r.68-SNAPSHOT</nutz.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -22,6 +23,8 @@
     </dependencyManagement>
     <modules>
         <module>assemble_web</module>
+        <module>unit_framework</module>
+        <module>unit_app</module>
     </modules>
 
 

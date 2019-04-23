@@ -11,14 +11,9 @@ import cn.luozc.assemble_web.service.sys.ReportService;
 import cn.luozc.assemble_web.util.JsonData;
 import cn.luozc.assemble_web.util.LayuiTableResult;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.lf5.util.ResourceUtils;
 import org.nutz.dao.Dao;
-import org.nutz.dao.entity.Record;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.nutz.lang.segment.CharSegment;
-import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 

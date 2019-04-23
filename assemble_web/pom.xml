@@ -13,10 +13,6 @@
     <dependencies>
         <dependency>
             <groupId>org.nutz</groupId>
-            <artifactId>nutzboot-starter-swagger</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.nutz</groupId>
             <artifactId>nutzboot-starter-nutz-dao</artifactId>
         </dependency>
         <dependency>
@@ -106,6 +102,7 @@
             <artifactId>urlrewritefilter</artifactId>
             <version>4.0.4</version>
         </dependency>
+
     </dependencies>
     <build>
         <plugins>

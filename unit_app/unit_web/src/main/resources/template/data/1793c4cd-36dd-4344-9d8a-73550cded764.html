@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>数据添加</title>
+
+    <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
+    <link rel='stylesheet' href='../../../assets/module/admin.css'/>
+</head>
+<body>
+    <!-- 正文开始 -->
+    <div class='layui-fluid'>
+        <div class="layui-form layui-form-pane" lay-filter="form" action="" >
+            <div class="layui-form-item" style="display: none">
+                <label class="layui-form-label">ID</label>
+                <div class="layui-input-block">
+                    <input type="text" id="id" name="id" autocomplete="off"  placeholder="请输入报表名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" id="data_name" name="data_name" autocomplete="off" lay-verify="required" placeholder="请输入报表名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">表名</label>
+                <div class="layui-input-block">
+                    <input type="text" id="table_name" name="table_name" autocomplete="off" lay-verify="required" placeholder="请输入数据表名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item text-center">
+                <button class="layui-btn layui-btn-primary" type="button"  id="closeDialog" >取消</button>
+                <button class="layui-btn" lay-filter="formSubmit" lay-submit>保存</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- js部分 -->
+    <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
+    <script type='text/javascript' src='../../../assets/js/common.js'></script>
+    <script type='text/javascript'>
+        var pageData =eval('(${obj})') ;
+        var did = pageData.did;
+
+        layui.use(['layer', 'form', 'admin'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var admin = layui.admin;
+            var formData = JSON.parse(decodeURI($.getUrlParam("data")));
+
+            if(formData){
+                form.val("form", formData);
+            }
+
+            admin.iframeAuto();  // 让当前iframe弹层高度适应
+
+            // 表单提交事件
+            form.on('submit(formSubmit)', function (data) {
+                top.layer.load(2);
+                var d = data.field;
+                d['id'] = formData==null?"":formData.id;
+                $.ajax({
+                    url:"/sys/data/add",
+                    data:{"pid":did,"type":"data",data:JSON.stringify(d)},
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        if (res.status) {
+                            close();
+                        } else {
+                            close();
+                            top.layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            });
+
+            $("#closeDialog").on("click",function(){
+                close();
+            })
+            function close() {
+                top.layer.closeAll();
+                //关闭当前窗口
+                window.close();
+                console.log(window.location)
+                //关闭当前标签
+                top.layui.index.closeTab(window.location.pathname+window.location.search);
+            }
+
+        });
+    </script>
+</body>
+</html>

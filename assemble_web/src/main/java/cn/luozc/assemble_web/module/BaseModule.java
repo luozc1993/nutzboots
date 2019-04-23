@@ -8,7 +8,7 @@ import cn.luozc.assemble_web.service.sys.MenuService;
 import cn.luozc.assemble_web.util.JsonData;
 import cn.luozc.assemble_web.util.LayuiTableResult;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.nutz.dao.entity.Record;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.mvc.annotation.At;

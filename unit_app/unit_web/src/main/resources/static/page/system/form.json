@@ -1,0 +1,126 @@
+
+[ {
+    "type": "text",
+    "label": "",
+    "value": "标题",
+    "col": 6,
+    "offset":3
+  },
+  {
+      "key": "text-input",
+      "type": "text-input",
+      "label":"输入框",
+      "value": "1查看",
+      "col": 4,
+      "offset":0,
+      "power":1
+  },
+  {
+    "key": "text-input2",
+    "type": "text-input",
+    "label":"输入框",
+    "value": "2隐藏",
+    "col": 4,
+    "offset":0,
+    "power":2
+  },
+  {
+    "key": "text-input3",
+    "type": "text-input",
+    "label":"输入框",
+    "value": "0编辑",
+    "col": 4,
+    "offset":0,
+    "power":0
+  },
+  {
+      "key": "date",
+      "type": "date",
+      "label": "开始时间",
+      "tips": "请选择时间",
+      "value": "2018-11-02",
+      "col": 4,
+      "power":3
+  },
+  {
+      "key": "time",
+      "type": "time",
+      "label": "开始时间",
+      "tips": "请选择日期时间",
+      "value": "",
+      "col": 4
+  },
+  {
+      "key": "datetime",
+      "type": "datetime",
+      "label": "开始时间",
+      "tips": "请选择日期时间",
+      "value": "",
+      "col": 4
+  },
+  {
+      "key": "month",
+      "type": "month",
+      "label": "开始时间",
+      "tips": "请选择日期时间",
+      "value": "",
+      "col": 4
+  },
+  {
+      "key": "year",
+      "type": "year",
+      "label": "开始时间",
+      "tips": "请选择日期时间",
+      "value": "",
+      "col": 4
+  },
+  {
+      "key": "col",
+      "type": "select",
+      "label": "占位",
+      "value": "一",
+      "options":[{"id":1,"name":"一"},{"id":2,"name":"二"},{"id":3,"name":"三"}],
+      "col": 4
+  },
+  {
+      "type": "text",
+      "label": "标签",
+      "value": "文本显示",
+      "col": 4
+  },
+  {
+      "key": "textarea",
+      "type": "textarea",
+      "label": "文本域",
+      "tips": "请输入内容",
+      "value": "",
+      "col": 12
+  },
+  {
+    "key": "isMenu",
+    "type": "switch",
+    "label": "创建菜单",
+    "tips": "ID",
+    "options":[{"id":1,"name":"是"},{"id":2,"name":"否"}],
+    "value": "是",
+    "col": 4,
+    "power":0,
+    "offset":0
+  },
+  {
+    "key": "checkbox",
+    "type": "checkbox",
+    "label": "多选",
+    "value": "二",
+    "options":[{"id":1,"name":"一"},{"id":2,"name":"二"},{"id":3,"name":"三"}],
+    "col": 4
+  },
+  {
+    "key": "radio",
+    "type": "radio",
+    "label": "单选",
+    "value": "三",
+    "options":[{"id":1,"name":"一"},{"id":2,"name":"二"},{"id":3,"name":"三"}],
+    "col": 4
+  }
+]

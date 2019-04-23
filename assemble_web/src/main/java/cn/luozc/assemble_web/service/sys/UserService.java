@@ -7,7 +7,7 @@ import cn.luozc.assemble_web.dao.sys.SysUserDao;
 import cn.luozc.assemble_web.util.JsonData;
 import cn.luozc.assemble_web.util.LayuiTableResult;
 import cn.luozc.assemble_web.util.MD5Util;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 

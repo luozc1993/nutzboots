@@ -1,0 +1,32 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 1000,
+	"data": [{
+		"key": "id",
+		"type": "hide-input",
+		"label": "ID",
+		"tips": "ID",
+		"value": "",
+		"col": 4,
+		"power":2,
+		"offset":0
+	},{
+		"key": "flow_name",
+		"type": "text-input",
+		"label": "流程名称",
+		"tips": "请输入流程名称",
+		"value": "",
+		"col": 4
+	},
+	{
+		"key": "remarks",
+		"type": "textarea",
+		"label": "备注",
+		"tips": "请输入流程说明",
+		"value": "",
+		"col": 12
+	}
+
+]
+}

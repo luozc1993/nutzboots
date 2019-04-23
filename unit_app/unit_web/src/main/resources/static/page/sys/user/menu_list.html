@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>用户管理</title>
+
+    <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
+    <link rel='stylesheet' href='../../../assets/module/admin.css'/>
+    <style type="text/css">
+        #search{display: inline-block;width: 200px;height: 34px;vertical-align:top}
+    </style>
+</head>
+<body>
+    <!-- 正文开始 -->
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form toolbar">
+                    <div class="layui-form-item">
+                        <button class='layui-btn layui-btn-sm' id="addBtn">添加</button>
+                        <input type="search" id="search" name="search" placeholder="请输入需要搜索的内容" class="layui-input">
+                        <buttin class='layui-btn layui-btn-sm layui-btn-normal' lay-event='search' style="    position: relative;left: -5px;height: 34px;line-height: 34px;">搜索</buttin>
+                    </div>
+                </div>
+
+                <table class="layui-table" id="treeTable" lay-filter="treeTable"></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载动画，移除位置在common.js中 -->
+    <div class="page-loading">
+        <div class="ball-loader">
+            <span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <!--操作-->
+    <script type='text/html' id='toolbar'>
+        <!--<button class='layui-btn layui-btn-sm' lay-event='add'>添加</button>-->
+        <!--<input type="search" id="search" name="search" placeholder="请输入需要搜索的内容" class="layui-input">-->
+        <!--<buttin class='layui-btn layui-btn-sm layui-btn-normal' lay-event='search' style="    position: relative;left: -5px;height: 34px;line-height: 34px;">搜索</buttin>-->
+    </script>
+    <!-- 表格操作列 -->
+    <script type='text/html' id='tableBar'>
+        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>
+        <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
+    </script>
+
+    <script type='text/html' id='iconBar'>
+        <i class="layui-icon {{d.icon}}"></i>
+    </script>
+
+
+
+    <!-- js部分 -->
+    <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
+    <script type='text/javascript' src='../../../assets/js/common.js'></script>
+    <script type='text/javascript'>
+        layui.use(['form','layer','jquery','table','admin','treetable'],function(){
+            var table = layui.table;
+            var admin = layui.admin;
+            var form = layui.form;
+            var treetable = layui.treetable;
+            $ = layui.$;
+            // 渲染表格
+            function renderTable() {
+                treetable.render({
+                    treeColIndex: 1,
+                    treeSpid: 0,
+                    treeIdName: 'id',
+                    treePidName: 'parentId',
+                    elem: '#treeTable',
+                    url: '/sys/menu/list',
+                    treeDefaultClose: true,
+                    cellMinWidth: 100,
+                    cols: [[
+                        {type: 'numbers'},
+                        {field: 'name', title: '名称', minWidth: 200},
+                        {field: 'url', title: '菜单url'},
+                        {field: 'icon',title: '图标', templet: '#iconBar', align: 'center'},
+                        {field: 'order', title: '排序号', align: 'center'},
+                        {
+                            title: '类型', templet: function (d) {
+                                var strs = ['<span class="layui-badge-rim">目录</span>','<span class="layui-badge-rim">菜单</span>', '<span class="layui-badge layui-bg-gray">按钮</span>'];
+                                return strs[d.isMenu];
+                            }, align: 'center'
+                        },
+                        {templet: '#tableBar', title: '操作', align: 'center', minWidth: 120}
+                    ]]
+                });
+            }
+
+            renderTable();
+
+
+            $("#addBtn").click(function(){
+                menuForm("");
+            })
+            function menuForm(data){
+
+                top.layui.index.closeTab('/page/sys/user/menu_form.html');
+                admin.putTempData("SysMenu",isNull(data));
+
+                top.layui.index.openTab({
+                    title: (data?'编辑':'添加')+'菜单',
+                    url: '/page/sys/user/menu_form.html',
+                    end: function() {
+                        table.reload('table');  // 成功刷新表格
+                    }
+                });
+            }
+
+            //监听行工具事件
+            table.on('tool(treeTable)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'delete'){
+                    layer.confirm('真的删除行么', function(index){
+                        del(data.id,obj);
+                        layer.close(index);
+                    });
+                } else if(obj.event === 'edit'){
+                    menuForm(data);
+                }
+            });
+
+            function del(id,obj){
+                $.ajax({
+                    url:"/sys/menu/del",
+                    data:{id:id},
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        if (res.status) {
+                            top.layer.closeAll();
+                            top.layer.msg(res.msg, {icon: 1});
+                            obj.del();
+                        } else {
+                            layer.closeAll('loading'); //关闭加载层
+                            top.layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            }
+        })
+
+
+
+    </script>
+</body>
+</html>
