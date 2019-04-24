@@ -12,5 +12,15 @@
     <modules>
         <module>unit_model</module>
         <module>unit_web</module>
+        <module>unit_service</module>
+        <module>unit_service_impl</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>cn.luozc</groupId>
+            <artifactId>unit_commoms</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
 </project>

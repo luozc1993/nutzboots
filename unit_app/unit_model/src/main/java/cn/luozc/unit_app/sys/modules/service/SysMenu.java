@@ -1,4 +1,4 @@
-package cn.luozc.unit_app.sys.modules.models;
+package cn.luozc.unit_app.sys.modules.service;
 
 import cn.luozc.unit_framework.base.model.BaseModel;
 import org.nutz.dao.DB;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class SysMenu extends BaseModel implements Serializable {
 
 
-    @Column
+    @Column("parent_id")
     @Comment("父级ID")
     @ColDefine(type = ColType.VARCHAR, width = 32)
     private String parentId;
@@ -68,7 +68,19 @@ public class SysMenu extends BaseModel implements Serializable {
             @SQL(db= DB.MYSQL,value = "SELECT IFNULL(MAX(sort),0)+1 FROM sys_menu"),
             @SQL(db= DB.ORACLE,value = "SELECT COALESCE(MAX(sort),0)+1 FROM sys_menu")
     })
-  private long sort;
+    private long sort;
+
+    public SysMenu(){}
+
+    public SysMenu(String name,String parentId,String url,String icon,long sort,String type,String fid){
+        this.name = name;
+        this.parentId = parentId;
+        this.url = url;
+        this.icon = icon;
+        this.sort = sort;
+        this.type = type;
+        this.fid = fid;
+    }
 
 
 

@@ -1,4 +1,4 @@
-package cn.luozc.unit_app.sys.modules.models;
+package cn.luozc.unit_app.sys.modules.service;
 
 
 import cn.luozc.unit_framework.base.model.BaseModel;
@@ -42,7 +42,12 @@ public class SysRole extends BaseModel implements Serializable {
     public List<SysMenu> menus;
 
 
+    public SysRole(){
 
+    }
+    public SysRole(String name){
+        this.name = name;
+    }
 
 
 

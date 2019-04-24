@@ -25,7 +25,14 @@
         <module>assemble_web</module>
         <module>unit_framework</module>
         <module>unit_app</module>
+        <module>unit_commoms</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.nutz</groupId>
+            <artifactId>nutz</artifactId>
+        </dependency>
+    </dependencies>
 
 
 

@@ -1,9 +1,8 @@
-package cn.luozc.unit_app.sys.modules.models;
+package cn.luozc.unit_app.sys.modules.service;
 
 
 import cn.luozc.unit_framework.base.model.BaseModel;
 import org.nutz.dao.entity.annotation.*;
-import org.nutz.integration.json4excel.annotation.J4EIgnore;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,30 +16,30 @@ public class SysUser extends BaseModel implements Serializable {
     @Column
     @Comment("账号")
     @ColDefine(type = ColType.VARCHAR, width = 120)
-    @J4EIgnore
+    
     private String uname;
 
     @Column
     @Comment("密码")
     @ColDefine(type = ColType.VARCHAR, width = 255)
-    @J4EIgnore
+    
     private String password;
 
     @Column
     @Comment("昵称")
     @ColDefine(type = ColType.VARCHAR, width = 255)
-    @J4EIgnore
+    
     private String nickname;
 
     @Column
     @Comment("头像")
-    @J4EIgnore
+    
     @ColDefine(type = ColType.VARCHAR, width = 255)
     private String avatar;
 
     @Column
     @Comment("是否在线")
-    @J4EIgnore
+    
     @ColDefine(type = ColType.BOOLEAN)
     private boolean online;
 
@@ -48,41 +47,41 @@ public class SysUser extends BaseModel implements Serializable {
     @Column
     @Comment("电子邮箱")
     @ColDefine(type = ColType.VARCHAR, width = 255)
-    @J4EIgnore
+    
     private String email;
 
     @Column
     @Comment("手机号码")
     @ColDefine(type = ColType.VARCHAR, width = 255)
-    @J4EIgnore
+    
     private String phone;
 
     @Column
     @Comment("登陆时间")
-    @J4EIgnore
+    
     private Long loginTime;
 
     @Column
     @Comment("登陆IP")
-    @J4EIgnore
+    
     @ColDefine(type = ColType.VARCHAR, width = 255)
     private String loginIp;
 
     @Column
     @Comment("登陆次数")
-    @J4EIgnore
+    
     @ColDefine(type = ColType.INT)
     private Integer loginCount;
 
     @Column
     @Comment("登陆SessionId")
-    @J4EIgnore
+    
     @ColDefine(type = ColType.VARCHAR, width = 50)
     private String loginSessionId;
 
     @Column
     @Comment("皮肤样式")
-    @J4EIgnore
+    
     @ColDefine(type = ColType.VARCHAR, width = 100)
     private String theme;
 
@@ -93,9 +92,15 @@ public class SysUser extends BaseModel implements Serializable {
 
     @Comment("角色列表")
     @ManyMany(relation = "sys_role_user",from = "uid:id",to = "rid")
-    @J4EIgnore
+    
     public List<SysRole> roles;
 
+    public SysUser(){}
+    public SysUser(String uname,String password,String nickname){
+        this.uname = uname;
+        this.password = password;
+        this.nickname = nickname;
+    }
 
 
     public String getUname() {

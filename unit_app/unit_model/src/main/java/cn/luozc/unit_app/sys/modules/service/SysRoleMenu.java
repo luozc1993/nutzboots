@@ -1,4 +1,4 @@
-package cn.luozc.unit_app.sys.modules.models;
+package cn.luozc.unit_app.sys.modules.service;
 
 import cn.luozc.unit_framework.base.model.BaseModel;
 import org.nutz.dao.entity.annotation.*;

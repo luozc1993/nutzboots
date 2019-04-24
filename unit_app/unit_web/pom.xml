@@ -22,6 +22,16 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>cn.luozc</groupId>
+            <artifactId>unit_service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.luozc</groupId>
+            <artifactId>unit_service_impl</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.nutz</groupId>
             <artifactId>nutzboot-starter-nutz-dao</artifactId>
         </dependency>
@@ -75,6 +85,11 @@
                     <artifactId>ooxml-schemas</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.4</version>
         </dependency>
     </dependencies>
     <build>
