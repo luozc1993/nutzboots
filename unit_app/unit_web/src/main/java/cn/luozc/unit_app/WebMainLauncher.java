@@ -14,23 +14,19 @@ import org.nutz.mvc.annotation.Encoding;
 import org.nutz.mvc.annotation.Modules;
 
 @IocBean(create="init", depose="depose")
-@Modules(packages = "cn.luozc")
+@Modules(packages = "cn.luozc.unit_app.modules")
 @Encoding(input = "UTF-8", output = "UTF-8")
-@ChainBy(args = "chain/nutzwk-mvc-chain.json")
 public class WebMainLauncher {
     @Inject("refer:$ioc")
     private Ioc ioc;
     @Inject
     protected PropertiesProxy conf;
-    @Inject private SysMenuService sysMenuService;
 
     @Inject
     protected Dao dao;
 
     
     public void init() {
-        int count = sysMenuService.count();
-        System.err.println(count);
         //通过POJO类创建表结构
         try {
             Daos.createTablesInPackage(dao, "cn.luozc.unit_app.sys", false);
@@ -54,16 +50,16 @@ public class WebMainLauncher {
             sysMenu = dao.insert(new SysMenu("用户管理", parentId, "", "layui-icon-home", 0, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加用户列表菜单
-            sysMenu = dao.insert(new SysMenu("用户列表", sysMenu.getParentId(), "/page/sys/user/user_list.html", "layui-icon-home", 0, "", ""));
+            sysMenu = dao.insert(new SysMenu("用户列表", sysMenu.getId(), "/page/sys/user/user_list.html", "layui-icon-home", 0, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加角色管理菜单
-            sysMenu = dao.insert(new SysMenu("角色管理", sysMenu.getParentId(), "/page/sys/user/role_list.html", "layui-icon-home", 0, "", ""));
+            sysMenu = dao.insert(new SysMenu("角色管理", sysMenu.getParentId(), "/page/sys/user/role_list.html", "layui-icon-home", 1, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加菜单管理菜单
-            sysMenu = dao.insert(new SysMenu("菜单管理", sysMenu.getParentId(), "/page/sys/user/menu_list.html", "layui-icon-home", 0, "", ""));
+            sysMenu = dao.insert(new SysMenu("菜单管理", sysMenu.getParentId(), "/page/sys/user/menu_list.html", "layui-icon-home", 2, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加系统设置目录
-            sysMenu = dao.insert(new SysMenu("系统设置", parentId, "/page/sys/user/menu_list.html", "layui-icon-home", 0, "", ""));
+            sysMenu = dao.insert(new SysMenu("系统设置", parentId, "", "layui-icon-home", 1, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
 
         }
@@ -74,7 +70,6 @@ public class WebMainLauncher {
 
     public static void main(String[] args) throws Exception {
         NbApp nb = new NbApp().setArgs(args).setPrintProcDoc(true);
-        nb.getAppContext().setMainPackage("cn.luozc");
         nb.run();
     }
 

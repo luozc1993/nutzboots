@@ -4,5 +4,4 @@ import cn.luozc.unit_framework.base.service.BaseService;
 
 public interface SysUserService  extends BaseService<SysUser> {
 
-
 }

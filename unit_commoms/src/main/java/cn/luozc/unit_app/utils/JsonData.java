@@ -32,6 +32,11 @@ public class JsonData {
         jsonData.msg = "";
         return jsonData;
     }
+    public static JsonData success(String msg) {
+        JsonData jsonData = new JsonData(true);
+        jsonData.msg = "";
+        return jsonData;
+    }
 
     public static JsonData success() {
         return new JsonData(true);
@@ -42,16 +47,17 @@ public class JsonData {
         jsonData.msg = msg;
         return jsonData;
     }
-    public static JsonData fail() {
-        return new JsonData(false);
-    }
-    
     public static JsonData fail(Object object) {
         JsonData jsonData = new JsonData(false);
         jsonData.data = object;
         jsonData.msg = "";
         return jsonData;
     }
+    public static JsonData fail() {
+        return new JsonData(false);
+    }
+    
+
     public static JsonData fail(Object object, String msg) {
         JsonData jsonData = new JsonData(false);
         jsonData.data = object;

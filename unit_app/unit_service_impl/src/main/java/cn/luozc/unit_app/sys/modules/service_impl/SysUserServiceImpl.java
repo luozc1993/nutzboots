@@ -3,6 +3,7 @@ package cn.luozc.unit_app.sys.modules.service_impl;
 import cn.luozc.unit_app.sys.modules.service.SysUser;
 import cn.luozc.unit_app.sys.modules.service.SysUserService;
 import cn.luozc.unit_framework.base.service.BaseServiceImpl;
+import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.springframework.stereotype.Service;
@@ -13,4 +14,5 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     public SysUserServiceImpl(Dao dao) {
         super(dao);
     }
+
 }
