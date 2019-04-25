@@ -64,14 +64,14 @@
             $ = layui.$;
             // 渲染表格
             function renderTable() {
-                treetable.render({
+               var treeTables =  treetable.render({
                     treeColIndex: 1,
                     treeSpid: 0,
                     treeIdName: 'id',
                     treePidName: 'parentId',
                     elem: '#treeTable',
                     url: '/sys/menu/list',
-                    treeDefaultClose: true,
+                    treeDefaultClose: false,
                     cellMinWidth: 100,
                     cols: [[
                         {type: 'numbers'},
@@ -82,6 +82,7 @@
                         {templet: '#tableBar', title: '操作', align: 'center', minWidth: 120}
                     ]]
                 });
+                treeTables.toggleRows($("#treeTable"))
             }
 
             renderTable();
@@ -126,8 +127,8 @@
                     success:function(res){
                         if (res.status) {
                             top.layer.closeAll();
-                            top.layer.msg(res.msg, {icon: 1});
                             obj.del();
+
                         } else {
                             layer.closeAll('loading'); //关闭加载层
                             top.layer.msg(res.msg, {icon: 2});

@@ -24,7 +24,6 @@ layui.define(['layer', 'table'], function (exports) {
             var mData = [];
             var doneCallback = param.done;
             var tNodes = data;
-            console.log(data)
             // 补上id和pid字段
             for (var i = 0; i < tNodes.length; i++) {
                 var tt = tNodes[i];
@@ -100,6 +99,7 @@ layui.define(['layer', 'table'], function (exports) {
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }
+
             };
 
             // 渲染表格

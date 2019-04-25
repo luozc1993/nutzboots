@@ -125,7 +125,7 @@
                 d['id'] = id;
                 var url = id?"/sys/menu/edit":"/sys/menu/add";
                 $.ajax({
-                    url:"/sys/menu/add",
+                    url:url,
                     data:d,
                     dataType:"json",
                     type:"post",
