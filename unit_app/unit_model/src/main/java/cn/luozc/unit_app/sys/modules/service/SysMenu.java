@@ -5,6 +5,7 @@ import org.nutz.dao.DB;
 import org.nutz.dao.entity.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Table("sys_menu")
 @Comment("菜单表")
@@ -69,6 +70,32 @@ public class SysMenu extends BaseModel implements Serializable {
             @SQL(db= DB.ORACLE,value = "SELECT COALESCE(MAX(sort),0)+1 FROM sys_menu")
     })
     private long sort;
+
+    @Comment("菜单关联角色")
+    @ManyMany(relation = "sys_role_menu",
+            from = "mid:id",
+            to = "rid")
+    public List<SysRole> roles;
+
+    @One(field = "parentId")
+    public SysMenu parent;
+
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
+    }
+
+    public SysMenu getParent() {
+        return parent;
+    }
+
+    public void setParent(SysMenu parent) {
+        this.parent = parent;
+    }
 
     public SysMenu(){}
 

@@ -52,15 +52,6 @@
                     </div>
                 </div>
             </div>
-            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md6">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">菜单类型</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="isMenu" lay-filter="isMenu" value="0" title="目录" >
-                        <input type="radio" name="isMenu" lay-filter="isMenu" value="1" title="菜单" checked="">
-                    </div>
-                </div>
-            </div>
             <div id="urlDiv" class=" layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <div class="layui-form-item ">
                     <label class="layui-form-label">地址</label>
@@ -112,9 +103,11 @@
             if(SysMenu){
                 form.val("form", SysMenu);
                 //角色列表
-                var sysRoles = SysMenu.sysRoleMenus;
-                for (var i = 0; i < sysRoles.length; i++) {
-                    roleIds.push(sysRoles[i].rid)
+                var sysRoles = SysMenu.roles;
+                if(sysRoles){
+                    for (var i = 0; i < sysRoles.length; i++) {
+                        roleIds.push(sysRoles[i].id)
+                    }
                 }
                 var parent = SysMenu.parent;
                 if(parent){
@@ -128,7 +121,9 @@
             form.on('submit(formSubmit)', function (data) {
                 layer.load(2);
                 var d = data.field;
-                d['id'] = SysMenu.id;
+                let id = SysMenu.id;
+                d['id'] = id;
+                var url = id?"/sys/menu/edit":"/sys/menu/add";
                 $.ajax({
                     url:"/sys/menu/add",
                     data:d,
@@ -229,21 +224,13 @@
 
             form.on('radio(type)', function(data){
                 type = data.value;
-                if(type=="url"&&isMenu==1){
+                if(type=="url"){
                     $("#urlDiv").show();
                 }else{
                     $("#urlDiv").hide();
                 }
             });
-            var isMenu = 1;
-            form.on('radio(isMenu)', function(data){
-                isMenu = data.value;
-                if(type=="url"&&isMenu==1){
-                    $("#urlDiv").show();
-                }else{
-                    $("#urlDiv").hide();
-                }
-            });
+
 
         });
 

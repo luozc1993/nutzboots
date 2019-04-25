@@ -4,13 +4,16 @@ import cn.luozc.unit_framework.page.OffsetPager;
 import cn.luozc.unit_framework.page.Pagination;
 import cn.luozc.unit_framework.page.datatable.DataTableColumn;
 import cn.luozc.unit_framework.page.datatable.DataTableOrder;
+import com.alibaba.druid.util.StringUtils;
 import org.nutz.dao.*;
 import org.nutz.dao.entity.Entity;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.pager.Pager;
+import org.nutz.dao.sql.Criteria;
 import org.nutz.dao.sql.Sql;
 import org.nutz.dao.sql.SqlCallback;
 import org.nutz.dao.util.Daos;
+import org.nutz.dao.util.cri.SqlExpressionGroup;
 import org.nutz.lang.Lang;
 import org.nutz.lang.Strings;
 import org.nutz.lang.util.NutMap;
@@ -1286,5 +1289,24 @@ public class BaseServiceImpl<T> extends EntityService<T> implements BaseService<
         re.put("draw", draw);
         re.put("recordsTotal", length);
         return re;
+    }
+
+
+    /**
+     * 获取模糊查询参数
+     * @param value
+     * @return
+     */
+    public Criteria getVagueCriteria(String value, String feild) {
+        String[] feilds = feild.split(",");
+        Criteria cri = Cnd.cri();
+        if(!StringUtils.isEmpty(value)){
+            for (String f:feilds) {
+                // 封装条件并塞入条件集合
+                SqlExpressionGroup expression = Cnd.exps(f, "like", "%"+value+"%");
+                cri.where().or(expression);
+            }
+        }
+        return cri;
     }
 }

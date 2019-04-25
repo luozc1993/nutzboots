@@ -7,6 +7,7 @@ import org.nutz.dao.*;
 import org.nutz.dao.entity.Entity;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.pager.Pager;
+import org.nutz.dao.sql.Criteria;
 import org.nutz.dao.sql.Sql;
 import org.nutz.lang.util.NutMap;
 
@@ -863,4 +864,7 @@ public interface BaseService<T> {
      * @return
      */
     NutMap data(int length, int start, int draw, Cnd cnd, String linkName);
+
+
+    Criteria getVagueCriteria(String value, String feild);
 }

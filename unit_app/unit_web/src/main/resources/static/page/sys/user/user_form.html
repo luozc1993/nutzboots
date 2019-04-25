@@ -87,9 +87,11 @@
             form.on('submit(formSubmit)', function (data) {
                 layer.load(2);
                 var d = data.field;
-                d['id'] = SysUser.id;
+                let id = SysUser.id;
+                d['id'] = id;
+                var url = id?"/sys/user/edit":"/sys/user/add";
                 $.ajax({
-                    url:"/sys/user/add",
+                    url:url,
                     data:d,
                     dataType:"json",
                     type:"post",

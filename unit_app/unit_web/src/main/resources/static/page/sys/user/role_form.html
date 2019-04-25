@@ -53,9 +53,11 @@
             form.on('submit(formSubmit)', function (data) {
                 layer.load(2);
                 var d = data.field;
-                d['id'] = SysRole.id;
+                let id = SysRole.id;
+                d['id'] = id;
+                var url = id?"/sys/role/edit":"/sys/role/add";
                 $.ajax({
-                    url:"/sys/role/add",
+                    url:url,
                     data:d,
                     dataType:"json",
                     type:"post",

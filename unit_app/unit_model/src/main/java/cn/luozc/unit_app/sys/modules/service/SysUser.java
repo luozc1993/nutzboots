@@ -92,8 +92,19 @@ public class SysUser extends BaseModel implements Serializable {
 
     @Comment("角色列表")
     @ManyMany(relation = "sys_role_user",from = "uid:id",to = "rid")
-    
     public List<SysRole> roles;
+
+    @Comment("角色用户关联表")
+    @Many(field = "uid")
+    private List<SysRoleUser> sysRoleUsers;
+
+    public List<SysRoleUser> getSysRoleUsers() {
+        return sysRoleUsers;
+    }
+
+    public void setSysRoleUsers(List<SysRoleUser> sysRoleUsers) {
+        this.sysRoleUsers = sysRoleUsers;
+    }
 
     public SysUser(){}
     public SysUser(String uname,String password,String nickname){
