@@ -17,7 +17,7 @@ public abstract class BaseModel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column
     @Name
-    @ColDefine(type = ColType.VARCHAR, width = 32)
+    @ColDefine(type = ColType.VARCHAR, width = 36)
     @Prev(els = {@EL("uuid()")})
     private String id;
 
@@ -25,7 +25,7 @@ public abstract class BaseModel implements Serializable {
     @Column
     @Comment("操作人")
     @Prev(els = @EL("$me.uid()"))
-    @ColDefine(type = ColType.VARCHAR, width = 32)
+    @ColDefine(type = ColType.VARCHAR, width = 36)
     private String opUser;
 
     @Column

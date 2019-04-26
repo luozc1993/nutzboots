@@ -4,7 +4,8 @@ import cn.luozc.unit_framework.page.OffsetPager;
 import cn.luozc.unit_framework.page.Pagination;
 import cn.luozc.unit_framework.page.datatable.DataTableColumn;
 import cn.luozc.unit_framework.page.datatable.DataTableOrder;
-import com.alibaba.druid.util.StringUtils;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.nutz.dao.*;
 import org.nutz.dao.entity.Entity;
 import org.nutz.dao.entity.Record;
@@ -22,9 +23,7 @@ import org.nutz.service.EntityService;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by wizzer on 2016/12/22.
@@ -1308,5 +1307,20 @@ public class BaseServiceImpl<T> extends EntityService<T> implements BaseService<
             }
         }
         return cri;
+    }
+
+    public Record call(String funName, JSONObject data){
+        Iterator keys = data.keys();
+        List<String> list = new ArrayList<>();
+        while (keys.hasNext()){
+            String key = (String) keys.next();
+            list.add("'"+data.getString(key)+"'");
+
+        }
+        Sql sql = Sqls.create("Call "+funName+"("+ StringUtils.join(list,",") +")");
+        sql.setCallback(Sqls.callback.records());
+        this.dao().execute(sql);
+        Record record = sql.getOutParams();
+        return record;
     }
 }

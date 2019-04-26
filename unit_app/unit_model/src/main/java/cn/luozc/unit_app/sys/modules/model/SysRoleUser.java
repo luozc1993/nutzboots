@@ -1,9 +1,7 @@
 package cn.luozc.unit_app.sys.modules.model;
 
 import cn.luozc.unit_framework.base.model.BaseModel;
-import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.Comment;
-import org.nutz.dao.entity.annotation.Table;
+import org.nutz.dao.entity.annotation.*;
 
 import java.io.Serializable;
 
@@ -14,9 +12,11 @@ public class SysRoleUser extends BaseModel implements Serializable {
 
     @Column("rid")
     @Comment("角色id")
+    @ColDefine(type = ColType.VARCHAR, width = 36)
     private String rid;
     @Column("uid")
     @Comment("用户id")
+    @ColDefine(type = ColType.VARCHAR, width = 36)
     private String uid;
 
     public SysRoleUser(String rid,String uid){

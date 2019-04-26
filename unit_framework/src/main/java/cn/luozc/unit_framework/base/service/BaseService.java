@@ -3,6 +3,7 @@ package cn.luozc.unit_framework.base.service;
 import cn.luozc.unit_framework.page.Pagination;
 import cn.luozc.unit_framework.page.datatable.DataTableColumn;
 import cn.luozc.unit_framework.page.datatable.DataTableOrder;
+import net.sf.json.JSONObject;
 import org.nutz.dao.*;
 import org.nutz.dao.entity.Entity;
 import org.nutz.dao.entity.Record;
@@ -867,4 +868,8 @@ public interface BaseService<T> {
 
 
     Criteria getVagueCriteria(String value, String feild);
+
+
+    Record call(String funName, JSONObject data);
+
 }

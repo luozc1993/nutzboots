@@ -64,7 +64,7 @@
                 var d = data.field;
                 d['id'] = formData==null?"":formData.id;
                 $.ajax({
-                    url:"/sys/data/add",
+                    url:"/sys/data/data_add",
                     data:{"pid":did,"type":"data",data:JSON.stringify(d)},
                     dataType:"json",
                     type:"post",
@@ -75,6 +75,11 @@
                             close();
                             top.layer.msg(res.msg, {icon: 2});
                         }
+                    },
+                    error:function(){
+
+                        close();
+                        top.layer.msg("添加失败", {icon: 2});
                     }
                 });
             });

@@ -10,9 +10,11 @@ import java.io.Serializable;
 public class SysRoleMenu extends BaseModel implements Serializable {
     @Column
     @Comment("角色id")
+    @ColDefine(type = ColType.VARCHAR, width = 36)
   private String rid;
     @Column
     @Comment("菜单id")
+    @ColDefine(type = ColType.VARCHAR, width = 36)
   private String mid;
 
     public SysRoleMenu(){

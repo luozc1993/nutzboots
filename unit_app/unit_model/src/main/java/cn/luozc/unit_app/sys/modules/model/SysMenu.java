@@ -15,7 +15,7 @@ public class SysMenu extends BaseModel implements Serializable {
 
     @Column("parent_id")
     @Comment("父级ID")
-    @ColDefine(type = ColType.VARCHAR, width = 32)
+    @ColDefine(type = ColType.VARCHAR, width = 36)
     private String parentId;
 
     @Column
