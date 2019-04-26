@@ -1,6 +1,6 @@
-package cn.luozc.unit_app.modules;
+package cn.luozc.unit_app.sys.modules.controller;
 
-import cn.luozc.unit_app.sys.modules.service.*;
+import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
@@ -29,6 +29,20 @@ public class SysMenuController {
     @Inject private SysMenuService sysMenuService;
     @Inject private SysRoleMenuService sysRoleMenuService;
 
+
+    @At
+    @Ok("beetl:/${obj.type}/${obj.fid}.html")
+    public JSONObject page(String mid){
+        SysMenu menu = sysMenuService.fetch(mid);
+        JSONObject json = new JSONObject();
+        json.put("mid",mid);
+        json.put("type",menu.getType());
+        json.put("fid",menu.getFid());
+        return json;
+    }
+
+
+
     /**
      * 删除用户
      * @param id    角色id
@@ -41,10 +55,18 @@ public class SysMenuController {
         return JsonData.success();
     }
 
+    /**
+     * 编辑
+     * @param sysMenu
+     * @param roleId
+     * @return
+     */
     @At
     @Aop(TransAop.READ_COMMITTED)
     public JsonData edit(SysMenu sysMenu,String roleId){
-
+        if(!"url".equals(sysMenu.getType())){
+            sysMenu.setUrl("/menu/"+sysMenu.getId()+".html");
+        }
         //添加信息
         int update = sysMenuService.update(sysMenu);
 
@@ -68,7 +90,7 @@ public class SysMenuController {
     }
 
     /**
-     * 添加角色
+     * 添加
      * @param sysMenu       角色信息
      * @return              JsonData
      */
@@ -79,8 +101,8 @@ public class SysMenuController {
         }
         String id = UUID.randomUUID().toString();
         sysMenu.setId(id);
-        if(StringUtils.isNotEmpty(sysMenu.getType())&&!"url".equals(sysMenu.getType())){
-            sysMenu.setUrl("/"+sysMenu.getType()+"/"+id+".html");
+        if(!"url".equals(sysMenu.getType())){
+            sysMenu.setUrl("/menu/"+id+".html");
         }
         sysMenu = sysMenuService.insert(sysMenu);
         List<SysRoleMenu> srms = getSysRoleMenus(sysMenu, roleId);
@@ -98,7 +120,7 @@ public class SysMenuController {
     @At
     public LayuiTableResult list(int page, int limit, String value){
         Criteria criteria = sysMenuService.getVagueCriteria(value, "name");
-        Pagination listPage = sysMenuService.listPageLinks(page, limit,criteria,"^(roles|parent)$");
+        Pagination listPage = sysMenuService.listPageLinks(page, limit,criteria.getOrderBy().asc("sort"),"^(roles|parent)$");
         return LayuiTableResult.result(0,"",sysMenuService.count(criteria),listPage.getList());
     }
 

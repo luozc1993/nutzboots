@@ -1,4 +1,4 @@
-package cn.luozc.unit_app.sys.modules.service;
+package cn.luozc.unit_app.sys.modules.model;
 
 import cn.luozc.unit_framework.base.model.BaseModel;
 import org.nutz.dao.DB;

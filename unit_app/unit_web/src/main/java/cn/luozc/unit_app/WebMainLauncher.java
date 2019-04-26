@@ -1,6 +1,6 @@
 package cn.luozc.unit_app;
 
-import cn.luozc.unit_app.sys.modules.service.*;
+import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.MD5Util;
 import org.nutz.boot.NbApp;
 import org.nutz.dao.Dao;
@@ -9,7 +9,6 @@ import org.nutz.ioc.Ioc;
 import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.nutz.mvc.annotation.ChainBy;
 import org.nutz.mvc.annotation.Encoding;
 import org.nutz.mvc.annotation.Modules;
 
@@ -53,13 +52,16 @@ public class WebMainLauncher {
             sysMenu = dao.insert(new SysMenu("用户列表", sysMenu.getId(), "/page/sys/user/user_list.html", "layui-icon-home", 0, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加角色管理菜单
-            sysMenu = dao.insert(new SysMenu("角色管理", sysMenu.getParentId(), "/page/sys/user/role_list.html", "layui-icon-home", 1, "", ""));
+            sysMenu = dao.insert(new SysMenu("角色管理", sysMenu.getParentId(), "/page/sys/user/report_list.html", "layui-icon-home", 1, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加菜单管理菜单
             sysMenu = dao.insert(new SysMenu("菜单管理", sysMenu.getParentId(), "/page/sys/user/menu_list.html", "layui-icon-home", 2, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加系统设置目录
             sysMenu = dao.insert(new SysMenu("系统设置", parentId, "", "layui-icon-home", 1, "", ""));
+            dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
+            //添加菜单管理菜单
+            sysMenu = dao.insert(new SysMenu("报表管理", sysMenu.getId(), "/page/sys/report/report_list.html", "layui-icon-home", 0, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
 
         }

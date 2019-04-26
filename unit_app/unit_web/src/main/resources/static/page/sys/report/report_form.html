@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>角色添加</title>
+
+    <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
+    <link rel='stylesheet' href='../../../assets/module/admin.css'/>
+</head>
+<body>
+    <!-- 正文开始 -->
+    <div class='layui-fluid'>
+        <div class="layui-form layui-form-pane" lay-filter="form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">报表名称</label>
+                <div class="layui-input-block">
+                    <input type="text" id="reportName" name="reportName" autocomplete="off" lay-verify="required" placeholder="请输入账号" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">数据表名</label>
+                <div class="layui-input-block">
+                    <input type="text" id="tableName" name="tableName" autocomplete="off" lay-verify="required" placeholder="请输入账号" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item text-center">
+                <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+                <button class="layui-btn" lay-filter="formSubmit" lay-submit>保存</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- js部分 -->
+    <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
+    <script type='text/javascript' src='../../../assets/js/common.js'></script>
+    <script type='text/javascript'>
+        layui.use(['layer', 'form', 'admin'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var admin = layui.admin;
+            var TempData = admin.getTempData("SysReport");
+
+            if(TempData){
+                form.val("form", TempData);
+            }
+
+            admin.iframeAuto();  // 让当前iframe弹层高度适应
+
+            // 表单提交事件
+            form.on('submit(formSubmit)', function (data) {
+                layer.load(2);
+                var d = data.field;
+                let id = TempData.id;
+                d['id'] = id;
+                var url = id?"/sys/report/edit":"/sys/report/add";
+                $.ajax({
+                    url:url,
+                    data:d,
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        if (res.status) {
+                            top.layer.closeAll();
+                            top.layer.msg(res.data, {icon: 1});
+                        } else {
+                            layer.closeAll('loading'); //关闭加载层
+                            top.layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

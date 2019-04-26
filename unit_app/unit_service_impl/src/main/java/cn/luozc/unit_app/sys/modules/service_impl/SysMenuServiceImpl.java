@@ -1,7 +1,7 @@
 package cn.luozc.unit_app.sys.modules.service_impl;
 
-import cn.luozc.unit_app.sys.modules.service.SysMenu;
-import cn.luozc.unit_app.sys.modules.service.SysMenuService;
+import cn.luozc.unit_app.sys.modules.model.SysMenu;
+import cn.luozc.unit_app.sys.modules.model.SysMenuService;
 import cn.luozc.unit_framework.base.service.BaseServiceImpl;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.IocBean;

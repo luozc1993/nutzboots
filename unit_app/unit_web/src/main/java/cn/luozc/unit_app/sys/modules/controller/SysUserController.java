@@ -1,13 +1,12 @@
-package cn.luozc.unit_app.modules;
+package cn.luozc.unit_app.sys.modules.controller;
 
-import cn.luozc.unit_app.sys.modules.service.*;
+import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_app.utils.MD5Util;
 import cn.luozc.unit_framework.page.Pagination;
 import org.apache.commons.lang.StringUtils;
 import org.nutz.aop.interceptor.ioc.TransAop;
-import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.sql.Criteria;
 import org.nutz.ioc.aop.Aop;
@@ -17,7 +16,6 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
