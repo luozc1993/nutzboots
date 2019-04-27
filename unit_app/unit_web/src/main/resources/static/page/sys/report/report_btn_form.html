@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>角色添加</title>
+
+    <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
+    <link rel='stylesheet' href='../../../assets/module/admin.css'/>
+</head>
+<body>
+    <!-- 正文开始 -->
+    <div class='layui-fluid'>
+        <div class="layui-form layui-form-pane" lay-filter="form" action="">
+            <input type="hidden" id="reportId" name="reportId" class="layui-input">
+            <input type="hidden" id="dataId" name="dataId" class="layui-input">
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" id="title" name="title" autocomplete="off" lay-verify="required" placeholder="请输入" class="layui-input">
+                </div>
+            </div>
+            <div class=" layui-col-xs12 layui-col-sm12 layui-col-md12">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">按钮类型</label>
+                    <div class="layui-input-block" >
+                        <input type="radio" name="type" lay-filter="type" value="data" title="数据" checked="">
+                        <input type="radio" name="type" lay-filter="type" value="flow" title="流程" >
+                        <input type="radio" name="type" lay-filter="type" value="report" title="报表" >
+                        <input type="radio" name="type" lay-filter="type" value="fun" title="函数">
+                    </div>
+                </div>
+            </div>
+            <div class=" layui-col-xs12 layui-col-sm12 layui-col-md12">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">跳转方式</label>
+                    <div class="layui-input-block" >
+                        <input type="radio" name="jump" lay-filter="jump" value="0" title="弹窗" checked="">
+                        <input type="radio" name="jump" lay-filter="jump" value="1" title="框架新窗口" >
+                        <input type="radio" name="jump" lay-filter="jump" value="2" title="浏览器新窗口" >
+                    </div>
+                </div>
+            </div>
+
+            <div id="dataDiv" class=" layui-col-xs12 layui-col-sm6 layui-col-md6">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关联数据</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="dataName" name="dataName" autocomplete="off" placeholder="请关联数据" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div id="reportDiv" class=" layui-col-xs12 layui-col-sm6 layui-col-md6" style="display: none">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关联报表</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="reportName" name="reportName" autocomplete="off" placeholder="请关联报表" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item text-center">
+                <button class="layui-btn layui-btn-primary" type="button" id="closeDialog">取消</button>
+                <button class="layui-btn" lay-filter="formSubmit" lay-submit>保存</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- js部分 -->
+    <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
+    <script type='text/javascript' src='../../../assets/js/common.js'></script>
+    <script type='text/javascript'>
+        layui.use(['layer', 'form', 'admin','tableSelect'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var admin = layui.admin;
+            var tableSelect = layui.tableSelect;
+            var SysReportBtnReportId = admin.getTempData("SysReportBtnReportId");
+            var TempData = admin.getTempData("SysReportBtn");
+            if(TempData){
+                form.val("form", TempData);
+            }
+            if(SysReportBtnReportId){
+                $("#reportId").val(SysReportBtnReportId);
+            }
+
+            admin.iframeAuto();  // 让当前iframe弹层高度适应
+
+            // 表单提交事件
+            form.on('submit(formSubmit)', function (data) {
+                layer.load(2);
+                var d = data.field;
+                let id = TempData.id;
+                d['id'] = id;
+                var url = id?"/sys/report_btn/edit":"/sys/report_btn/add";
+                $.ajax({
+                    url:url,
+                    data:d,
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        if (res.status) {
+                            top.layer.closeAll();
+                            top.layer.msg(res.data, {icon: 1});
+                            close();
+                            layer.closeAll('loading'); //关闭加载层
+                        } else {
+                            layer.closeAll('loading'); //关闭加载层
+                            top.layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            });
+            form.on('radio(type)', function(data){
+                type = data.value;
+                if(type=="data"){
+                    $("#dataDiv").show();
+                    $("#reportDiv").hide();
+                }else if(type=="report"){
+                    $("#dataDiv").hide();
+                    $("#reportDiv").show();
+                }else{
+                    $("#dataDiv").hide();
+                    $("#reportDiv").hide();
+                }
+            });
+            tableSelect.render({
+                elem: '#dataName',	//定义输入框input对象
+                checkedKey: 'id',//表格的唯一建值，非常重要，影响到选中状态 必填
+                searchKey: 'value',	//搜索输入框的name值 默认keyword
+                searchPlaceholder: '关键词搜索',	//搜索输入框的提示文字 默认关键词搜索
+                table: {	//定义表格参数，与LAYUI的TABLE模块一致，只是无需再定义表格elem
+                    url:'/sys/data/list',
+                    cols: [[
+                        {type:'radio'},
+                        {field:'dataName',title:'数据名称'},
+                        {field:'tableName',title:'数据表名'}
+                    ]]
+                },
+                done: function (elem, data) {
+                    if(data.data.length>0){
+                        $("#dataId").val(data.data[0].id);
+                        $("#dataName").val(data.data[0].dataName)
+                    }
+
+                    //选择完后的回调，包含2个返回值 elem:返回之前input对象；data:表格返回的选中的数据 []
+                    //拿到data[]后 就按照业务需求做想做的事情啦~比如加个隐藏域放ID...
+                }
+            });
+
+            tableSelect.render({
+                elem: '#reportName',	//定义输入框input对象
+                checkedKey: 'id',//表格的唯一建值，非常重要，影响到选中状态 必填
+                searchKey: 'value',	//搜索输入框的name值 默认keyword
+                searchPlaceholder: '关键词搜索',	//搜索输入框的提示文字 默认关键词搜索
+                table: {	//定义表格参数，与LAYUI的TABLE模块一致，只是无需再定义表格elem
+                    url:'/sys/report/list',
+                    cols: [[
+                        {type:'radio'},
+                        {field:'reportName',title:'数据名称'},
+                        {field:'tableName',title:'数据表名'}
+                    ]]
+                },
+                done: function (elem, data) {
+                    if(data.data.length>0){
+                        $("#dataId").val(data.data[0].id);
+                        $("#reportName  ").val(data.data[0].reportName)
+                    }
+
+                    //选择完后的回调，包含2个返回值 elem:返回之前input对象；data:表格返回的选中的数据 []
+                    //拿到data[]后 就按照业务需求做想做的事情啦~比如加个隐藏域放ID...
+                }
+            })
+
+            $("#closeDialog").on("click",function(){
+                close();
+            })
+            function close() {
+                top.layer.closeAll();
+                //关闭当前窗口
+                window.close();
+                console.log(window.location)
+                //关闭当前标签
+                top.layui.index.closeTab(window.location.pathname+window.location.search);
+            }
+
+        });
+    </script>
+</body>
+</html>

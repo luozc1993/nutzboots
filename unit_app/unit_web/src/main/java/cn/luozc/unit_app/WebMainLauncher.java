@@ -49,25 +49,25 @@ public class WebMainLauncher {
             sysMenu = dao.insert(new SysMenu("用户管理", parentId, "", "layui-icon-home", 0, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加用户列表菜单
-            sysMenu = dao.insert(new SysMenu("用户列表", sysMenu.getId(), "/page/sys/user/user_list.html", "layui-icon-home", 0, "", ""));
+            sysMenu = dao.insert(new SysMenu("用户列表", sysMenu.getId(), "/page/sys/user/user_list.html", "layui-icon-home", 0, "url", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加角色管理菜单
-            sysMenu = dao.insert(new SysMenu("角色管理", sysMenu.getParentId(), "/page/sys/user/role_list.html", "layui-icon-home", 1, "", ""));
+            sysMenu = dao.insert(new SysMenu("角色管理", sysMenu.getParentId(), "/page/sys/user/role_list.html", "layui-icon-home", 1, "url", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加菜单管理菜单
-            sysMenu = dao.insert(new SysMenu("菜单管理", sysMenu.getParentId(), "/page/sys/user/menu_list.html", "layui-icon-home", 2, "", ""));
+            sysMenu = dao.insert(new SysMenu("菜单管理", sysMenu.getParentId(), "/page/sys/user/menu_list.html", "layui-icon-home", 2, "url", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加系统设置目录
             sysMenu = dao.insert(new SysMenu("系统设置", parentId, "", "layui-icon-home", 1, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加报表管理菜单
-            sysMenu = dao.insert(new SysMenu("报表管理", sysMenu.getId(), "/page/sys/report/report_list.html", "layui-icon-home", 0, "", ""));
+            sysMenu = dao.insert(new SysMenu("报表管理", sysMenu.getId(), "/page/sys/report/report_list.html", "layui-icon-home", 0, "url", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加数据管理菜单
-            sysMenu = dao.insert(new SysMenu("数据管理", sysMenu.getParentId(), "/page/sys/data/data_list.html", "layui-icon-home", 1, "", ""));
+            sysMenu = dao.insert(new SysMenu("数据管理", sysMenu.getParentId(), "/page/sys/data/data_list.html", "layui-icon-home", 1, "url", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加函数管理菜单
-            sysMenu = dao.insert(new SysMenu("函数管理", sysMenu.getParentId(), "/page/sys/function/function_list.html", "layui-icon-home", 1, "", ""));
+            sysMenu = dao.insert(new SysMenu("函数管理", sysMenu.getParentId(), "/page/sys/function/function_list.html", "layui-icon-home", 1, "url", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
 
         }

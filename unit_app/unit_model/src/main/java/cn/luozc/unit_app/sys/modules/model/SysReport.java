@@ -28,4 +28,6 @@ public class SysReport extends BaseModel implements Serializable {
     @ColDefine(type = ColType.VARCHAR, width = 255)
     private String tableName;
 
+    @One(field = "id", key = "fid")
+    private SysMenu sysMenu;
 }

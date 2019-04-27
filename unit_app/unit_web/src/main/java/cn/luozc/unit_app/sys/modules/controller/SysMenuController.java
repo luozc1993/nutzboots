@@ -64,10 +64,15 @@ public class SysMenuController {
     @At
     @Aop(TransAop.READ_COMMITTED)
     public JsonData edit(SysMenu sysMenu,String roleId){
-        if(!"url".equals(sysMenu.getType())){
+        if(!("url".equals(sysMenu.getType())||"folder".equals(sysMenu.getType()))){
+            SysMenu fid = sysMenuService.fetch(Cnd.where("fid", "=", sysMenu.getFid()));
+            if(fid!=null&&!sysMenu.getId().equals(fid.getId())){
+                return JsonData.success("该报表已关联菜单："+fid.getName());
+            }
             sysMenu.setUrl("/menu/"+sysMenu.getId()+".html");
         }
-        //添加信息
+
+        //修改信息
         int update = sysMenuService.update(sysMenu);
 
         if(update==0){return JsonData.fail("添加失败"); }
@@ -95,16 +100,22 @@ public class SysMenuController {
      * @return              JsonData
      */
     @At
-    public JsonData add(SysMenu sysMenu,String roleId){
+    public JsonData add(SysMenu sysMenu,String roleId,int isAdd){
         if(StringUtils.isEmpty(sysMenu.getParentId())){
             sysMenu.setParentId("0");
         }
-        String id = UUID.randomUUID().toString();
-        sysMenu.setId(id);
-        if(!"url".equals(sysMenu.getType())){
-            sysMenu.setUrl("/menu/"+id+".html");
+
+
+
+        if(!("url".equals(sysMenu.getType())||"folder".equals(sysMenu.getType()))){
+            SysMenu fid = sysMenuService.fetch(Cnd.where("fid", "=", sysMenu.getFid()));
+            if(fid!=null){
+                return JsonData.success("该报表已关联菜单："+fid.getName());
+            }
         }
         sysMenu = sysMenuService.insert(sysMenu);
+        sysMenu.setUrl("/menu/"+sysMenu.getId()+".html");
+        sysMenuService.update(sysMenu);
         List<SysRoleMenu> srms = getSysRoleMenus(sysMenu, roleId);
         sysRoleMenuService.insert(srms);
         return JsonData.success();
@@ -120,7 +131,7 @@ public class SysMenuController {
     @At
     public LayuiTableResult list(int page, int limit, String value){
         Criteria criteria = sysMenuService.getVagueCriteria(value, "name");
-        Pagination listPage = sysMenuService.listPageLinks(page, limit,criteria.getOrderBy().asc("sort"),"^(roles|parent)$");
+        Pagination listPage = sysMenuService.listPageLinks(page, limit,criteria.getOrderBy().asc("sort"),"^(roles|parent|sysReport)$");
         return LayuiTableResult.result(0,"",sysMenuService.count(criteria),listPage.getList());
     }
 

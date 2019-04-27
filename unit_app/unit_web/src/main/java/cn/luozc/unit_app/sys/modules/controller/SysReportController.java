@@ -4,6 +4,7 @@ import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import net.sf.json.JSONObject;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.sql.Criteria;
 import org.nutz.ioc.loader.annotation.Inject;
@@ -12,6 +13,7 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,78 @@ import java.util.List;
 public class SysReportController {
 
     @Inject private SysReportService sysReportService;
+    @Inject private SysReportBtnService sysReportBtnService;
 
+
+    @At
+    @Ok("beetl:/report/${obj.fid}.html")
+    public JSONObject page(String fid){
+        JSONObject json = new JSONObject();
+        json.put("fid",fid);
+        return json;
+    }
+
+    @At
+    public JsonData createReport(String id){
+
+
+        String html = getReportHtml().toString();
+
+        SysReport sysReport = sysReportService.fetch(id);
+        html = html.replace("${title}",sysReport.getReportName());
+        List<SysReportBtn> reportBtns = sysReportBtnService.query(Cnd.where("report_id","=", id));
+        String topBtnHtml = "";
+        for (SysReportBtn btn:reportBtns) {
+            topBtnHtml += "<button class='layui-btn layui-btn-sm toolbarBtn' data-type=\""+btn.getType()+"\" data-jump=\""+btn.getJump()+"\" data-title=\""+btn.getTitle()+"\" data-id=\""+btn.getDataId()+"\">"+btn.getTitle()+"</button>";
+        }
+        html = html.replace("${topBtn}",topBtnHtml);
+        try {
+            String path = this.getClass().getResource("/").getPath() + "template/report/" + sysReport.getId() + ".html";
+            File file = new File(path);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(html);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return JsonData.success("生成成功");
+    }
+
+    /**
+     * 获取模板文件内容
+     * @return
+     */
+    private StringBuffer getReportHtml() {
+        StringBuffer html = new StringBuffer();
+        BufferedReader br = null;
+        try {
+            String path = this.getClass().getResource("/").getPath() + "report.html";
+            File file = new File(path);
+            br = new BufferedReader(new FileReader(file));
+            String str = null;
+            while ((str=br.readLine())!=null){
+                html.append(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(br!=null){
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return html;
+    }
 
 
     @At("/report_list")
@@ -89,8 +162,8 @@ public class SysReportController {
      */
     @At
     public LayuiTableResult list(int page, int limit, String value){
-        Criteria criteria = sysReportService.getVagueCriteria(value, "name");
-        Pagination listPage = sysReportService.listPage(page, limit,criteria);
+        Criteria criteria = sysReportService.getVagueCriteria(value, "reportName");
+        Pagination listPage = sysReportService.listPageLinks(page, limit,criteria,"sysMenu");
         return LayuiTableResult.result(0,"",sysReportService.count(criteria),listPage.getList());
     }
 

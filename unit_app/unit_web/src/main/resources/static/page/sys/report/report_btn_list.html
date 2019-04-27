@@ -30,13 +30,11 @@
 
     <!-- 表格操作列 -->
     <script type='text/html' id='tableBar'>
-        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='createReport'>生成报表</a>
-        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reportBtn'>报表按钮</a>
         <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>
         <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
     </script>
-    <script type='text/html' id='menuBar'>
-        <span class="layui-badge layui-bg-blue">{{d.reportName}}</span>
+    <script type='text/html' id='jumpBar'>
+        <span class="layui-badge layui-bg-blue">{{d.jump}}</span>
     </script>
     <!--操作-->
     <script type='text/html' id='toolbar'>
@@ -54,6 +52,8 @@
             var table = layui.table;
             var admin = layui.admin;
             var form = layui.form;
+
+            var SysReportBtnReportId = admin.getTempData("SysReportBtnReportId");
             $ = layui.$;
             createTable('');
             function createTable(value){
@@ -61,19 +61,20 @@
                 var tableIns = table.render({
                     elem: '#table' //指定原始表格元素选择器（推荐id选择器）
                     ,toolbar: '#toolbar'
-                    ,url:'/sys/report/list'
+                    ,url:'/sys/report_btn/list'
                     ,page:true
                     ,cellMinWidth:100
                     ,where: { //设定异步数据接口的额外参数，任意设
-                        value: value
+                        value: value,
+                        reportId:SysReportBtnReportId
                     }
                     ,height: 'full-70'
                     ,cols: [ [
                         {field:'id',title:'ID',hide:true},
-                        {field:'reportName',title:'报表名称'},
-                        {field:'tableName',title:'报表对应数据表'},
-                        {field:'menu',title:'菜单',toolbar:'#menuBar',minWidth:90},
-                        {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:260}
+                        {field:'title',title:'按钮名称'},
+                        {field:'type',title:'按钮类型'},
+                        {field:'jump',title:'跳转方式',toolbar:'#jumpBar',minWidth:90},
+                        {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:180}
                     ] ] //设置表头
 
                 });
@@ -91,29 +92,6 @@
                             break;
                     };
                 });
-
-                /**
-                 * 报表生成
-                 * @param data
-                 */
-                function createReport(data) {
-                    $.ajax({
-                        url: "/sys/report/createReport",
-                        data: {id: data.id},
-                        dataType: "json",
-                        type: "post",
-                        success: function (res) {
-                            if (res.status) {
-                                top.layer.closeAll();
-                                top.layer.msg(res.data, {icon: 1});
-                            } else {
-                                layer.closeAll('loading'); //关闭加载层
-                                top.layer.msg(res.msg, {icon: 2});
-                            }
-                        }
-                    });
-                }
-
                 //监听行工具事件
                 table.on('tool(table)', function(obj){
                     var data = obj.data;
@@ -125,19 +103,17 @@
                         });
                     } else if(obj.event === 'edit'){
                         showFormModel(data);
-                    }else if(obj.event === 'createReport'){
-                        createReport(data);
-                    }else if(obj.event === 'reportBtn'){
-                        showReportBtn(data);
                     }
                 });
+
 
             }
 
             // 显示表单弹窗
-            function showReportBtn(data) {
-                admin.putTempData("SysReportBtnReportId",isNull(data.id));
-                var url = '/page/sys/report/report_btn_list.html';
+            function showFormModel(data) {
+                admin.putTempData("SysReportBtn",isNull(data));
+                admin.putTempData("SysReportBtnReportId",SysReportBtnReportId);
+                var url = '/page/sys/report/report_btn_form.html';
                 top.layui.index.closeTab(url);
                 top.layui.index.openTab({
                     title: "报表按钮管理",
@@ -146,30 +122,12 @@
                         table.reload('table');
                     }
                 });
-
             }
 
-            // 显示表单弹窗
-            function showFormModel(data) {
-                admin.putTempData("SysReport",isNull(data));
-                top.layui.admin.open({
-                    type: 2,
-                    title:  (data?'编辑':'添加')+'角色' ,
-                    area: ['700px', '400px'],
-                    content: '/page/sys/report/report_form.html',
-                    end: function () {
-                        table.reload('table');  // 成功刷新表格
-                    }
-                });
-            }
 
-            /**
-             * 删除数据
-             * @param id
-             */
             function del(id){
                 $.ajax({
-                    url:"/sys/report/del",
+                    url:"/sys/report_btn/del",
                     data:{id:id},
                     dataType:"json",
                     type:"post",

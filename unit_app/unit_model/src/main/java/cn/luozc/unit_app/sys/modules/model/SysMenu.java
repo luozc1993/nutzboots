@@ -80,6 +80,9 @@ public class SysMenu extends BaseModel implements Serializable {
     @One(field = "parentId")
     public SysMenu parent;
 
+    @One(field = "fid",key = "id")
+    public SysReport sysReport;
+
 
     public List<SysRole> getRoles() {
         return roles;
