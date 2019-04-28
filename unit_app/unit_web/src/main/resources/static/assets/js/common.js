@@ -75,3 +75,12 @@ function isEmptyObject(obj) {
     }
     return true;
 }
+
+function closeTips() {
+    top.layer.closeAll();
+    //关闭当前窗口
+    window.close();
+    console.log(window.location)
+    //关闭当前标签
+    top.layui.index.closeTab(window.location.pathname+window.location.search);
+}

@@ -34,12 +34,17 @@
     </script>
     <!-- 表格操作列 -->
     <script type='text/html' id='tableBar'>
-        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='createReport'>生成报表</a>
+        <a class='layui-btn {{d.createHtml==0||d.createHtml==null?"layui-btn-warm":"layui-btn-primary"}}  layui-btn-xs' lay-event='createReport'>生成报表</a>
         <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>
         <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
     </script>
     <script type='text/html' id='menuBar'>
-        <span class="layui-badge layui-bg-blue">{{d.reportName}}</span>
+        {{#  if(d.sysMenu !=null){ }}
+        <span class="layui-badge layui-bg-blue">{{d.sysMenu.name}}</span>
+        {{#  } else { }}
+
+        {{#  } }}
+
     </script>
     <!--操作-->
     <script type='text/html' id='toolbar'>
@@ -110,6 +115,7 @@
                             if (res.status) {
                                 top.layer.closeAll();
                                 top.layer.msg(res.data, {icon: 1});
+                                table.reload('table');
                             } else {
                                 layer.closeAll('loading'); //关闭加载层
                                 top.layer.msg(res.msg, {icon: 2});
@@ -172,13 +178,13 @@
             // 显示表单弹窗
             function showFormModel(data) {
                 admin.putTempData("SysReport",isNull(data));
-                top.layui.admin.open({
-                    type: 2,
-                    title:  (data?'编辑':'添加')+'角色' ,
-                    area: ['700px', '400px'],
-                    content: '/page/sys/report/report_form.html',
+                var url = '/page/sys/report/report_form.html';
+                top.layui.index.closeTab(url);
+                top.layui.index.openTab({
+                    title: (data?'编辑':'添加')+'报表',
+                    url:  url,
                     end: function () {
-                        table.reload('table');  // 成功刷新表格
+                        table.reload('table');
                     }
                 });
             }

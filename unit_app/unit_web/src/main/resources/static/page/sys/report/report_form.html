@@ -17,10 +17,12 @@
                     <input type="text" id="reportName" name="reportName" autocomplete="off" lay-verify="required" placeholder="请输入" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">数据表名</label>
-                <div class="layui-input-block">
-                    <input type="text" id="tableName" name="tableName" autocomplete="off" lay-verify="required" placeholder="请输入" class="layui-input">
+            <div  class=" layui-col-xs12 layui-col-sm6 layui-col-md6">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关联数据</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="tableName" name="tableName" autocomplete="off" placeholder="请选择" class="layui-input">
+                    </div>
                 </div>
             </div>
             <div class="layui-form-item text-center">
@@ -36,11 +38,12 @@
     <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
     <script type='text/javascript' src='../../../assets/js/common.js'></script>
     <script type='text/javascript'>
-        layui.use(['layer', 'form', 'admin'], function () {
+        layui.use(['layer', 'form', 'admin','tableSelect'], function () {
             var $ = layui.jquery;
             var layer = layui.layer;
             var form = layui.form;
             var admin = layui.admin;
+            var tableSelect = layui.tableSelect;
             var TempData = admin.getTempData("SysReport");
 
             if(TempData){
@@ -65,6 +68,8 @@
                         if (res.status) {
                             top.layer.closeAll();
                             top.layer.msg(res.data, {icon: 1});
+                            layer.closeAll('loading'); //关闭加载层
+                            closeTips()
                         } else {
                             layer.closeAll('loading'); //关闭加载层
                             top.layer.msg(res.msg, {icon: 2});
@@ -72,6 +77,30 @@
                     }
                 });
             });
+
+            tableSelect.render({
+                elem: '#reportName',	//定义输入框input对象
+                checkedKey: 'id',//表格的唯一建值，非常重要，影响到选中状态 必填
+                searchKey: 'value',	//搜索输入框的name值 默认keyword
+                searchPlaceholder: '关键词搜索',	//搜索输入框的提示文字 默认关键词搜索
+                table: {	//定义表格参数，与LAYUI的TABLE模块一致，只是无需再定义表格elem
+                    url:'/sys/db/listTableNames',
+                    cols: [[
+                        {type:'radio'},
+                        {field:'table_name',title:'表名'},
+                        {field:'table_comment',title:'啊啊啊'}
+                    ]]
+                },
+                done: function (elem, data) {
+                    if(data.data.length>0){
+                        $("#tableName").val(data.data[0].table_name);
+                        $("#reportName").val(data.data[0].table_comment)
+                    }
+
+                    //选择完后的回调，包含2个返回值 elem:返回之前input对象；data:表格返回的选中的数据 []
+                    //拿到data[]后 就按照业务需求做想做的事情啦~比如加个隐藏域放ID...
+                }
+            })
 
         });
     </script>

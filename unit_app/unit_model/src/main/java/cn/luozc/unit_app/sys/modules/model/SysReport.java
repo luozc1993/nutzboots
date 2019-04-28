@@ -30,4 +30,9 @@ public class SysReport extends BaseModel implements Serializable {
 
     @One(field = "id", key = "fid")
     private SysMenu sysMenu;
+
+    @Column("create_html")
+    @Comment("是否生成过页面")
+    @ColDefine(type = ColType.BOOLEAN)
+    private boolean createHtml;
 }

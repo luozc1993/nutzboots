@@ -6,6 +6,7 @@ import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.sql.Criteria;
 import org.nutz.ioc.loader.annotation.Inject;
@@ -67,6 +68,9 @@ public class SysReportController {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(html);
             bw.close();
+            Chain create = Chain.make("create_html", 1);
+            int update = sysReportService.update(create,Cnd.where("id","=",sysReport.getId()));
+            System.err.println(update);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,6 +145,7 @@ public class SysReportController {
      */
     @At
     public JsonData edit(SysReport sysReport){
+        sysReport.setCreateHtml(false);
         int update = sysReportService.update(sysReport);
         if(update>0){
             return JsonData.success("修改成功");
@@ -171,6 +176,21 @@ public class SysReportController {
     @At
     public LayuiTableResult list(int page, int limit, String value){
         Criteria criteria = sysReportService.getVagueCriteria(value, "reportName");
+        Pagination listPage = sysReportService.listPageLinks(page, limit,criteria,"sysMenu");
+        return LayuiTableResult.result(0,"",sysReportService.count(criteria),listPage.getList());
+    }
+
+    /**
+     * 获取已创建页面列表列表
+     * @param page      页数
+     * @param limit     每页显示数量
+     * @param value     搜索框值
+     * @return          LayuiTableResult
+     */
+    @At
+    public LayuiTableResult listCreate(int page, int limit, String value){
+        Criteria criteria = sysReportService.getVagueCriteria(value, "reportName");
+        criteria.where().and("create_html","=",1);
         Pagination listPage = sysReportService.listPageLinks(page, limit,criteria,"sysMenu");
         return LayuiTableResult.result(0,"",sysReportService.count(criteria),listPage.getList());
     }
