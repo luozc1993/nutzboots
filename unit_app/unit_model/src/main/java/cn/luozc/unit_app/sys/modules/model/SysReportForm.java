@@ -41,5 +41,10 @@ public class SysReportForm extends BaseModel implements Serializable {
     @Comment("是否隐藏")
     @ColDefine(type = ColType.VARCHAR, width = 10)
     private String hide;
+    @Column("order_by")
+    @Comment("排序")
+    @ColDefine(type = ColType.VARCHAR, width = 10)
+    private int orderBy;
+
 
 }

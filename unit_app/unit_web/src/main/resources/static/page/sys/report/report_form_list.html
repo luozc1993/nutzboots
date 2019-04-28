@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
     <meta charset='UTF-8'>
-    <title>报表按钮管理</title>
+    <title>报表表单管理</title>
 
     <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
     <link rel='stylesheet' href='../../../assets/module/admin.css'/>
@@ -33,9 +33,6 @@
         <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>
         <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
     </script>
-    <script type='text/html' id='jumpBar'>
-        <span class="layui-badge layui-bg-blue">{{d.jump}}</span>
-    </script>
     <!--操作-->
     <script type='text/html' id='toolbar'>
         <button class='layui-btn layui-btn-sm' lay-event='add'>添加</button>
@@ -61,7 +58,7 @@
                 var tableIns = table.render({
                     elem: '#table' //指定原始表格元素选择器（推荐id选择器）
                     ,toolbar: '#toolbar'
-                    ,url:'/sys/report_btn/list'
+                    ,url:'/sys/report_form/list'
                     ,page:true
                     ,cellMinWidth:100
                     ,where: { //设定异步数据接口的额外参数，任意设
@@ -71,9 +68,10 @@
                     ,height: 'full-70'
                     ,cols: [ [
                         {field:'id',title:'ID',hide:true},
-                        {field:'title',title:'按钮名称'},
-                        {field:'type',title:'按钮类型'},
-                        {field:'jump',title:'跳转方式',toolbar:'#jumpBar',minWidth:90},
+                        {field:'field',title:'字段key'},
+                        {field:'title',title:'名称'},
+                        {field:'minWidth',title:'最小宽度'},
+                        {field:'hide',title:'是否隐藏'},
                         {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:180}
                     ] ] //设置表头
 
@@ -111,9 +109,9 @@
 
             // 显示表单弹窗
             function showFormModel(data) {
-                admin.putTempData("SysReportBtn",isNull(data));
+                admin.putTempData("SysReportForm",isNull(data));
                 admin.putTempData("SysReportId",SysReportId);
-                var url = '/page/sys/report/report_btn_form.html';
+                var url = '/page/sys/report/report_form_form.html';
                 top.layui.index.closeTab(url);
                 top.layui.index.openTab({
                     title: "报表按钮管理",
@@ -127,7 +125,7 @@
 
             function del(id){
                 $.ajax({
-                    url:"/sys/report_btn/del",
+                    url:"/sys/report_form/del",
                     data:{id:id},
                     dataType:"json",
                     type:"post",

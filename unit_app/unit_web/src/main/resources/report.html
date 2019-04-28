@@ -64,12 +64,7 @@
             , page: true
             , where: {value: $("#search").val()}
             , height: 'full-93'
-            , cols: [[
-                {field: 'id', title: 'ID', hide: false,width:300},
-                {field: 'data_name', title: '表名', minWidth: 80},
-                {field: 'table_name', title: '数据表名', minWidth: 80},
-                {field: 'edit', title: '操作', toolbar: '#edit', minWidth: 80}
-            ]]
+            , cols: [${tableCol}]
 
         });
 

@@ -31,7 +31,7 @@ public class SysMenuController {
 
 
     @At
-    @Ok("beetl:/${obj.type}/${obj.fid}.html")
+    @Ok(">>:/${obj.type}/${obj.fid}.html")
     public JSONObject page(String mid){
         SysMenu menu = sysMenuService.fetch(mid);
         JSONObject json = new JSONObject();
@@ -112,6 +112,8 @@ public class SysMenuController {
             if(fid!=null){
                 return JsonData.success("该报表已关联菜单："+fid.getName());
             }
+        }else{
+            sysMenu.setFid("");
         }
         sysMenu = sysMenuService.insert(sysMenu);
         sysMenu.setUrl("/menu/"+sysMenu.getId()+".html");

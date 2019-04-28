@@ -19,6 +19,7 @@ public abstract class BaseModel implements Serializable {
     @Name
     @ColDefine(type = ColType.VARCHAR, width = 36)
     @Prev(els = {@EL("uuid()")})
+    @Comment("ID")
     private String id;
 
 

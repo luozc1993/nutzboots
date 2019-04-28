@@ -27,11 +27,14 @@
             <span></span><span></span><span></span><span></span>
         </div>
     </div>
-
+    <!-- 表格操作列 -->
+    <script type='text/html' id='setUpBar'>
+        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reportBtn'>报表按钮</a>
+        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reportForm'>报表表单</a>
+    </script>
     <!-- 表格操作列 -->
     <script type='text/html' id='tableBar'>
         <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='createReport'>生成报表</a>
-        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='reportBtn'>报表按钮</a>
         <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>
         <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
     </script>
@@ -73,6 +76,7 @@
                         {field:'reportName',title:'报表名称'},
                         {field:'tableName',title:'报表对应数据表'},
                         {field:'menu',title:'菜单',toolbar:'#menuBar',minWidth:90},
+                        {field:'setUp',title:'操作',toolbar:'#setUpBar',minWidth:260},
                         {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:260}
                     ] ] //设置表头
 
@@ -129,6 +133,8 @@
                         createReport(data);
                     }else if(obj.event === 'reportBtn'){
                         showReportBtn(data);
+                    }else if(obj.event === 'reportForm'){
+                        showReportForm(data);
                     }
                 });
 
@@ -136,11 +142,25 @@
 
             // 显示表单弹窗
             function showReportBtn(data) {
-                admin.putTempData("SysReportBtnReportId",isNull(data.id));
+                admin.putTempData("SysReportId",isNull(data.id));
                 var url = '/page/sys/report/report_btn_list.html';
                 top.layui.index.closeTab(url);
                 top.layui.index.openTab({
                     title: "报表按钮管理",
+                    url:  url,
+                    end: function () {
+                        table.reload('table');
+                    }
+                });
+
+            }
+            // 显示表单弹窗
+            function showReportForm(data) {
+                admin.putTempData("SysReportId",isNull(data.id));
+                var url = '/page/sys/report/report_form_list.html';
+                top.layui.index.closeTab(url);
+                top.layui.index.openTab({
+                    title: "报表表单管理",
                     url:  url,
                     end: function () {
                         table.reload('table');

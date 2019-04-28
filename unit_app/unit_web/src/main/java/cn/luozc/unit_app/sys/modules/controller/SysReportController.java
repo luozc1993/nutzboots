@@ -4,6 +4,7 @@ import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.sql.Criteria;
@@ -24,6 +25,7 @@ public class SysReportController {
 
     @Inject private SysReportService sysReportService;
     @Inject private SysReportBtnService sysReportBtnService;
+    @Inject private SysReportFormService sysReportFormService;
 
 
     @At
@@ -48,6 +50,12 @@ public class SysReportController {
             topBtnHtml += "<button class='layui-btn layui-btn-sm toolbarBtn' data-type=\""+btn.getType()+"\" data-jump=\""+btn.getJump()+"\" data-title=\""+btn.getTitle()+"\" data-id=\""+btn.getDataId()+"\">"+btn.getTitle()+"</button>";
         }
         html = html.replace("${topBtn}",topBtnHtml);
+
+        List<SysReportForm> reportForms = sysReportFormService.query(Cnd.where("report_id", "=", id).orderBy("order_by","asc"));
+        JSONArray array = JSONArray.fromObject(reportForms);
+        String col = array.toString();
+        html = html.replace("${tableCol}",col);
+
         try {
             String path = this.getClass().getResource("/").getPath() + "template/report/" + sysReport.getId() + ".html";
             File file = new File(path);

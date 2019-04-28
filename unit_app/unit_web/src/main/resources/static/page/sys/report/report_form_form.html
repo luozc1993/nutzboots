@@ -13,48 +13,32 @@
         <div class="layui-form layui-form-pane" lay-filter="form" action="">
             <input type="hidden" id="reportId" name="reportId" class="layui-input">
             <input type="hidden" id="dataId" name="dataId" class="layui-input">
+
+            <div id="dataDiv" class=" layui-col-xs12 layui-col-sm6 layui-col-md6">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关联数据</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="field" name="field" autocomplete="off" placeholder="请选择" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
             <div class="layui-form-item">
                 <label class="layui-form-label">名称</label>
                 <div class="layui-input-block">
                     <input type="text" id="title" name="title" autocomplete="off" lay-verify="required" placeholder="请输入" class="layui-input">
                 </div>
             </div>
-            <div class=" layui-col-xs12 layui-col-sm12 layui-col-md12">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">按钮类型</label>
-                    <div class="layui-input-block" >
-                        <input type="radio" name="type" lay-filter="type" value="data" title="数据" checked="">
-                        <input type="radio" name="type" lay-filter="type" value="flow" title="流程" >
-                        <input type="radio" name="type" lay-filter="type" value="report" title="报表" >
-                        <input type="radio" name="type" lay-filter="type" value="fun" title="函数">
-                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">最小宽度</label>
+                <div class="layui-input-block">
+                    <input type="number" id="minWidth" name="minWidth" autocomplete="off" value="100"  class="layui-input">
                 </div>
             </div>
-            <div class=" layui-col-xs12 layui-col-sm12 layui-col-md12">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">跳转方式</label>
-                    <div class="layui-input-block" >
-                        <input type="radio" name="jump" lay-filter="jump" value="0" title="弹窗" checked="">
-                        <input type="radio" name="jump" lay-filter="jump" value="1" title="框架新窗口" >
-                        <input type="radio" name="jump" lay-filter="jump" value="2" title="浏览器新窗口" >
-                    </div>
-                </div>
-            </div>
-
-            <div id="dataDiv" class=" layui-col-xs12 layui-col-sm6 layui-col-md6">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">关联数据</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="dataName" name="dataName" autocomplete="off" placeholder="请关联数据" class="layui-input">
-                    </div>
-                </div>
-            </div>
-            <div id="reportDiv" class=" layui-col-xs12 layui-col-sm6 layui-col-md6" style="display: none">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">关联报表</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="reportName" name="reportName" autocomplete="off" placeholder="请关联报表" class="layui-input">
-                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-block">
+                    <input type="number" id="orderBy" name="orderBy" autocomplete="off" value="0"   class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item text-center">
@@ -77,7 +61,7 @@
             var admin = layui.admin;
             var tableSelect = layui.tableSelect;
             var SysReportId = admin.getTempData("SysReportId");
-            var TempData = admin.getTempData("SysReportBtn");
+            var TempData = admin.getTempData("SysReportForm");
             if(TempData){
                 form.val("form", TempData);
             }
@@ -91,9 +75,13 @@
             form.on('submit(formSubmit)', function (data) {
                 layer.load(2);
                 var d = data.field;
-                let id = TempData.id;
+                var id = "";
+                if(TempData){
+                    id = TempData.id;
+                }
+
                 d['id'] = id;
-                var url = id?"/sys/report_btn/edit":"/sys/report_btn/add";
+                var url = id?"/sys/report_form/edit":"/sys/report_form/add";
                 $.ajax({
                     url:url,
                     data:d,
@@ -125,47 +113,25 @@
                     $("#reportDiv").hide();
                 }
             });
+
+
             tableSelect.render({
-                elem: '#dataName',	//定义输入框input对象
+                elem: '#field',	//定义输入框input对象
                 checkedKey: 'id',//表格的唯一建值，非常重要，影响到选中状态 必填
                 searchKey: 'value',	//搜索输入框的name值 默认keyword
                 searchPlaceholder: '关键词搜索',	//搜索输入框的提示文字 默认关键词搜索
                 table: {	//定义表格参数，与LAYUI的TABLE模块一致，只是无需再定义表格elem
-                    url:'/sys/data/list',
+                    url:'/sys/report_form/listTableFeilds?reportId='+SysReportId,
                     cols: [[
                         {type:'radio'},
-                        {field:'dataName',title:'数据名称'},
-                        {field:'tableName',title:'数据表名'}
+                        {field:'column_name',title:'字段key'},
+                        {field:'column_comment',title:'字段名称'}
                     ]]
                 },
                 done: function (elem, data) {
                     if(data.data.length>0){
-                        $("#dataId").val(data.data[0].id);
-                        $("#dataName").val(data.data[0].dataName)
-                    }
-
-                    //选择完后的回调，包含2个返回值 elem:返回之前input对象；data:表格返回的选中的数据 []
-                    //拿到data[]后 就按照业务需求做想做的事情啦~比如加个隐藏域放ID...
-                }
-            });
-
-            tableSelect.render({
-                elem: '#reportName',	//定义输入框input对象
-                checkedKey: 'id',//表格的唯一建值，非常重要，影响到选中状态 必填
-                searchKey: 'value',	//搜索输入框的name值 默认keyword
-                searchPlaceholder: '关键词搜索',	//搜索输入框的提示文字 默认关键词搜索
-                table: {	//定义表格参数，与LAYUI的TABLE模块一致，只是无需再定义表格elem
-                    url:'/sys/report/list',
-                    cols: [[
-                        {type:'radio'},
-                        {field:'reportName',title:'数据名称'},
-                        {field:'tableName',title:'数据表名'}
-                    ]]
-                },
-                done: function (elem, data) {
-                    if(data.data.length>0){
-                        $("#dataId").val(data.data[0].id);
-                        $("#reportName  ").val(data.data[0].reportName)
+                        $("#field").val(data.data[0].column_name);
+                        $("#title").val(data.data[0].column_comment)
                     }
 
                     //选择完后的回调，包含2个返回值 elem:返回之前input对象；data:表格返回的选中的数据 []
