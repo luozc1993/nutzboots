@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>公司管理</title>
+
+    <link rel='stylesheet' href='../../../assets/libs/layui/css/layui.css'/>
+    <link rel='stylesheet' href='../../../assets/module/admin.css'/>
+    <style type="text/css">
+        #search{display: inline-block;width: 200px;height: 34px;vertical-align:top}
+    </style>
+</head>
+<body>
+    <!-- 正文开始 -->
+    <div class='layui-fluid'>
+        <div class='layui-card'>
+            <div class='layui-card-body'>
+                <table id='table' lay-filter='table'></table>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载动画，移除位置在common.js中 -->
+    <div class="page-loading">
+        <div class="ball-loader">
+            <span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- 表格操作列 -->
+    <script type='text/html' id='tableBar'>
+        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>
+        <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
+    </script>
+    <!--操作-->
+    <script type='text/html' id='toolbar'>
+        <button class='layui-btn layui-btn-sm' lay-event='add'>添加</button>
+        <input type="search" id="search" name="search" placeholder="请输入需要搜索的内容" class="layui-input">
+        <buttin class='layui-btn layui-btn-sm layui-btn-normal' lay-event='search' style="    position: relative;left: -5px;height: 34px;line-height: 34px;">搜索</buttin>
+    </script>
+
+
+    <!-- js部分 -->
+    <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
+    <script type='text/javascript' src='../../../assets/js/common.js'></script>
+    <script type='text/javascript'>
+        layui.use(['form','layer','jquery','table','admin'],function(){
+            var table = layui.table;
+            var admin = layui.admin;
+            var form = layui.form;
+            $ = layui.$;
+            createTable('');
+            function createTable(value){
+                //执行渲染
+                var tableIns = table.render({
+                    elem: '#table' //指定原始表格元素选择器（推荐id选择器）
+                    ,toolbar: '#toolbar'
+                    ,url:'/sys/company/list'
+                    ,page:true
+                    ,cellMinWidth:100
+                    ,where: { //设定异步数据接口的额外参数，任意设
+                        value: value
+                    }
+                    ,height: 'full-70'
+                    ,cols: [ [
+                        {field:'id',title:'ID',hide:true},
+                        {field:'companyName',title:'角色'},
+                        {field:'abbreviation',title:'简称'},
+                        {field:'telephone',title:'联系电话'},
+                        {field:'email',title:'邮箱'},
+                        {field:'introduce',title:'介绍'},
+                        {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:120}
+                    ] ] //设置表头
+
+                });
+                $("#search").val(value);
+                $("#search").focus()
+
+                //头工具栏事件
+                table.on('toolbar(table)', function(obj){
+                    switch(obj.event){
+                        case 'add':
+                            showFormModel();
+                            break;
+                        case 'search':
+                            createTable($("#search").val());
+                            break;
+                    };
+                });
+                //监听行工具事件
+                table.on('tool(table)', function(obj){
+                    var data = obj.data;
+                    if(obj.event === 'delete'){
+                        layer.confirm('真的删除行么', function(index){
+                            obj.del();
+                            del(data.id);
+                            layer.close(index);
+                        });
+                    } else if(obj.event === 'edit'){
+                        showFormModel(data);
+                    }
+                });
+
+            }
+
+            // 显示表单弹窗
+            function showFormModel(data) {
+                admin.putTempData("SysCompany",isNull(data));
+                top.layui.admin.open({
+                    type: 2,
+                    title:  (data?'编辑':'添加')+'公司' ,
+                    area: ['500px', '400px'],
+                    content: '/page/sys/user/company_form.html',
+                    end: function () {
+                        table.reload('table');  // 成功刷新表格
+                    }
+                });
+            }
+
+
+            function del(id){
+                $.ajax({
+                    url:"/sys/role/del",
+                    data:{id:id},
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        if (res.status) {
+                            top.layer.closeAll();
+                            top.layer.msg(res.msg, {icon: 1});
+                        } else {
+                            layer.closeAll('loading'); //关闭加载层
+                            top.layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            }
+
+        })
+
+
+    </script>
+</body>
+</html>

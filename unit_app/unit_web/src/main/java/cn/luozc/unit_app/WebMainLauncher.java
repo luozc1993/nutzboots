@@ -57,6 +57,9 @@ public class WebMainLauncher {
             //添加菜单管理菜单
             sysMenu = dao.insert(new SysMenu("菜单管理", sysMenu.getParentId(), "/page/sys/user/menu_list.html", "layui-icon-home", 2, "url", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
+            //添加公司管理菜单
+            sysMenu = dao.insert(new SysMenu("公司管理", sysMenu.getParentId(), "/page/sys/user/company_list.html", "layui-icon-home", 2, "url", ""));
+            dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
             //添加系统设置目录
             sysMenu = dao.insert(new SysMenu("系统设置", parentId, "", "layui-icon-home", 1, "", ""));
             dao.insert(new SysRoleMenu(sysRole.getId(),sysMenu.getId()));
