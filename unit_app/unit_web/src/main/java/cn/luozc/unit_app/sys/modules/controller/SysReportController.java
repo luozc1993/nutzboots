@@ -120,7 +120,7 @@ public class SysReportController {
     public LayuiTableResult report_list(int page,int limit,String fid,String value){
         SysReport sysReport = sysReportService.fetch(fid);
         if(sysReport==null){
-            return LayuiTableResult.result(1,"数据错误",0,new ArrayList<>());
+            return LayuiTableResult.result(1,"数据错误",0,new ArrayList<JSONObject>());
         }
         Criteria criteria = sysReportService.getVagueCriteria(value, "report_name");
         int count = sysReportService.count(sysReport.getTableName(), criteria);

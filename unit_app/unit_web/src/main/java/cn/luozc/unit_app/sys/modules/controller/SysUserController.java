@@ -90,7 +90,7 @@ public class SysUserController {
      * @return              JsonData
      */
     private List<SysRoleUser> getSysRoleUsers(SysUser sysUser, String roleId) {
-        List<SysRoleUser> rus = new ArrayList<>();
+        List<SysRoleUser> rus = new ArrayList<SysRoleUser>();
         if (roleId != null) {
             String[] roleIdArr = roleId.split(",");
             for (String rid : roleIdArr) {
@@ -158,7 +158,7 @@ public class SysUserController {
         if(sysUser==null){return JsonData.fail("账号或密码错误");}
         //获取用户关联的角色信息
         sysUser = sysUserService.fetchLinks(sysUser, "roles");
-        List<String> rids = new ArrayList<>();
+        List<String> rids = new ArrayList<String> ();
         for (SysRole sysRole:sysUser.getRoles()) {
             rids.add(sysRole.getId());
         }

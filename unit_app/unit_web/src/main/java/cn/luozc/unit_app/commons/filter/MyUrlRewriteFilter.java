@@ -19,34 +19,33 @@ public class MyUrlRewriteFilter extends UrlRewriteFilter implements WebFilterFac
     PropertiesProxy conf;
 
 
-    @Override
+
     public String getName() {
         return "UrlRewrite";
     }
 
-    @Override
+
     public String getPathSpec() {
         return "/*";
     }
 
-    @Override
+
     public EnumSet<DispatcherType> getDispatches() {
         return EnumSet.of(DispatcherType.REQUEST);
     }
 
-    @Override
     public Filter getFilter() {
         return new MyUrlRewriteFilter();
     }
 
-    @Override
+
     public Map<String, String> getInitParameters() {
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<String, String>();
         map.put("confPath","/urlrewrite.xml");
         return map;
     }
 
-    @Override
+
     public int getOrder() {
         return 0;
     }

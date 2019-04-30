@@ -24,7 +24,6 @@
         </dependencies>
     </dependencyManagement>
     <modules>
-        <module>assemble_web</module>
         <module>unit_framework</module>
         <module>unit_app</module>
         <module>unit_commoms</module>
@@ -74,6 +73,8 @@
             <artifactId>nutzboot-core</artifactId>
         </dependency>
     </dependencies>
+
+
 
 
 

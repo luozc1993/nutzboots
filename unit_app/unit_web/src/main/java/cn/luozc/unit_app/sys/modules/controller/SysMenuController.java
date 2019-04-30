@@ -91,7 +91,7 @@ public class SysMenuController {
     }
 
     private List<SysRoleMenu> getSysRoleMenus(SysMenu sysMenu, String roleId) {
-        List<SysRoleMenu> srms = new ArrayList<>();
+        List<SysRoleMenu> srms = new ArrayList<SysRoleMenu>();
         if (roleId != null) {
             String[] roleIdArr = roleId.split(",");
             for (String rid : roleIdArr) {
@@ -155,7 +155,7 @@ public class SysMenuController {
         Object obj = session.getAttribute("rids");
         String rids = obj==null? "":(String)obj;
         //通过用户角色获取用户菜单
-        List<SysMenu> sysMenus = new ArrayList<>();
+        List<SysMenu> sysMenus = new ArrayList<SysMenu>();
         String[] arr = rids.split(",");
         for (String rid:arr) {
             SysRole sysRole = new SysRole();
@@ -168,7 +168,7 @@ public class SysMenuController {
             }
         }
         //加工角色
-        List<JSONObject> result = new ArrayList<>();
+        List<JSONObject> result = new ArrayList<JSONObject>();
         for (int i = 0; i < sysMenus.size(); i++) {
             SysMenu menu = sysMenus.get(i);
             if("0".equals(menu.getParentId())){
@@ -193,7 +193,7 @@ public class SysMenuController {
      * @return          List<JSONObject>
      */
     private List<JSONObject> menuTree(List<SysMenu> menus,String parentId){
-        List<JSONObject> result = new ArrayList<>();
+        List<JSONObject> result = new ArrayList<JSONObject>();
         for (int i = 0; i < menus.size(); i++) {
             SysMenu menu = menus.get(i);
             if(parentId.equals(menu.getParentId())){

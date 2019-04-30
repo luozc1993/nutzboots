@@ -18,34 +18,34 @@ public class FilterStarter implements WebFilterFace {
     PropertiesProxy conf;
 
 
-    @Override
+
     public String getName() {
         return "LOGIN";
     }
 
-    @Override
+
     public String getPathSpec() {
         return "/*";
     }
 
-    @Override
+
     public EnumSet<DispatcherType> getDispatches() {
         return EnumSet.of(DispatcherType.REQUEST);
     }
 
-    @Override
+
     public Filter getFilter() {
         return new LoginFilter();
     }
 
-    @Override
+
     public Map<String, String> getInitParameters() {
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<String, String>();
         map.put("loginFilter",conf.get("loginFilter"));
         return map;
     }
 
-    @Override
+
     public int getOrder() {
         return 0;
     }

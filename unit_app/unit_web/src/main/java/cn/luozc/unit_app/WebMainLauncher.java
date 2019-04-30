@@ -9,12 +9,14 @@ import org.nutz.ioc.Ioc;
 import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.mvc.annotation.ChainBy;
 import org.nutz.mvc.annotation.Encoding;
 import org.nutz.mvc.annotation.Modules;
 
 @IocBean(create="init", depose="depose")
 @Modules(packages = "cn.luozc.unit_app.modules")
 @Encoding(input = "UTF-8", output = "UTF-8")
+@ChainBy(args = "chain/nutzwk-mvc-chain.json")
 public class WebMainLauncher {
     @Inject("refer:$ioc")
     private Ioc ioc;
