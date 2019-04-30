@@ -4,6 +4,7 @@ import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import net.sf.json.JSONObject;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.sql.Criteria;
@@ -17,7 +18,9 @@ import org.nutz.mvc.annotation.Ok;
 @Ok("json:full")
 public class SysReportBtnController {
 
-    @Inject private SysReportBtnService sysReportBtnService;
+    @Inject
+    @Reference
+    private SysReportBtnService sysReportBtnService;
 
 
 

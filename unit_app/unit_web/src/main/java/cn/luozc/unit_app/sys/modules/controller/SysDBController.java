@@ -6,6 +6,7 @@ import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_app.utils.MD5Util;
 import cn.luozc.unit_framework.base.service.BaseService;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.commons.lang.StringUtils;
 import org.nutz.aop.interceptor.ioc.TransAop;
 import org.nutz.dao.Cnd;
@@ -27,7 +28,9 @@ import java.util.List;
 @Ok("json:full")
 public class SysDBController {
 
-    @Inject private BaseService baseService;
+    @Inject
+    @Reference
+    private BaseService baseService;
 
     /**
      * 获取列表

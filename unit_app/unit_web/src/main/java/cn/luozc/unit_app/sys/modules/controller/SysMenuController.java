@@ -4,6 +4,7 @@ import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.nutz.aop.interceptor.ioc.TransAop;
@@ -25,9 +26,15 @@ import java.util.UUID;
 @Ok("json:full")
 public class SysMenuController {
 
-    @Inject private SysRoleService sysRoleService;
-    @Inject private SysMenuService sysMenuService;
-    @Inject private SysRoleMenuService sysRoleMenuService;
+    @Inject
+    @Reference
+    private SysRoleService sysRoleService;
+    @Inject
+    @Reference
+    private SysMenuService sysMenuService;
+    @Inject
+    @Reference
+    private SysRoleMenuService sysRoleMenuService;
 
 
     @At

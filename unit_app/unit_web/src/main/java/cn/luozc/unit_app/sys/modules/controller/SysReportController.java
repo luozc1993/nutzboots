@@ -4,6 +4,7 @@ import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.nutz.dao.Chain;
@@ -24,9 +25,15 @@ import java.util.List;
 @Ok("json:full")
 public class SysReportController {
 
-    @Inject private SysReportService sysReportService;
-    @Inject private SysReportBtnService sysReportBtnService;
-    @Inject private SysReportFormService sysReportFormService;
+    @Inject
+    @Reference
+    private SysReportService sysReportService;
+    @Inject
+    @Reference
+    private SysReportBtnService sysReportBtnService;
+    @Inject
+    @Reference
+    private SysReportFormService sysReportFormService;
 
 
     @At

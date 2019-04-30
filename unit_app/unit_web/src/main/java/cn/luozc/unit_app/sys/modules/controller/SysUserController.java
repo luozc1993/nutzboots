@@ -5,6 +5,7 @@ import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_app.utils.MD5Util;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.commons.lang.StringUtils;
 import org.nutz.aop.interceptor.ioc.TransAop;
 import org.nutz.dao.Cnd;
@@ -24,8 +25,13 @@ import java.util.List;
 @Ok("json:full")
 public class SysUserController {
 
-    @Inject private SysUserService sysUserService;
-    @Inject private SysRoleUserService sysRoleUserService;
+    @Inject
+    @Reference
+    private SysUserService sysUserService;
+
+    @Inject
+    @Reference
+    private SysRoleUserService sysRoleUserService;
 
 
     @At

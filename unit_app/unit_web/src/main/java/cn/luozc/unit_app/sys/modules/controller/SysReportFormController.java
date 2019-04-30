@@ -6,6 +6,7 @@ import cn.luozc.unit_app.sys.modules.model.SysReportFormService;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.sql.Criteria;
@@ -23,8 +24,12 @@ import java.util.List;
 @Ok("json:full")
 public class SysReportFormController {
 
-    @Inject private SysReportFormService sysReportFormService;
-    @Inject private SysReportService sysReportService;
+    @Inject
+    @Reference
+    private SysReportFormService sysReportFormService;
+    @Inject
+    @Reference
+    private SysReportService sysReportService;
 
 
 

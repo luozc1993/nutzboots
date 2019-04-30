@@ -13,7 +13,7 @@
         <module>unit_model</module>
         <module>unit_web</module>
         <module>unit_service</module>
-        <module>unit_service_impl</module>
+        <module>unit_service_sys</module>
     </modules>
     <dependencies>
         <dependency>

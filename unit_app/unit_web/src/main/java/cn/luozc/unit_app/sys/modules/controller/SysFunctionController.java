@@ -6,6 +6,7 @@ import cn.luozc.unit_app.sys.modules.model.SysFunctionService;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import net.sf.json.JSONObject;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.sql.Criteria;
@@ -18,7 +19,9 @@ import org.nutz.mvc.annotation.Ok;
 @Ok("json:full")
 @IocBean
 public class SysFunctionController  {
-    @Inject private SysFunctionService sysFunctionService;
+    @Inject
+    @Reference
+    private SysFunctionService sysFunctionService;
 
     @At
     public JsonData call(String id, String data){

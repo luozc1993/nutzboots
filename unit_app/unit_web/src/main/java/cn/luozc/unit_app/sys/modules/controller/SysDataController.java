@@ -6,6 +6,7 @@ import cn.luozc.unit_app.sys.modules.model.SysReport;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.nutz.dao.Chain;
@@ -24,7 +25,9 @@ import java.util.UUID;
 @IocBean
 public class SysDataController  {
 
-    @Inject private SysDataService sysDataService;
+    @Inject
+    @Reference
+    private SysDataService sysDataService;
 
     @At
     @Ok("beetl:/data/${obj.did}.html")

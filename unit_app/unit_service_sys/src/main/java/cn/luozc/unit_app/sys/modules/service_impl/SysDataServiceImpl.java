@@ -5,10 +5,10 @@ import cn.luozc.unit_app.sys.modules.model.SysDataService;
 import cn.luozc.unit_framework.base.service.BaseServiceImpl;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.springframework.stereotype.Service;
+import com.alibaba.dubbo.config.annotation.Service;
 
 @IocBean(args = {"refer:dao"})
-@Service
+@Service(interfaceClass=SysDataService.class)
 public class SysDataServiceImpl extends BaseServiceImpl<SysData> implements SysDataService {
     public SysDataServiceImpl(Dao dao) {
         super(dao);

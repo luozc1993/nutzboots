@@ -4,6 +4,7 @@ import cn.luozc.unit_app.sys.modules.model.*;
 import cn.luozc.unit_app.utils.JsonData;
 import cn.luozc.unit_app.utils.LayuiTableResult;
 import cn.luozc.unit_framework.page.Pagination;
+import com.alibaba.dubbo.config.annotation.Reference;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.sql.Criteria;
 import org.nutz.ioc.loader.annotation.Inject;
@@ -16,8 +17,12 @@ import org.nutz.mvc.annotation.Ok;
 @Ok("json:full")
 public class SysRoleController {
 
-    @Inject private SysRoleService sysRoleService;
-    @Inject private SysRoleUserService sysRoleUserService;
+    @Inject
+    @Reference
+    private SysRoleService sysRoleService;
+    @Inject
+    @Reference
+    private SysRoleUserService sysRoleUserService;
     /**
      * 删除角色
      * @param id    角色id

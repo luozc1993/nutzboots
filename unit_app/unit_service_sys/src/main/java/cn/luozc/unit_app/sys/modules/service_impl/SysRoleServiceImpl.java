@@ -5,10 +5,10 @@ import cn.luozc.unit_app.sys.modules.model.SysRoleService;
 import cn.luozc.unit_framework.base.service.BaseServiceImpl;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.springframework.stereotype.Service;
+import com.alibaba.dubbo.config.annotation.Service;
 
 @IocBean(args = {"refer:dao"})
-@Service
+@Service(interfaceClass=SysRoleService.class)
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysRoleService {
     public SysRoleServiceImpl(Dao dao) {
         super(dao);
