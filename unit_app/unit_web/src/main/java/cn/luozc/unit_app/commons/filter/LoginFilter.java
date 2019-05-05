@@ -21,7 +21,6 @@ public class LoginFilter implements Filter {
     protected PatternMatcher pathMatcher = new ServletPathMatcher();
 
 
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String loginFilter = filterConfig.getInitParameter("loginFilter");
         if (loginFilter != null && loginFilter.trim().length() != 0) {
@@ -29,7 +28,6 @@ public class LoginFilter implements Filter {
         }
     }
 
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
@@ -44,7 +42,6 @@ public class LoginFilter implements Filter {
         chain.doFilter(request,response);
     }
 
-    @Override
     public void destroy() {
 
     }

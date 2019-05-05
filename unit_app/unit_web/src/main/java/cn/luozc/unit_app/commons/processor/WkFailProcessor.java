@@ -1,5 +1,6 @@
 package cn.luozc.unit_app.commons.processor;
 
+import cn.luozc.unit_app.utils.JsonData;
 import org.nutz.ioc.IocException;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
@@ -16,7 +17,7 @@ public class WkFailProcessor extends ViewProcessor {
 
     @Override
     public void init(NutConfig config, ActionInfo ai) throws Throwable {
-        view = evalView(config, ai, ai.getFailView());
+        super.init(config, ai);
     }
 
     @Override
@@ -25,9 +26,13 @@ public class WkFailProcessor extends ViewProcessor {
             String uri = Mvcs.getRequestPath(ac.getRequest());
             log.warn(String.format("Error@%s :", uri), ac.getError());
         }
-        if (ac.getError() instanceof IocException) {
 
+        if (ac.getError() instanceof IocException) {
+            ac.setMethodReturn(JsonData.fail(Mvcs.getMessage(ac.getRequest(), "systemServiceDisabled")));
+            log.warn(Mvcs.getMessage(ac.getRequest(), "systemServiceDisabled"));
         }
         super.process(ac);
     }
+
+
 }
