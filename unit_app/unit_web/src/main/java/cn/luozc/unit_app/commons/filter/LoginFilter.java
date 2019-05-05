@@ -33,11 +33,15 @@ public class LoginFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         String requestURI = req.getRequestURI();
-        if(!(isExclusion(requestURI)||session.getAttribute("userId")!=null)){
-            //跳转到登录页面
-            //req.getRequestDispatcher("/login.html").forward(request,response);
-            res.sendRedirect("/login.html");
+        System.err.println(session.getAttribute("roles"));
+        if(session.getAttribute("userId")==null){
+            if(!isExclusion(requestURI)){
+                //跳转到登录页面
+                //req.getRequestDispatcher("/login.html").forward(request,response);
+                res.sendRedirect("/login.html");
+            }
         }
+
 
         chain.doFilter(request,response);
     }

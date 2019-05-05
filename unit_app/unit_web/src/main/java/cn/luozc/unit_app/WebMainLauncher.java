@@ -6,10 +6,7 @@ import org.nutz.ioc.Ioc;
 import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.nutz.mvc.annotation.ChainBy;
-import org.nutz.mvc.annotation.Encoding;
-import org.nutz.mvc.annotation.Localization;
-import org.nutz.mvc.annotation.Modules;
+import org.nutz.mvc.annotation.*;
 
 @IocBean(create="init", depose="depose")
 @Modules(packages = "cn.luozc.unit_app.modules")
@@ -25,6 +22,9 @@ public class WebMainLauncher {
     @Inject
     protected Dao dao;
 
+    @At("/")
+    @Ok(">>:/index.html")
+    public void index(){}
     
     public void init() {
 

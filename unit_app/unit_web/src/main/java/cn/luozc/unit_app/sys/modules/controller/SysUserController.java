@@ -169,5 +169,16 @@ public class SysUserController {
         return JsonData.success("登录成功");
     }
 
+    /**
+     * 登出
+     * @param session   会话
+     * @return          JsonData
+     */
+    @At
+    @Ok(">>:/login.html")
+    public void logout(HttpSession session){
+        session.invalidate();
+    }
+
 
 }
