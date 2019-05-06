@@ -22,8 +22,8 @@ public class WebMainLauncher {
     @Inject
     protected Dao dao;
 
-    @At("/")
-    @Ok(">>:/index.html")
+    @At({"/","index"})
+    @Ok("beetl:/index.html")
     public void index(){}
     
     public void init() {
