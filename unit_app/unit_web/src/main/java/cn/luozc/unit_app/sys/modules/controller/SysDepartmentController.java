@@ -22,9 +22,9 @@ public class SysDepartmentController {
     private SysDepartmentService sysDepartmentService;
 
     @At
-    @Ok("beetl:system.department.html")
+    @Ok("beetl:/system/department/department_list.html")
     public void listPage(){
-
+        System.err.println(11);
     }
 
     /**
