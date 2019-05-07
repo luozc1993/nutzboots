@@ -82,6 +82,10 @@ public class SysUser extends BaseModel implements Serializable {
     @ManyMany(relation = "sys_role_user",from = "uid:id",to = "rid")
     public List<SysRole> roles;
 
+    @Comment("部门列表")
+    @ManyMany(relation = "sys_department_user",from = "uid:id",to = "did")
+    public List<SysDepartment> departments;
+
     @Comment("角色用户关联表")
     @Many(field = "uid")
     private List<SysRoleUser> sysRoleUsers;

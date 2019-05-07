@@ -20,10 +20,10 @@ public class SysDepartment extends BaseModel implements Serializable {
     @ColDefine(type = ColType.VARCHAR, width = 100)
     private String name;
 
-    @Column("pid")
+    @Column("parent_id")
     @Comment("上级id")
     @ColDefine(type = ColType.VARCHAR, width = 36)
-    private String pid;
+    private String parentId;
 
     @Column("company_id")
     @Comment("公司id")
@@ -35,4 +35,12 @@ public class SysDepartment extends BaseModel implements Serializable {
     @Comment("部门介绍")
     @ColDefine(type = ColType.TEXT, width = 2000)
     private String introduce;
+
+    @Column("sort")
+    @Comment("排序")
+    @ColDefine(type = ColType.INT)
+    private int sort;
+
+    @One(field = "parentId")
+    private SysDepartment parent;
 }

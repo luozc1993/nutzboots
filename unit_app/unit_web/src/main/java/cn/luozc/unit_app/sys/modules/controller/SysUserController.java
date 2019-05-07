@@ -33,6 +33,10 @@ public class SysUserController {
     @Reference
     private SysRoleUserService sysRoleUserService;
 
+    @Inject
+    @Reference
+    private SysDepartmentUserService sysDepartmentUserService;
+
 
     @At
     public JsonData enable(String id){
@@ -69,7 +73,7 @@ public class SysUserController {
      */
     @At
     @Aop(TransAop.READ_COMMITTED)
-    public JsonData edit(SysUser sysUser,String roleId){
+    public JsonData edit(SysUser sysUser,String roleId,String did){
 
         //添加信息
         int update = sysUserService.update(sysUser);
@@ -80,6 +84,11 @@ public class SysUserController {
         List<SysRoleUser> rus = getSysRoleUsers(sysUser, roleId);
         sysRoleUserService.clear(Cnd.where("uid", "=", sysUser.getId()));
         sysRoleUserService.insert(rus);
+
+        sysDepartmentUserService.clear(Cnd.where("uid","=",sysUser.getId()));
+        SysDepartmentUser sysDepartmentUser = new SysDepartmentUser(did,sysUser.getId());
+        sysDepartmentUserService.insert(sysDepartmentUser);
+
         return JsonData.success(sysUser);
     }
 
@@ -108,7 +117,7 @@ public class SysUserController {
      */
     @At
     @Aop(TransAop.READ_COMMITTED)
-    public JsonData add(SysUser sysUser,String roleId){
+    public JsonData add(SysUser sysUser,String roleId,String did){
         if(sysUserService.count(Cnd.where("uname","=",sysUser.getUname()))>0){
             return JsonData.fail("账号已被注册");
         }
@@ -125,6 +134,10 @@ public class SysUserController {
         //角色关联添加
         List<SysRoleUser> rus = getSysRoleUsers(sysUser, roleId);
         sysRoleUserService.insert(rus);
+
+        SysDepartmentUser sysDepartmentUser = new SysDepartmentUser(did,sysUser.getId());
+        sysDepartmentUserService.insert(sysDepartmentUser);
+
         return JsonData.success(sysUser);
     }
 
@@ -138,7 +151,7 @@ public class SysUserController {
     @At
     public LayuiTableResult list(int page, int limit, String value){
         Criteria criteria = sysUserService.getVagueCriteria(value, "uname,nickname,phone");
-        Pagination listPage = sysUserService.listPageLinks(page, limit,criteria,"roles");
+        Pagination listPage = sysUserService.listPageLinks(page, limit,criteria,"roles|departments");
         int count = sysUserService.count(criteria);
         return LayuiTableResult.result(0,"",count,listPage.getList());
     }

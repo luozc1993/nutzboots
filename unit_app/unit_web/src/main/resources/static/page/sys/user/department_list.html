@@ -42,7 +42,6 @@
     </script>
     <!-- 表格操作列 -->
     <script type='text/html' id='tableBar'>
-        <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='department'>部门</a>
         <a class='layui-btn layui-btn-primary layui-btn-xs' lay-event='edit'>修改</a>
         <a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete'>删除</a>
     </script>
@@ -71,15 +70,12 @@
                     treeIdName: 'id',
                     treePidName: 'parentId',
                     elem: '#treeTable',
-                    url: '/sys/menu/list',
+                    url: '/sys/department/list',
                     treeDefaultClose: false,
                     cellMinWidth: 100,
                     cols: [[
                         {type: 'numbers'},
                         {field: 'name', title: '名称', minWidth: 200},
-                        {field: 'url', title: '菜单url'},
-                        {field: 'icon',title: '图标', templet: '#iconBar', align: 'center'},
-                        {field: 'type', title: '类型', align: 'center'},
                         {templet: '#tableBar', title: '操作', align: 'center', minWidth: 120}
                     ]]
                 });
@@ -87,16 +83,18 @@
 
             renderTable();
 
-
+            $("#addBtn").click(function(){
+                department("");
+            })
 
             function department(data){
 
                 top.layui.index.closeTab('/page/sys/user/menu_form.html');
-                admin.putTempData("SysMenu",isNull(data));
+                admin.putTempData("SysDepartment",isNull(data));
 
                 top.layui.index.openTab({
                     title: (data?'编辑':'添加')+'菜单',
-                    url: '/page/sys/user/menu_form.html',
+                    url: '/page/sys/user/department_form.html',
                     end: function() {
                         table.reload('table');  // 成功刷新表格
                     }
@@ -112,7 +110,7 @@
                         layer.close(index);
                     });
                 } else if(obj.event === 'edit'){
-                    menuForm(data);
+                    department(data);
                 }else if(obj.event === 'department'){
 
                 }
@@ -120,7 +118,7 @@
 
             function del(id,obj){
                 $.ajax({
-                    url:"/sys/menu/del",
+                    url:"/sys/department/del",
                     data:{id:id},
                     dataType:"json",
                     type:"post",

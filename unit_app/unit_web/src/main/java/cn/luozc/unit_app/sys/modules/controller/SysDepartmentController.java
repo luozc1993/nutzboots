@@ -21,12 +21,6 @@ public class SysDepartmentController {
     @Reference
     private SysDepartmentService sysDepartmentService;
 
-    @At
-    @Ok("beetl:/system/department/department_list.html")
-    public void listPage(){
-        System.err.println(11);
-    }
-
     /**
      * 删除数据
      * @param id    id
@@ -77,8 +71,8 @@ public class SysDepartmentController {
      */
     @At
     public LayuiTableResult list(int page, int limit, String value){
-        Criteria criteria = sysDepartmentService.getVagueCriteria(value, "companyName");
-        Pagination listPage = sysDepartmentService.listPage(page, limit,criteria);
+        Criteria criteria = sysDepartmentService.getVagueCriteria(value, "name");
+        Pagination listPage = sysDepartmentService.listPageLinks(page, limit,criteria,"parent");
         return LayuiTableResult.result(0,"",sysDepartmentService.count(criteria),listPage.getList());
     }
 

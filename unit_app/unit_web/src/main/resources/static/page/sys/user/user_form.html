@@ -44,6 +44,15 @@
                     </select>
                 </div>
             </div>
+            <div class=" layui-col-xs12 layui-col-sm6 layui-col-md4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">部门</label>
+                    <div class="layui-input-block">
+                        <input type="text"      id="departName" name="parentName" autocomplete="off" placeholder="请选择部门" class="layui-input">
+                        <input type="hidden"    id="did"   name="did" value="0" class="layui-input">
+                    </div>
+                </div>
+            </div>
             <div class="layui-form-item text-center">
                 <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
                 <button class="layui-btn" lay-filter="formSubmit" lay-submit>保存</button>
@@ -125,6 +134,21 @@
                 });
             }
 
+
+            $("#departName").on("click", function (e) {
+                admin.putTempData("menuTreeNameKey", "departName");
+                admin.putTempData("menuTreeIdKey", "did");
+                layui.admin.open({
+                    type: 2,
+                    title: '菜单',
+                    area: ['500px', '400px'],
+                    content: '/page/sys/user/department_tree.html',
+                    zIndex: layer.zIndex, //重点1
+                    end: function () {
+
+                    }
+                });
+            });
         });
     </script>
 </body>

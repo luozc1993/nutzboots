@@ -56,7 +56,7 @@ public abstract class BaseModel implements Serializable {
         try {
             HttpServletRequest request = Mvcs.getReq();
             if (request != null) {
-                return Strings.sNull(request.getSession(true).getAttribute("platform_uid"));
+                return Strings.sNull(request.getSession(true).getAttribute("userId"));
             }
         } catch (Exception e) {
         }
