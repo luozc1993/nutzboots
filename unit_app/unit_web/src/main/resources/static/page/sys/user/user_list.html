@@ -49,7 +49,11 @@
         <span class="layui-badge layui-bg-orange">{{d.roles[i].name}}</span>
         {{# } }}
     </script>
-
+    <script type="text/html" id="departmentTemplate">
+        {{# for(var i = 0, len = d.departments.length; i < len; i++){ }}
+        <span class="layui-badge layui-bg-orange">{{d.departments[i].name}}</span>
+        {{# } }}
+    </script>
     <!-- js部分 -->
     <script type='text/javascript' src='../../../assets/libs/layui/layui.js'></script>
     <script type='text/javascript' src='../../../assets/js/common.js'></script>
@@ -79,6 +83,7 @@
                         {field:'phone',title:'手机号'},
                         {field:'email',title:'邮箱'},
                         {field:'roles',title:'角色',templet: '#rolesTemplate', unresize: true,minWidth:110},
+                        {field:'departments',title:'角色',templet: '#departmentTemplate', unresize: true,minWidth:110},
                         {field:'enable',title:'是否启用',templet: '#enable', unresize: true,minWidth:110},
                         {field:'edit',title:'操作',toolbar:'#tableBar',minWidth:120}
                     ] ] //设置表头

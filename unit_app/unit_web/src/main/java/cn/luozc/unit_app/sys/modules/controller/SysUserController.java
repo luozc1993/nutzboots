@@ -138,7 +138,7 @@ public class SysUserController {
         SysDepartmentUser sysDepartmentUser = new SysDepartmentUser(did,sysUser.getId());
         sysDepartmentUserService.insert(sysDepartmentUser);
 
-        return JsonData.success(sysUser);
+        return JsonData.success(sysUser,"添加成功");
     }
 
     /**
