@@ -48,12 +48,18 @@
             <groupId>org.nutz</groupId>
             <artifactId>nutzboot-starter-beetl</artifactId>
         </dependency>
+        <!--redis操作-->
+        <dependency>
+            <groupId>org.nutz</groupId>
+            <artifactId>nutzboot-starter-redis</artifactId>
+        </dependency>
         <!--mysql驱动-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.44</version>
         </dependency>
+        <!--日志-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -81,11 +87,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--伪静态-->
         <dependency>
             <groupId>org.tuckey</groupId>
             <artifactId>urlrewritefilter</artifactId>
             <version>4.0.4</version>
         </dependency>
+        <!--微服务-->
         <dependency>
             <groupId>org.nutz</groupId>
             <artifactId>nutzboot-starter-dubbo</artifactId>
@@ -96,11 +104,13 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.32.Final</version>
         </dependency>
+        <!--zookeeper-->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
             <version>3.4.13</version>
         </dependency>
+
     </dependencies>
     <pluginRepositories>
         <pluginRepository>

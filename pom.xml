@@ -68,6 +68,7 @@
             <version>1.2</version>
         </dependency>
         <!--===================json 需要依赖的6个包结束=======================-->
+
         <dependency>
             <groupId>org.nutz</groupId>
             <artifactId>nutzboot-core</artifactId>
