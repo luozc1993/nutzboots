@@ -30,6 +30,10 @@ public class SysDepartment extends BaseModel implements Serializable {
     @ColDefine(type = ColType.VARCHAR, width = 36)
     private String companyId;
 
+    @Column("leader")
+    @Comment("负责人")
+    @ColDefine(type = ColType.VARCHAR, width = 36)
+    private String leader;
 
     @Column("introduce")
     @Comment("部门介绍")

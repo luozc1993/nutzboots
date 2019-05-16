@@ -58,17 +58,17 @@ public class WebMainLauncher {
 
 
     public void init() {
-        Map<String, Object> variables = new HashMap<String, Object>();
-        variables.put("employeeName", "Kermit");
-        variables.put("numberOfDays", new Integer(4));
-        variables.put("vacationMotivation", "I'm really tired!");
-
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Vacation", variables);
-
-        List<Task> list = taskService.createTaskQuery().list();
-        for (Task task:list) {
-            System.err.println(task.getName());
-        }
+//        Map<String, Object> variables = new HashMap<String, Object>();
+//        variables.put("employeeName", "Kermit");
+//        variables.put("numberOfDays", new Integer(4));
+//        variables.put("vacationMotivation", "I'm really tired!");
+//
+//        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Vacation", variables);
+//
+//        List<Task> list = taskService.createTaskQuery().list();
+//        for (Task task:list) {
+//            System.err.println(task.getName());
+//        }
         //windows启动zookeeper
 //        if ( System.getProperty("os.name").startsWith("Windows")) {
 //            CommandUtils.exec("E:\\nutz\\luozc\\assets\\zookeeper-3.4.10\\bin\\zkServer.cmd");

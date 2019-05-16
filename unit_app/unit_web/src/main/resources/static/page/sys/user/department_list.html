@@ -58,6 +58,7 @@
     <script type='text/javascript'>
         layui.use(['form','layer','jquery','table','admin','treetable'],function(){
             var table = layui.table;
+            var layer = layui.layer;
             var admin = layui.admin;
             var form = layui.form;
             var treetable = layui.treetable;
@@ -89,13 +90,14 @@
 
             function department(data){
 
-                top.layui.index.closeTab('/page/sys/user/menu_form.html');
                 admin.putTempData("SysDepartment",isNull(data));
-
-                top.layui.index.openTab({
+                layui.admin.open({
+                    type: 2,
                     title: (data?'编辑':'添加')+'菜单',
-                    url: '/page/sys/user/department_form.html',
-                    end: function() {
+                    area: ['80%', '80%'],
+                    content: '/page/sys/user/department_form.html',
+                    zIndex: layer.zIndex, //重点1
+                    end: function () {
                         table.reload('table');  // 成功刷新表格
                     }
                 });
