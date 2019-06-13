@@ -65,6 +65,7 @@
 </div>
 
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="./assets/js/common.js?v=312"></script>
 <script>
     layui.use(['layer', 'form'], function () {
         var $ = layui.jquery;
@@ -73,20 +74,15 @@
 
         // 表单提交
         form.on('submit(login-submit)', function (obj) {
-            layer.msg(JSON.stringify(obj.field), {icon: 1,});
+            //layer.msg(JSON.stringify(obj.field), {icon: 1,});
 			
 			
 			
 			$.ajax({
 				url:'http://127.0.0.1:8080/system/user/login',
 				data:obj.field,
-				dataType:'jsonp',//服务器返回json格式数据
-				success:function(data){
-					console.log(data);
-				},
-				error:function(res){
-					console.log(res)
-				}
+				dataType:'json',//服务器返回json格式数据
+				
 			});
             return false;
         });

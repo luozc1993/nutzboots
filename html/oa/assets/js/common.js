@@ -24,6 +24,10 @@ layui.config({
     setTimeout(function () {
         admin.removeLoading();
     }, window == top ? 600 : 100);
+	//设置ajax所有错误回调方法
+	$.ajaxSettings.error = function(res){
+		console.log(res)
+	};//重要设置
 
 });
 

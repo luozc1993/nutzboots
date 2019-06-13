@@ -1,5 +1,6 @@
 package cn.luozc.oa.module.system.controller;
 
+import cn.luozc.oa.commom.SysLog;
 import cn.luozc.oa.commom.utils.JsonData;
 import cn.luozc.oa.commom.utils.JwtTokenUtil;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +22,8 @@ public class UserController {
     @ApiOperation(value = "登录", notes = "登录", httpMethod="GET", response=Long.class)
     @At
     @Filters(@By(type= CrossOriginFilter.class))
-    @Ok("jsonp:full")
+    @Ok("json:full")
+    @SysLog // 自定义注解,后面会介绍
     public JsonData login(HttpServletRequest request){
         String username = request.getParameter("username");
         String password = request.getParameter("password");

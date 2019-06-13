@@ -31,9 +31,14 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        String requestURI = req.getRequestURI();
         String token = req.getParameter("token");
         if(token==null){
-            res.sendError(403,"token错误");
+            if(!isExclusion(requestURI)){
+                res.setHeader("Access-Control-Allow-Origin","http://127.0.0.1:8848");
+                res.sendError(403,"token错误");
+            }
+
         }
 
 

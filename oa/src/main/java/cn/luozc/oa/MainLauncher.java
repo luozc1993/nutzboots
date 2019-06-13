@@ -10,6 +10,9 @@ import org.nutz.mvc.annotation.*;
 @Encoding(input = "UTF-8", output = "UTF-8")
 @ChainBy(args = "chain/nutzwk-mvc-chain.js")
 @Localization(value = "locales/", defaultLocalizationKey = "zh_CN")
+@IocBy(args={
+        "*cn.luozc.oa.commom.DemoAopLoader" // 自定义aop注解加载器
+})
 public class MainLauncher {
     
     @Inject
