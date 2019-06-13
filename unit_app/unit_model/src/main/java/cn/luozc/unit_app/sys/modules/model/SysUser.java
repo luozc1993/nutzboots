@@ -20,13 +20,11 @@ public class SysUser extends BaseModel implements Serializable {
     @Column
     @Comment("账号")
     @ColDefine(type = ColType.VARCHAR, width = 120)
-    
     private String uname;
 
     @Column
     @Comment("密码")
     @ColDefine(type = ColType.VARCHAR, width = 255)
-    
     private String password;
 
     @Column

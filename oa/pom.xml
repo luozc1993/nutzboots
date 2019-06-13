@@ -91,6 +91,12 @@
             <groupId>org.nutz</groupId>
             <artifactId>nutzboot-starter-jdbc</artifactId>
         </dependency>
+        <!--mysql驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.44</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

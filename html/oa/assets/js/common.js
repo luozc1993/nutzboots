@@ -26,10 +26,38 @@ layui.config({
     }, window == top ? 600 : 100);
 	//设置ajax所有错误回调方法
 	$.ajaxSettings.error = function(res){
-		console.log(res)
-	};//重要设置
-
+		if(res.status==403){
+			window.location.href = "/login.html"
+		}
+	};
+	token = admin.getTempData("token");
+	if(!admin.getTempData("token")&&window.location.href.replace(getProjectUrl(),"")!="login.html"){
+		top.window.location.href = getProjectUrl()+"login.html"
+	}else if(admin.getTempData("token")&&window.location.href.replace(getProjectUrl(),"")=="login.html"){
+		top.window.location.href = getProjectUrl()+"index.html"
+	}
 });
+/////////////////////////////////////////////////////////////
+////////////////////////全局变量开始/////////////////////////////
+/////////////////////////////////////////////////////////////
+var serverUrl = "http://127.0.0.1:8080";
+var token = "";
+/////////////////////////////////////////////////////////////
+////////////////////////全局变量结束/////////////////////////////
+/////////////////////////////////////////////////////////////
+
+function sysAjax(url,data,type,success){
+	var $ = layui.jquery;
+	data['token'] = token;
+	$.ajax({
+		url:url,
+		data:data,
+		dataType:'json',//服务器返回json格式数据
+		type:type,
+		success:success
+	});
+}
+
 
 // 获取当前项目的根路径，通过获取layui.js全路径截取assets之前的地址
 function getProjectUrl() {

@@ -32,10 +32,11 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String requestURI = req.getRequestURI();
+
         String token = req.getParameter("token");
         if(token==null){
             if(!isExclusion(requestURI)){
-                res.setHeader("Access-Control-Allow-Origin","http://127.0.0.1:8848");
+                res.setHeader("Access-Control-Allow-Origin",req.getHeader("Origin"));
                 res.sendError(403,"token错误");
             }
 
