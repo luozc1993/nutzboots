@@ -19,7 +19,7 @@ import java.util.Map;
  * @author qiaokun
  * @date 2018/08/10
  */
-public class JwtTokenUtil {
+public class TokenUtil {
     /**
      * 过期时间一天，
      * TODO 正式运行时修改为15分钟

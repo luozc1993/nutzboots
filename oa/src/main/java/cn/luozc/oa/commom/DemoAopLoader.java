@@ -14,18 +14,27 @@ import java.util.List;
 public class DemoAopLoader extends SimpleAopMaker<SysLog> {
 
     public List<? extends MethodInterceptor> makeIt(SysLog sysLog, Method method, Ioc ioc) {
-        return Arrays.asList(new SysLogMethodInterceptor());
+
+
+        return Arrays.asList(new SysLogMethodInterceptor(sysLog.value()));
     }
 }
 
 class SysLogMethodInterceptor implements MethodInterceptor {
     private static final Log log = Logs.get();
 
+    private String value ;
+
+    public SysLogMethodInterceptor(){}
+    public SysLogMethodInterceptor(String name){
+        this.value = value;
+    }
+
     public void filter(final InterceptorChain chain) throws Throwable {
 
-        log.debug("hi");
+        log.debug(value);
         chain.doChain(); // 继续下一个拦截器, 如果要终止执行,不调用该方法即可
-        log.debug("byte");
+        log.debug(value);
     }
 }
 

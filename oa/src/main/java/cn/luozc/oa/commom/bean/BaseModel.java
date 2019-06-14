@@ -1,6 +1,6 @@
 package cn.luozc.oa.commom.bean;
 
-import cn.luozc.oa.commom.utils.JwtTokenUtil;
+import cn.luozc.oa.commom.utils.TokenUtil;
 import org.nutz.dao.entity.annotation.*;
 import org.nutz.json.Json;
 import org.nutz.json.JsonFormat;
@@ -58,7 +58,7 @@ public abstract class BaseModel implements Serializable {
         try {
             HttpServletRequest request = Mvcs.getReq();
             if (request != null) {
-                return Strings.sNull(JwtTokenUtil.getUserId(request.getParameter("token")));
+                return Strings.sNull(TokenUtil.getUserId(request.getParameter("token")));
             }
         } catch (Exception e) {
         }

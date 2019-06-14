@@ -6,4 +6,9 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD}) // aop,一般指方法
 @Documented // 记录到javadoc
 public @interface SysLog {
+
+    /**
+     * 方法说明
+     */
+    String value() default "";
 }

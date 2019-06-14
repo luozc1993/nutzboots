@@ -2,7 +2,7 @@ package cn.luozc.oa.module.system.controller;
 
 import cn.luozc.oa.commom.SysLog;
 import cn.luozc.oa.commom.utils.JsonData;
-import cn.luozc.oa.commom.utils.JwtTokenUtil;
+import cn.luozc.oa.commom.utils.TokenUtil;
 import cn.luozc.oa.module.system.model.SysUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,11 +23,11 @@ public class UserController {
     @ApiOperation(value = "登录", notes = "登录", httpMethod="GET", response=JsonData.class)
     @At
     @Filters(@By(type= CrossOriginFilter.class))
-    @SysLog
+    @SysLog("登录接口")
     public JsonData login(HttpServletRequest request){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String sign = JwtTokenUtil.sign(username, "123");
+        String sign = TokenUtil.sign(username, "123");
         if(sign==null){
             return JsonData.fail("登录失败");
         }
@@ -37,7 +37,7 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "创建用户", httpMethod="POST", response=JsonData.class)
     @At
     @Filters(@By(type= CrossOriginFilter.class))
-    @SysLog
+    @SysLog("创建用户")
     @POST
     public JsonData createUser(SysUser user){
 

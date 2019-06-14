@@ -177,17 +177,14 @@
                 content: $('#modelUser').html(),
                 success: function (layero, dIndex) {
                     $(layero).children('.layui-layer-content').css('overflow', 'visible');
-                    var url = mUser ? serverUrl+'/system/user/createUser' :serverUrl+'/system/user/createUser';
+                    var url = mUser ? serverUrl+'/system/user/updateUser' :serverUrl+'/system/user/createUser';
                     // 回显数据
                     form.val('modelUserForm', mUser);
                     // 表单提交事件
                     form.on('submit(modelSubmitUser)', function (data) {
-						admin.showLoading();
+						console.log(data.field)
 						sysAjax(url,data.field,"post",function(res){
-							admin.removeLoading();
-							layer.closeAll('loading');
 							layer.close(dIndex);
-							console.log(res)
 						})
                         return false;
                     });

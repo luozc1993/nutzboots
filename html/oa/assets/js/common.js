@@ -30,6 +30,8 @@ layui.config({
 			window.location.href = "/login.html"
 		}
 	};
+	
+	
 	token = admin.getTempData("token");
 	if(!admin.getTempData("token")&&window.location.href.replace(getProjectUrl(),"")!="login.html"){
 		top.window.location.href = getProjectUrl()+"login.html"
@@ -40,13 +42,14 @@ layui.config({
 /////////////////////////////////////////////////////////////
 ////////////////////////全局变量开始/////////////////////////////
 /////////////////////////////////////////////////////////////
-var serverUrl = "http://127.0.0.1:8080";
+var serverUrl = "http://127.0.0.1:20000";
 var token = "";
 /////////////////////////////////////////////////////////////
 ////////////////////////全局变量结束/////////////////////////////
 /////////////////////////////////////////////////////////////
 
 function sysAjax(url,data,type,success){
+	layer.load(2);
 	var $ = layui.jquery;
 	data['token'] = token;
 	$.ajax({
@@ -54,7 +57,10 @@ function sysAjax(url,data,type,success){
 		data:data,
 		dataType:'json',//服务器返回json格式数据
 		type:type,
-		success:success
+		success:success,
+		complete:function(){
+			layer.closeAll('loading');
+		}
 	});
 }
 

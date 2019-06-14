@@ -1,5 +1,6 @@
 package cn.luozc.oa.commom.filter;
 
+import cn.luozc.oa.commom.utils.TokenUtil;
 import com.alibaba.druid.util.PatternMatcher;
 import com.alibaba.druid.util.ServletPathMatcher;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -33,14 +34,17 @@ public class LoginFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String requestURI = req.getRequestURI();
 
-        String token = req.getParameter("token");
-        if(token==null){
-            if(!isExclusion(requestURI)){
+        //判断是否为需要验证的链接
+        if(!isExclusion(requestURI)){
+            String token = req.getParameter("token");
+            if(token==null|| !TokenUtil.verify(token)){
                 res.setHeader("Access-Control-Allow-Origin",req.getHeader("Origin"));
                 res.sendError(403,"token错误");
             }
-
         }
+
+
+
 
 
         chain.doFilter(request,response);
