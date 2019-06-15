@@ -10,6 +10,7 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.filter.CrossOriginFilter;
+import org.nutz.plugins.slog.annotation.Slog;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +24,7 @@ public class UserController {
     @ApiOperation(value = "登录", notes = "登录", httpMethod="GET", response=JsonData.class)
     @At
     @Filters(@By(type= CrossOriginFilter.class))
-    @SysLog("登录接口")
+    @Slog(tag="新增yongh", after="用户")
     public JsonData login(HttpServletRequest request){
         String username = request.getParameter("username");
         String password = request.getParameter("password");

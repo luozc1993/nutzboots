@@ -13,7 +13,7 @@ import org.nutz.mvc.annotation.*;
 @ChainBy(args = "chain/nutzwk-mvc-chain.js")
 @Localization(value = "locales/", defaultLocalizationKey = "zh_CN")
 @IocBy(args={
-        "*cn.luozc.oa.commom.DemoAopLoader" // 自定义aop注解加载器
+        "*slog" // 自定义aop注解加载器
 })
 public class MainLauncher {
     @Inject
