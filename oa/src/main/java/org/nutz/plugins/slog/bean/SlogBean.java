@@ -1,4 +1,4 @@
-package cn.luozc.oa.commom.slog;
+package org.nutz.plugins.slog.bean;
 
 import cn.luozc.oa.commom.bean.BaseModel;
 import org.nutz.dao.entity.annotation.*;
@@ -23,7 +23,7 @@ public class SlogBean extends BaseModel implements Serializable  {
     protected String source;
 
     @Column("u_id")
-    protected long uid;
+    protected String uid;
 
     @Column("u_name")
     protected String username;
@@ -60,11 +60,11 @@ public class SlogBean extends BaseModel implements Serializable  {
         this.source = source;
     }
 
-    public long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 
