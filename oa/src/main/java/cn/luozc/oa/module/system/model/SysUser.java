@@ -51,9 +51,9 @@ public class SysUser extends BaseModel implements Serializable {
 
     @Column
     @Comment("用户状态")
-    @ColDefine(type = ColType.BOOLEAN, width = 255)
+    @ColDefine(type = ColType.CHAR, width = 1)
     @Default("0")
-    private Boolean state;
+    private int state;
 
     public String getUsername() {
         return username;
@@ -119,11 +119,11 @@ public class SysUser extends BaseModel implements Serializable {
         this.emailVerified = emailVerified;
     }
 
-    public Boolean getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(int state) {
         this.state = state;
     }
 }

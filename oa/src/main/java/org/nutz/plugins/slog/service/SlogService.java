@@ -1,6 +1,5 @@
-package cn.luozc.oa.commom.slog;
+package org.nutz.plugins.slog.service;
 
-import cn.luozc.oa.commom.bean.BaseModel;
 import cn.luozc.oa.commom.utils.TokenUtil;
 import org.nutz.Nutz;
 import org.nutz.aop.interceptor.async.Async;
@@ -17,7 +16,7 @@ import org.nutz.lang.util.MethodParamNamesScaner;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
 import org.nutz.mvc.Mvcs;
-import org.nutz.plugins.slog.service.SlogService;
+import org.nutz.plugins.slog.bean.SlogBean;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -26,7 +25,7 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 @IocBean(name="slogService", fields={"dao"})
-public class MySlogService extends SlogService {
+public class SlogService  {
     private static final Log log = Logs.get();
 
     /**
@@ -86,8 +85,8 @@ public class MySlogService extends SlogService {
        SlogBean slog = c(t, tag, source, msg);
         try {
             Object uid = GET_USER_ID.call();
-            if (uid != null && uid instanceof Number)
-                slog.setUid(((Number)uid).longValue());
+            if (uid != null )
+                slog.setUid(((String)uid));
         }
         catch (Exception e) {
             if (log.isDebugEnabled())
@@ -140,7 +139,7 @@ public class MySlogService extends SlogService {
     public static Callable<Object> GET_USER_NAME = new Callable<Object>() {
         public Object call() throws Exception {
             Object uid = GET_USER_ID.call();
-            if (uid != null && ((Number)uid).longValue() > 0)
+            if (uid != null && Strings.isNotBlank((String)uid))
                 return uid;
             return "";
         };

@@ -1,5 +1,6 @@
 package cn.luozc.oa.commom.service;
 
+import cn.luozc.oa.commom.page.LayuiTable;
 import cn.luozc.oa.commom.page.Pagination;
 import cn.luozc.oa.commom.page.datatable.DataTableColumn;
 import cn.luozc.oa.commom.page.datatable.DataTableOrder;
@@ -239,6 +240,14 @@ public interface BaseService<T> {
      * @return
      */
     int update(Object obj);
+
+    /**
+     * 更新数据
+     *
+     * @param obj
+     * @return
+     */
+    int update(Object obj,String fieldFilter);
 
     /**
      * 更新数据忽略值为null的字段
@@ -869,7 +878,32 @@ public interface BaseService<T> {
 
     Criteria getVagueCriteria(String value, String feild);
 
-
+    /**
+     *  调用存储过程
+     * @param funName
+     * @param data
+     * @return
+     */
     Record call(String funName, JSONObject data);
 
+    /**
+     * 分页查询(cnd)
+     *
+     * @param pageNumber
+     * @param pageSize
+     * @param cnd
+     * @return
+     */
+    LayuiTable layuiListPage(Integer pageNumber, int pageSize, Condition cnd);
+
+
+    /**
+     *  加工条件
+     * @param key       表字段
+     * @param op        表达式
+     * @param value     值
+     * @param cnd       Cnd
+     * @return          Cnd
+     */
+    Cnd getCnd(String key,String op,String value, Cnd cnd);
 }

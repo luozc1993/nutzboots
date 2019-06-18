@@ -1,5 +1,6 @@
 package cn.luozc.oa.commom.service;
 
+import cn.luozc.oa.commom.page.LayuiTable;
 import cn.luozc.oa.commom.page.OffsetPager;
 import cn.luozc.oa.commom.page.Pagination;
 import cn.luozc.oa.commom.page.datatable.DataTableColumn;
@@ -311,6 +312,15 @@ public class BaseServiceImpl<T> extends EntityService<T> implements BaseService<
         return this.dao().update(obj);
     }
 
+    /**
+     *  更新数据
+     * @param obj
+     * @param fieldFilter
+     * @return
+     */
+    public int update(Object obj,String fieldFilter) {
+        return this.dao().update(obj,fieldFilter);
+    }
     /**
      * 更新数据忽略值为null的字段
      *
@@ -1309,6 +1319,12 @@ public class BaseServiceImpl<T> extends EntityService<T> implements BaseService<
         return cri;
     }
 
+    /**
+     * 调用存储过程
+     * @param funName
+     * @param data
+     * @return
+     */
     public Record call(String funName, JSONObject data){
         Iterator keys = data.keys();
         List<String> list = new ArrayList<>();
@@ -1322,5 +1338,44 @@ public class BaseServiceImpl<T> extends EntityService<T> implements BaseService<
         this.dao().execute(sql);
         Record record = sql.getOutParams();
         return record;
+    }
+
+
+
+    /**
+     * 分页查询(cnd)
+     *
+     * @param pageNumber
+     * @param pageSize
+     * @param cnd
+     * @return
+     */
+    public LayuiTable layuiListPage(Integer pageNumber, int pageSize, Condition cnd) {
+        pageNumber = getPageNumber(pageNumber);
+        pageSize = getPageSize(pageSize);
+        Pager pager = this.dao().createPager(pageNumber, pageSize);
+        List<T> list = this.dao().query(this.getEntityClass(), cnd, pager);
+        int count = this.dao().count(this.getEntityClass(), cnd);
+        return new LayuiTable(0, count, list, "查询成功");
+    }
+
+
+    /**
+     *  加工条件
+     * @param key       表字段
+     * @param op        表达式
+     * @param value     值
+     * @param cnd       Cnd
+     * @return          Cnd
+     */
+    public Cnd getCnd(String key,String op,String value, Cnd cnd) {
+        if(Strings.isNotBlank(value)) {
+            if (cnd == null) {
+                cnd = Cnd.where(key, op, value);
+            } else {
+                cnd.and(key, op, value);
+            }
+        }
+        return cnd;
     }
 }

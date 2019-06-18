@@ -63,17 +63,16 @@
 <script type="text/html" id="tableBarUser">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-xs" lay-event="reset">重置密码</a>
 </script>
 <!-- 表格状态列 -->
 <script type="text/html" id="tableStateUser">
-    <input type="checkbox" lay-filter="ckStateUser" value="{{d.userId}}" lay-skin="switch"
+    <input type="checkbox" lay-filter="ckStateUser" value="{{d.id}}" lay-skin="switch"
            lay-text="正常|锁定" {{d.state==0?'checked':''}}/>
 </script>
 <!-- 表单弹窗 -->
 <script type="text/html" id="modelUser">
     <form id="modelUserForm" lay-filter="modelUserForm" class="layui-form model-form">
-        <input name="userId" type="hidden"/>
+        <input name="id" type="hidden"/>
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-block">
@@ -128,7 +127,7 @@
         // 渲染表格
         var insTb = table.render({
             elem: '#tableUser',
-            url: '../../json/user.json',
+            url: serverUrl+'/system/user/userList?token='+token,
             page: true,
             cellMinWidth: 100,
             cols: [[
@@ -163,9 +162,9 @@
             if (layEvent === 'edit') { // 修改
                 showEditModel(data);
             } else if (layEvent === 'del') { // 删除
-                doDel(data.userId, data.nickName);
+                doDel(data.id, data.nickName);
             } else if (layEvent === 'reset') { // 重置密码
-                resetPsw(data.userId, data.nickName);
+                resetPsw(data.id, data.nickName);
             }
         });
 
@@ -182,9 +181,10 @@
                     form.val('modelUserForm', mUser);
                     // 表单提交事件
                     form.on('submit(modelSubmitUser)', function (data) {
-						console.log(data.field)
 						sysAjax(url,data.field,"post",function(res){
+							insTb.reload({}, 'data');
 							layer.close(dIndex);
+							
 						})
                         return false;
                     });
@@ -199,48 +199,53 @@
                 shade: .1
             }, function (i) {
                 layer.close(i);
-                layer.load(2);
-                $.get('../../json/ok.json', {
-                    userId: userId
-                }, function (res) {
-                    layer.closeAll('loading');
-                    if (res.code == 200) {
-                        layer.msg(res.msg, {icon: 1});
-                        insTb.reload({}, 'data');
-                    } else {
-                        layer.msg(res.msg, {icon: 2});
-                    }
-                }, 'json');
-            });
+				if(userId){
+					sysAjax(serverUrl+'/system/user/deleteUser',{"userId": userId},"get",function(res){
+						if(res.status){
+							layer.msg(res.msg, {icon: 1});
+							insTb.reload({}, 'data');
+						}
+					})
+				}
+			});
         }
 
         // 修改用户状态
         form.on('switch(ckStateUser)', function (obj) {
             layer.load(2);
-            $.get('../../json/ok.json', {
+			sysAjax(serverUrl+'/system/user/updateUserState',{
                 userId: obj.elem.value,
                 state: obj.elem.checked ? 0 : 1
-            }, function (res) {
-                layer.closeAll('loading');
-                if (res.code == 200) {
-                    layer.msg(res.msg, {icon: 1});
-                } else {
-                    layer.msg(res.msg, {icon: 2});
-                    $(obj.elem).prop('checked', !obj.elem.checked);
-                    form.render('checkbox');
-                }
-            }, 'json');
+            },"get",function(res){
+				if(res.status){
+					layer.msg(res.msg, {icon: 1});
+				}else{
+					$(obj.elem).prop('checked', !obj.elem.checked);
+					form.render('checkbox');
+				}
+			})
         });
 
         // 重置密码
         function resetPsw(userId, nickName) {
-            layer.confirm('确定要重置“' + nickName + '”的登录密码吗？', {
+            layer.confirm('确定要重置“' + nickName + '”的登录密码为123456吗？', {
                 skin: 'layui-layer-admin',
                 shade: .1
             }, function (i) {
                 layer.close(i);
                 layer.load(2);
-                $.get('../../json/ok.json', {
+				
+				sysAjax(serverUrl+'/system/user/initPassword',{
+				    userId: userId
+				},"get",function(res){
+					if(res.status){
+						layer.msg(res.msg, {icon: 1});
+					}else{
+						layer.msg(res.msg, {icon: 2});
+					}
+				})
+				
+                $.get(serverUrl+'/system/user/updateUserState', {
                     userId: userId
                 }, function (res) {
                     layer.closeAll('loading');

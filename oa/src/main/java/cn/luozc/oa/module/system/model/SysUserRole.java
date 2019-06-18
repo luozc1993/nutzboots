@@ -5,7 +5,7 @@ import org.nutz.dao.entity.annotation.*;
 
 import java.io.Serializable;
 
-@Table("sys_role")
+@Table("sys_user_role")
 public class SysUserRole extends BaseModel implements Serializable {
 
     @Column
