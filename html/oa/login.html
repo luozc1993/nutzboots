@@ -85,7 +85,7 @@
 				type:"post",
 				success:function(res){
 					if(res.status){
-						admin.putTempData("token",res.data.token);
+						admin.putTempData("token",res.data);
 						window.location.href = getProjectUrl()+"index.html"
 					}
 					

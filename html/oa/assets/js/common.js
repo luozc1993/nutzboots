@@ -33,6 +33,7 @@ layui.config({
 	
 	
 	token = admin.getTempData("token");
+	console.log(token)
 	if(!admin.getTempData("token")&&window.location.href.replace(getProjectUrl(),"")!="login.html"){
 		top.window.location.href = getProjectUrl()+"login.html"
 	}else if(admin.getTempData("token")&&window.location.href.replace(getProjectUrl(),"")=="login.html"){
